@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from 'react';
 import MainContent from "./components/MainContent";
 import Navigate from './components/Navigate';
-import { useLocation } from 'react-router-dom';
-import './css/main.css';
+import Window from "./components/Window";
+import useIsHome from './components/PathChecker';
+import Info from "./components/Info";
 
 function Landing() {
-    const location = useLocation();
-    const [showNavigate, setShowNavigate] = useState(location.pathname === '/');
+    const isHome = useIsHome(); 
 
-    useEffect(() => {
-        // When location changes, update the state to true or false
-        if (location.pathname === '/') {
-            setShowNavigate(true);
-        } else {
-            // Delay the hiding to allow for fade-out effect
-            const timer = setTimeout(() => {
-                setShowNavigate(false);
-            }, 300); // 300ms is the duration of the fade-out effect
-            return () => clearTimeout(timer);
-        }
-    }, [location.pathname]);
     return (
         <div className="mx-container">
             <div className="mx-first">
-                <Navigate className={showNavigate ? "fadeIn" : "fadeOut"} />
+                <Navigate className={isHome ? "fade-in" : "fade-out"} />
+                <Window className={isHome ? "window-close" : "window-open"} />
             </div>
 
             <div className="mx-last">
-                <MainContent />
+                <MainContent className={isHome ? "fade-in" : "fade-out"} />
+                <Info className={isHome ? "fade-out" : "fade-in"} />
             </div>
         </div>
     );

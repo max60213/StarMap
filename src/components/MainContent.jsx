@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { itemsData, group } from '../js/items-data';
+import { itemsData, group } from '../js/items-data.js';
 
-function MainContent() {
+function MainContent(props) {
     // 定義一個函數來渲染特定群組的項目
     const itemGroup = (groupIndex) => {
         // 計算當前群組的起始索引
@@ -25,7 +25,7 @@ function MainContent() {
     // 渲染主要內容
     return (
         <>
-            <div className="mx-list">
+            <div className={`mx-list ${props.className == undefined ? "" : props.className}`}>
                 {/* 頁面標題 */}
                 <h1>Lorem ipsum dolor sit amet consectetur.</h1>
                 <p className="mb-1">

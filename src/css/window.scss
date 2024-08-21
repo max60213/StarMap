@@ -1,0 +1,22 @@
+.window{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    &-view{
+        width: 418px;
+        aspect-ratio: 1/1;
+        background-color: rgba(255, 0, 0, 0.485);
+        border-radius: 100%;
+        transition: all 1s cubic-bezier(.2,0,0,1);
+        backdrop-filter: blur(50px);
+        &:hover{
+            width: calc(100% - 72px);
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            transform: translateX(-10%);
+        }
+    }
+}

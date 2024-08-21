@@ -1,7 +1,9 @@
+import "../css/window.css";
+
 function Window(){
     return (
-        <div>
-            <h1>Window</h1>
+        <div className="window">
+            <div className="window-view"></div>
         </div>
     )
 }

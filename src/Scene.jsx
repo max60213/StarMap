@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react';
+import './css/daylight.css';
 
 function Scene() {
     useEffect(() => {
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.src = "../src/js/selector.js";
-        script.async = true;
-
-        document.body.appendChild(script);
-
-        // 清理函數
-        return () => {
-            document.body.removeChild(script);
-        };
+        import('./js/selector').then(({ default: init }) => {
+            init();
+        });
     }, []);
     return (
         <>
-            <div id="scene" className="scene mx-mask-fade"></div>
+            <div id="scene" className="scene mx-mask-fade">
+            </div>
             <div className="daylight">
                 <div className="grad background-1"></div>
                 <div className="grad background-2"></div>

@@ -11,9 +11,9 @@ var isDebug = false;
 const visual = document.getElementById('scene');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, visual.clientWidth / visual.clientHeight, 0.1, 1000);
-const mobileDistance = 1.4, pcDistance = 1, pcShift = [-2 / 10, 0], mobileShift = [0, 1 / 4];
+const mobileDistance = 1.4, pcDistance = 0.8, pcShift = [-2 / 10, 0], mobileShift = [0, 1 / 4];
 var camDistance, camShift; // 相機與星系的距離
-const breakpoint = 786; // 斷點寬度
+const breakpoint = 785; // 斷點寬度
 const cameraAnchor = new THREE.Group();
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -133,12 +133,6 @@ let cubeAngle = 0, rotSpeed = 0, camPos = 0, maxSpeed = 2, speed = 0.05;
 let currentOrbit = 0;
 let targetAngle = 0;
 
-// 設置按鈕
-const buttonLeft = document.getElementById('button-left');
-const buttonRight = document.getElementById('button-right');
-const buttonUp = document.getElementById('button-up');
-const buttonDown = document.getElementById('button-down');
-
 // GUI控制
 gui.add(params, 'radius', 0, 10).onChange(adjustRadius);
 
@@ -169,7 +163,6 @@ document.addEventListener('mousemove', event => {
 });
 
 // 相機控制
-
 function camControl() {
     let camTarget = new THREE.Vector3(0, 1.2, 6);
     let targetQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(mouse.y / -20, mouse.x / -10, 0));
@@ -236,47 +229,134 @@ function keyControl() {
     starGroup.quaternion.slerp(cube.quaternion, maxSpeed / 30);
 }
 
-// 按鈕事件監聽器
-if (buttonLeft) {
-    buttonLeft.addEventListener('mousedown', () => {
-        leftKey = true;
-        rightKey = leftKeyUp = rightKeyUp = false;
+// 設置按鈕
+const buttonLeft = document.getElementById('button-left');
+const buttonRight = document.getElementById('button-right');
+const buttonUp = document.getElementById('button-up');
+const buttonDown = document.getElementById('button-down');
+
+if (buttonLeft && buttonRight && buttonUp && buttonDown) {
+    // Mouse events
+    buttonLeft.addEventListener('mousedown', () => handleInput('left', 'down'));
+    buttonUp.addEventListener('mousedown', () => handleInput('up', 'down'));
+    buttonRight.addEventListener('mousedown', () => handleInput('right', 'down'));
+    buttonDown.addEventListener('mousedown', () => handleInput('down', 'down'));
+
+    buttonLeft.addEventListener('mouseup', () => handleInput('left', 'up'));
+    buttonUp.addEventListener('mouseup', () => handleInput('up', 'up'));
+    buttonRight.addEventListener('mouseup', () => handleInput('right', 'up'));
+    buttonDown.addEventListener('mouseup', () => handleInput('down', 'up'));
+
+    // Touch events
+    buttonLeft.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // 阻止觸控時的預設事件，如滾動、縮放
+        handleInput('left', 'down');
     });
-    buttonLeft.addEventListener('mouseup', () => {
-        leftKey = false;
-        leftKeyUp = true;
-        listItemActive();
+    buttonUp.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        handleInput('up', 'down');
     });
-    buttonUp.addEventListener('mousedown', () => {
-        upKey = true;
-        downKey = upKeyUp = downKeyUp = false;
+    buttonRight.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        handleInput('right', 'down');
     });
-    buttonUp.addEventListener('mouseup', () => {
-        upKey = false;
-        upKeyUp = true;
-        listItemActive();
+    buttonDown.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        handleInput('down', 'down');
     });
-    buttonRight.addEventListener('mousedown', () => {
-        rightKey = true;
-        leftKey = leftKeyUp = rightKeyUp = false;
+
+    buttonLeft.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        handleInput('left', 'up');
     });
-    buttonRight.addEventListener('mouseup', () => {
-        rightKey = false;
-        rightKeyUp = true;
-        listItemActive();
+    buttonUp.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        handleInput('up', 'up');
     });
-    buttonDown.addEventListener('mousedown', () => {
-        downKey = true;
-        upKey = upKeyUp = downKeyUp = false;
+    buttonRight.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        handleInput('right', 'up');
     });
-    buttonDown.addEventListener('mouseup', () => {
-        downKey = false;
-        downKeyUp = true;
-        listItemActive();
+    buttonDown.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        handleInput('down', 'up');
     });
 }
 
-document.addEventListener('keydown', () => {
+// 鍵盤事件監聽器
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'ArrowLeft') {
+        handleInput('left', 'down')
+    } else if (event.key === 'ArrowUp') {
+        handleInput('up', 'down')
+    } else if (event.key === 'ArrowRight') {
+        handleInput('right', 'down')
+    } else if (event.key === 'ArrowDown') {
+        handleInput('down', 'down')
+    }
+});
+
+document.addEventListener('keyup', function (event) {
+    if (event.key === 'ArrowLeft') {
+        handleInput('left', 'up')
+    } else if (event.key === 'ArrowRight') {
+        handleInput('right', 'up')
+    } else if (event.key === 'ArrowUp') {
+        handleInput('up', 'up')
+    } else if (event.key === 'ArrowDown') {
+        handleInput('down', 'up')
+    }
+});
+
+function handleInput(direction, action) {
+    if (action == 'down') {
+        switch (direction) {
+            case 'left':
+                leftKey = true;
+                rightKey = leftKeyUp = rightKeyUp = false;
+                break;
+            case 'up':
+                upKey = true;
+                downKey = upKeyUp = downKeyUp = false;
+                break;
+            case 'right':
+                rightKey = true;
+                leftKey = leftKeyUp = rightKeyUp = false;
+                break;
+            case 'down':
+                downKey = true;
+                upKey = upKeyUp = downKeyUp = false;
+                break;
+        }
+    }
+    if(action == 'up'){
+        switch (direction) {
+            case 'left':
+                leftKey = false;
+                leftKeyUp = true;
+                rightKeyUp = false;
+                break;
+            case 'up':
+                upKey = false;
+                upKeyUp = true;
+                downKeyUp = false;
+                break;
+            case 'right':
+                rightKey = false;
+                leftKeyUp = false;
+                rightKeyUp = true;
+                break;
+            case 'down':
+                downKey = false;
+                upKeyUp = false;
+                downKeyUp = true;
+                break;
+        }
+        listItemActive();
+    }
+}
+
+document.addEventListener('keydown', (event) => {
     if (event.key === '`' || event.key === '~' || event.code === 'Backquote') {
         isDebug = !isDebug;
         debug();
@@ -287,20 +367,17 @@ document.addEventListener('keydown', () => {
 const raycaster = new THREE.Raycaster();
 
 document.addEventListener('click', (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
 
     raycaster.setFromCamera(mouse, camera);
 
     const intersects = raycaster.intersectObjects(galaxy.flat().map(pivot => pivot.children[0]));
 
     if (intersects.length > 0) {
-        console.log(intersects[0].object.userData);
         currentOrbit = intersects[0].object.userData.orbit;
         camPos = currentOrbit * params.radius;
         targetAngle = 360 / -orbit[intersects[0].object.userData.orbit];
         cubeAngle = intersects[0].object.userData.index * targetAngle;
-        console.log("currentOrbit: ", currentOrbit, "index: ", intersects[0].object.userData.index, "cubeAngle: ", cubeAngle);
     }
 });
 
@@ -316,6 +393,7 @@ renderer.setAnimationLoop(animate);
 
 // 視窗大小調整處理
 window.addEventListener('resize', onWindowResize);
+window.addEventListener('orientationchange', onWindowResize);
 
 function onWindowResize() {
     camera.aspect = visual.clientWidth / visual.clientHeight;
@@ -354,9 +432,10 @@ function debug() {
     }
 }
 
+let curremtItem = null;
+let curremtListItem = null;
+
 function listItemActive() {
-    let curremtItem = null;
-    let curremtListItem = null;
     setTimeout(() => {
         if (currentOrbit != 0) {
             curremtItem = galaxy[currentOrbit].find(starPivot => starPivot.children[0].userData.index == Math.abs(cubeAngle / targetAngle));
@@ -364,16 +443,33 @@ function listItemActive() {
         } else {
             curremtItem = items[0];
         }
-        console.log(curremtItem);
         document.querySelectorAll('.mx-list-item').forEach(item => {
             item.classList.remove('hover');
         });
-        let curremtListItem = document.getElementById(`${curremtItem}`);
+        console.log(curremtItem);
+        curremtListItem = document.getElementById(`${curremtItem}`);
         curremtListItem.classList.add('hover');
-        curremtListItem.scrollIntoView({
-            behavior: 'smooth',
-        });
+        if(curremtListItem != undefined)
+            mxScrollTo(currentListItem, 0.5);
     }, 10); // 延遲等方塊旋轉完成，獲取的度數才準確
+}
+
+function mxScrollTo(element, viewportFraction = 0.2) {
+    console.log(element);
+    const container = document.querySelector('.mx-list');
+    if (!container) return;
+
+    const elementRect = element.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    const elementTopRelativeToContainer = elementRect.top - containerRect.top;
+    const desiredOffset = container.clientHeight * viewportFraction; // 容器高度的百分比计算偏移量
+    const topPosition = elementTopRelativeToContainer - desiredOffset; // 新的顶部位置
+
+    container.scrollTo({
+        top: topPosition,
+        behavior: 'smooth'
+    });
 }
 
 // DOM 列表按鈕
