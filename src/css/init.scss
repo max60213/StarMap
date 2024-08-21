@@ -1,0 +1,124 @@
+// 定義主題變量
+$themes: (
+    "dark": (
+        background-color: #181818,
+        primary-color: #ffffff,
+        text-primary: hsla(0, 0%, 100%, 1),
+        text-secondary: hsla(0, 0%, 100%, 0.8),
+        text-caption: hsla(0, 0%, 100%, 0.5),
+        shadow-init: hsla(0, 0%, 0%, 0.9),
+        shadow-float: hsla(0, 0%, 0%, 0.6),
+        theme-color: hsl(22, 100%, 60%),
+    ),
+    "light": (
+        background-color: #ffffff,
+        primary-color: #181818,
+        text-primary: hsla(0, 0%, 0%, 0.8),
+        text-secondary: hsla(0, 0%, 0%, 0.7),
+        text-caption: hsla(0, 0%, 0%, 0.5),
+        shadow-init: hsla(0, 0%, 0%, 0.6),
+        shadow-float: hsla(0, 0%, 0%, 0.3),
+        theme-color: hsl(22, 100%, 50%),
+    )
+);
+
+// 適用主題變量
+@mixin apply-theme($theme-name) {
+    $theme-map: map-get($themes, $theme-name);
+    @each $key, $value in $theme-map {
+        --#{$key}: #{$value};
+    }
+}
+
+// 全局樣式設定
+html, body, *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--primary-color);
+    scroll-behavior: smooth;
+}
+
+.dg.ac{
+    z-index: 100 !important;
+}
+
+[data-bs-theme="dark"] {
+    @include apply-theme(dark);
+}
+
+[data-bs-theme="light"] {
+    @include apply-theme(light);
+}
+
+body {
+    -ms-overflow-style: none; // IE and Edge
+    scrollbar-width: none; // Firefox
+    animation: fadeBg 0.5s ease-in-out;
+
+    &::-webkit-scrollbar {
+        display: none; // Hide scrollbar for Chrome, Safari and Opera
+    }
+}
+
+@keyframes fadeBg{
+    0%{
+        background-color: transparent;
+    }
+    100%{
+        background-color: var(--background-color);
+    }
+}
+
+.fade-in{
+    animation: fade 0.3s ease backwards;
+}
+
+.fade-out{
+    animation: fade 0.3s ease reverse forwards;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+h1, h2, h3, h4, h5, h6, p, a{
+    margin: 0;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+a{
+    text-decoration: none;
+}
+
+hr{
+    margin-bottom: 2px;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+.link-secondary {
+    color: var(--text-caption);
+}
+
+p {
+    color: var(--text-secondary);
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.text-nowrap{
+    text-wrap: nowrap;
+}
