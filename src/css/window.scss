@@ -6,17 +6,16 @@
     justify-content: center;
     align-items: center;    
     &-view{
-        width: 418px;
+        width: 356px;
         aspect-ratio: 1/1;
         background-color: rgba(255, 0, 0, 0.485);
         border-radius: 100%;
         transition: all 1s cubic-bezier(.2,0,0,1);
         backdrop-filter: blur(50px);
         &:hover{
-            width: calc(100% - 72px);
-            aspect-ratio: 16/9;
+            width: calc(80%);
+            aspect-ratio: 4/3;
             border-radius: 8px;
-            transform: translateX(-10%);
         }
     }
 }

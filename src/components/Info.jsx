@@ -1,7 +1,9 @@
+import { itemsData } from '../../public/js/items-data.js';
+
 function Info(props) {
   return (
-    <div className={`info ${props.className == undefined ? "" : props.className}`}>
-      <h1>Info</h1>
+    <div className={`info full-size ${props.className == undefined ? "" : props.className}`}>
+      <h1>item</h1>
     </div>
   );
 }

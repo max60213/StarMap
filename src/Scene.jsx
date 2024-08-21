@@ -3,7 +3,7 @@ import './css/daylight.css';
 
 function Scene() {
     useEffect(() => {
-        import('./js/selector').then(({ default: init }) => {
+        import('../public/js/selector').then(({ default: init }) => {
             init();
         });
     }, []);

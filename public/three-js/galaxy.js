@@ -1,7 +1,6 @@
-// 引入必要的Three.js模組
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GUI } from 'dat.gui';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { group, itemsData } from '../js/items-data.js';
 
 // 調試模式開關

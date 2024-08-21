@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { itemsData, group } from '../js/items-data.js';
+import { itemsData, group } from '../../public/js/items-data.js';
 
 function MainContent(props) {
     // 定義一個函數來渲染特定群組的項目

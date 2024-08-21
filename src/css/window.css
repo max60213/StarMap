@@ -7,7 +7,7 @@
   align-items: center;
 }
 .window-view {
-  width: 418px;
+  width: 356px;
   aspect-ratio: 1/1;
   background-color: rgba(255, 0, 0, 0.485);
   border-radius: 100%;
@@ -16,8 +16,7 @@
           backdrop-filter: blur(50px);
 }
 .window-view:hover {
-  width: calc(100% - 72px);
-  aspect-ratio: 16/9;
+  width: 80%;
+  aspect-ratio: 4/3;
   border-radius: 8px;
-  transform: translateX(-10%);
 }/*# sourceMappingURL=window.css.map */

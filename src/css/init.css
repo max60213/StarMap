@@ -41,6 +41,12 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.full-size {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 @keyframes fadeBg {
   0% {
     background-color: transparent;
