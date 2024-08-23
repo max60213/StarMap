@@ -7,4 +7,10 @@ function useIsHome() {
     return location.pathname === '/' || location.pathname === '';
 }
 
+function currentPath() {    
+    const location = useLocation();
+    return location.pathname;
+}
+
 export default useIsHome;
+export { currentPath };

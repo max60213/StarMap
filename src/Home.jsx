@@ -1,7 +1,7 @@
 import Scene from "./Scene";
 import Landing from "./Landing";
-import React, { Suspense } from "react";
-import { BrowserRouter as  Router, Route, Routes } from "react-router-dom";
+import React, { Suspense, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import useIsHome from "./components/PathChecker";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/init.css';

@@ -1,22 +1,26 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GUI } from 'dat.gui';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { group, itemsData } from '../js/items-data.js';
+import { group, itemsData } from '../js/items-data';
+
 
 // 調試模式開關
 var isDebug = false;
+console.log('galaxy.js loaded');
 
 // 初始化場景、相機和渲染器
 const visual = document.getElementById('scene');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, visual.clientWidth / visual.clientHeight, 0.1, 1000);
 const mobileDistance = 1.4, pcDistance = 0.8, pcShift = [-2 / 10, 0], mobileShift = [0, 1 / 4];
+const respondTime = 0.02;
 var camDistance, camShift; // 相機與星系的距離
 const breakpoint = 785; // 斷點寬度
 const cameraAnchor = new THREE.Group();
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 const controls = new OrbitControls(camera, renderer.domElement);
 const gui = new GUI();
+const camTarget = new THREE.Vector3(0, 1.2, 6);
 const guiDOM = document.getElementsByClassName('dg ac');
 controls.enabled = false;
 
@@ -47,7 +51,7 @@ cube.add(point);
 
 // 平滑旋轉參考
 const cube2 = new THREE.Mesh(boxGeometry, redMaterial);
-cube2.position.set(0, 1.5, 0);
+cube2.position.set(0, 1, 0);
 
 // 相機位置參考
 const orbitPositioner = new THREE.Mesh(ballGeometry, yellowMaterial);
@@ -72,7 +76,7 @@ const galaxy = []; // 二維陣列來儲存星星
 const params = { radius: 5 };
 const starGroup = new THREE.Group();
 const starMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide });
-const pointLight = new THREE.PointLight(0xffffff, 220, 200, 2);
+const pointLight = new THREE.PointLight(0xffffff, 50, 200, 1.8);
 camera.add(pointLight);
 
 // Function to apply shift effect
@@ -110,8 +114,10 @@ let order = 0;
 for (let i = 0; i < orbit.length; i++) {
     galaxy[i] = [];
     for (let j = 0; j < orbit[i]; j++) {
+        let texture = new THREE.TextureLoader().load(`../src/img/sensor.png`);
         const starGeometry = new THREE.CircleGeometry(starSize[i], 64);
         const star = new THREE.Mesh(starGeometry, starMaterial);
+        star.material.map = texture;
         star.userData = { orbit: i, index: j, order: order, name: items[order] };
         const starPivot = new THREE.Object3D();
         starPivot.add(star);
@@ -163,14 +169,13 @@ document.addEventListener('mousemove', event => {
 
 // 相機控制
 function camControl() {
-    let camTarget = new THREE.Vector3(0, 1.2, 6);
     let targetQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(mouse.y / -20, mouse.x / -10, 0));
 
     // 使用四元數的球面線性插值（slerp）方法，讓 cameraAnchor 平滑地從當前旋轉過渡到目標旋轉
-    cameraAnchor.quaternion.slerp(targetQuaternion, 0.01);
+    cameraAnchor.quaternion.slerp(targetQuaternion, respondTime);
 
     // 平滑地將相機位置插值到目標位置
-    camera.position.lerp(camTarget, 0.01);
+    camera.position.lerp(camTarget, respondTime);
 
     orbitPositioner.position.z = camPos;
 
@@ -185,6 +190,35 @@ function camControl() {
     // 確保 camPos 不會小於 0
     if (camPos < 0) camPos = 0;
 }
+
+
+function locateChecker() {
+    let threshold = 0.004 / ((currentOrbit + 0.2) * 5);
+    if (Math.abs(cameraAnchor.position.z - camPos) < threshold) {
+        if (currentOrbit == 0) {
+            if (camera.position.distanceTo(camTarget) < threshold * 10) {
+                window.itemReady = true;
+            } else {
+                window.itemReady = false;
+            }
+        } else if (cube2.quaternion.angleTo(cube.quaternion) < threshold) {
+            window.itemReady = true;
+        } else {
+            window.itemReady = false;
+        }
+    } else {
+        window.itemReady = false;
+    }
+    let view = document.querySelector('.window-view');
+    if (view && window.itemReady) {
+        view.classList.add('ready');
+    }
+    if (!window.itemReady && !view.classList.contains('active') && view.classList.contains('ready')) {
+        view.classList.remove('ready');
+        console.log('remove ready');
+    }
+}
+
 
 // 鍵盤控制
 function keyControl() {
@@ -224,62 +258,8 @@ function keyControl() {
     cubeAngle = cubeAngle % 360;
 
     cube.rotation.y = THREE.MathUtils.degToRad(cubeAngle);
-    cube2.quaternion.slerp(cube.quaternion, maxSpeed / 30);
-    starGroup.quaternion.slerp(cube.quaternion, maxSpeed / 30);
-}
-
-// 設置按鈕
-const buttonLeft = document.getElementById('button-left');
-const buttonRight = document.getElementById('button-right');
-const buttonUp = document.getElementById('button-up');
-const buttonDown = document.getElementById('button-down');
-
-if (buttonLeft && buttonRight && buttonUp && buttonDown) {
-    // Mouse events
-    buttonLeft.addEventListener('mousedown', () => handleInput('left', 'down'));
-    buttonUp.addEventListener('mousedown', () => handleInput('up', 'down'));
-    buttonRight.addEventListener('mousedown', () => handleInput('right', 'down'));
-    buttonDown.addEventListener('mousedown', () => handleInput('down', 'down'));
-
-    buttonLeft.addEventListener('mouseup', () => handleInput('left', 'up'));
-    buttonUp.addEventListener('mouseup', () => handleInput('up', 'up'));
-    buttonRight.addEventListener('mouseup', () => handleInput('right', 'up'));
-    buttonDown.addEventListener('mouseup', () => handleInput('down', 'up'));
-
-    // Touch events
-    buttonLeft.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // 阻止觸控時的預設事件，如滾動、縮放
-        handleInput('left', 'down');
-    });
-    buttonUp.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleInput('up', 'down');
-    });
-    buttonRight.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleInput('right', 'down');
-    });
-    buttonDown.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleInput('down', 'down');
-    });
-
-    buttonLeft.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        handleInput('left', 'up');
-    });
-    buttonUp.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        handleInput('up', 'up');
-    });
-    buttonRight.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        handleInput('right', 'up');
-    });
-    buttonDown.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        handleInput('down', 'up');
-    });
+    cube2.quaternion.slerp(cube.quaternion, maxSpeed / 20);
+    starGroup.quaternion.slerp(cube.quaternion, maxSpeed / 20);
 }
 
 // 鍵盤事件監聽器
@@ -307,7 +287,8 @@ document.addEventListener('keyup', function (event) {
     }
 });
 
-function handleInput(direction, action) {
+window.handleInput = function (direction, action) {
+    console.log(direction, action);
     if (action == 'down') {
         switch (direction) {
             case 'left':
@@ -328,7 +309,7 @@ function handleInput(direction, action) {
                 break;
         }
     }
-    if(action == 'up'){
+    if (action == 'up') {
         switch (direction) {
             case 'left':
                 leftKey = false;
@@ -362,34 +343,6 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// 為每顆星星添加raycaster
-const raycaster = new THREE.Raycaster();
-
-document.addEventListener('click', (event) => {
-
-
-    raycaster.setFromCamera(mouse, camera);
-
-    const intersects = raycaster.intersectObjects(galaxy.flat().map(pivot => pivot.children[0]));
-
-    if (intersects.length > 0) {
-        currentOrbit = intersects[0].object.userData.orbit;
-        camPos = currentOrbit * params.radius;
-        targetAngle = 360 / -orbit[intersects[0].object.userData.orbit];
-        cubeAngle = intersects[0].object.userData.index * targetAngle;
-    }
-});
-
-// 動畫循環
-function animate() {
-    starLookAt();
-    keyControl();
-    camControl();
-    renderer.render(scene, camera);
-}
-
-renderer.setAnimationLoop(animate);
-
 // 視窗大小調整處理
 window.addEventListener('resize', onWindowResize);
 window.addEventListener('orientationchange', onWindowResize);
@@ -398,6 +351,7 @@ function onWindowResize() {
     camera.aspect = visual.clientWidth / visual.clientHeight;
     camInit();
     renderer.setSize(visual.clientWidth, visual.clientHeight);
+    console.log("resize");
 }
 
 // 定義一個函數來處理尺寸變化
@@ -448,31 +402,13 @@ function listItemActive() {
         console.log(curremtItem);
         curremtListItem = document.getElementById(`${curremtItem}`);
         curremtListItem.classList.add('hover');
-        if(curremtListItem != undefined)
-            mxScrollTo(currentListItem, 0.5);
+        scrollTo(0, curremtListItem.offsetTop - 100);
     }, 10); // 延遲等方塊旋轉完成，獲取的度數才準確
 }
 
-function mxScrollTo(element, viewportFraction = 0.2) {
-    console.log(element);
-    const container = document.querySelector('.mx-list');
-    if (!container) return;
-
-    const elementRect = element.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-
-    const elementTopRelativeToContainer = elementRect.top - containerRect.top;
-    const desiredOffset = container.clientHeight * viewportFraction; // 容器高度的百分比计算偏移量
-    const topPosition = elementTopRelativeToContainer - desiredOffset; // 新的顶部位置
-
-    container.scrollTo({
-        top: topPosition,
-        behavior: 'smooth'
-    });
-}
 
 // DOM 列表按鈕
-export function selector(items) {
+window.selector = function (items) {
     if (items != null) {
         galaxy.flat().forEach(starPivot => {
             if (starPivot.children[0].userData.name == items) {
@@ -484,3 +420,16 @@ export function selector(items) {
         });
     }
 }
+
+window.sceneLoaded = true;
+
+// 動畫循環
+function animate() {
+    starLookAt();
+    keyControl();
+    camControl();
+    locateChecker();
+    renderer.render(scene, camera);
+}
+
+renderer.setAnimationLoop(animate);

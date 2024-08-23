@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import { itemsData, group } from '../../public/js/items-data.js';
+import { useEffect } from 'react';
+import { itemsData, group } from '../js/items-data.js';
 
 function MainContent(props) {
+
     // 定義一個函數來渲染特定群組的項目
     const itemGroup = (groupIndex) => {
         // 計算當前群組的起始索引
@@ -21,6 +23,19 @@ function MainContent(props) {
             );
         });
     };
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = '../src/js/selector.js';
+        script.type = 'module';
+        document.body.appendChild(script);
+
+        return () => {
+            // 在組件卸載時移除腳本
+            document.body.removeChild(script);
+        };
+    }, []);  // 空依賴數組表示此效果只在組件掛載時執行一次
+
 
     // 渲染主要內容
     return (

@@ -1,4 +1,4 @@
-import { itemsData } from '../../public/js/items-data.js';
+import { itemsData } from '../js/items-data.js';
 
 function Info(props) {
   return (

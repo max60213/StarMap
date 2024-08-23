@@ -10,8 +10,8 @@ function Landing() {
     return (
         <div className="mx-container">
             <div className="mx-first">
+                <Window className={isHome ? "" : "active"} />
                 <Navigate className={isHome ? "fade-in" : "fade-out"} />
-                <Window className={isHome ? "window-close" : "window-open"} />
             </div>
 
             <div className="mx-last">

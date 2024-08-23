@@ -1,9 +1,10 @@
 import "../css/window.css";
+import { useState } from "react";
 
-function Window(){
+function Window(props){
     return (
         <div className="window">
-            <div className="window-view"></div>
+            <div className={`window-view ${props.className}`}></div>
         </div>
     )
 }
