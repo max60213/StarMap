@@ -15,7 +15,7 @@ const camera = new THREE.PerspectiveCamera(50, visual.clientWidth / visual.clien
 const mobileDistance = 1.4, pcDistance = 0.8, pcShift = [-2 / 10, 0], mobileShift = [0, 1 / 4];
 const respondTime = 0.02;
 var camDistance, camShift; // 相機與星系的距離
-const breakpoint = 785; // 斷點寬度
+const breakpoint = 785.9; // 斷點寬度
 const cameraAnchor = new THREE.Group();
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -73,7 +73,7 @@ for (const key in itemsData.items) {
 }
 const starSize = [1, 0.4, 0.2]; // 各軌道上的星星大小
 const galaxy = []; // 二維陣列來儲存星星
-const params = { radius: 5 };
+const params = { radius: 4 };
 const starGroup = new THREE.Group();
 const starMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide });
 const pointLight = new THREE.PointLight(0xffffff, 50, 200, 1.8);
@@ -111,13 +111,16 @@ function camInit() {
 
 // 創建星星並添加到星系中
 let order = 0;
+const loader = new THREE.TextureLoader();
 for (let i = 0; i < orbit.length; i++) {
     galaxy[i] = [];
     for (let j = 0; j < orbit[i]; j++) {
-        let texture = new THREE.TextureLoader().load(`../src/img/sensor.png`);
         const starGeometry = new THREE.CircleGeometry(starSize[i], 64);
-        const star = new THREE.Mesh(starGeometry, starMaterial);
-        star.material.map = texture;
+        const star = new THREE.Mesh(starGeometry, starMaterial.clone());
+        loader.load(`./img/${items[order]}.png`, (texture) => {
+            star.material.map = texture;
+            star.material.needsUpdate = true;
+        });
         star.userData = { orbit: i, index: j, order: order, name: items[order] };
         const starPivot = new THREE.Object3D();
         starPivot.add(star);
@@ -136,6 +139,7 @@ let upKey = false, downKey = false, upKeyUp = false, downKeyUp = true; // downKe
 let leftFirst = true, rightFirst = true;
 let cubeAngle = 0, rotSpeed = 0, camPos = 0, maxSpeed = 2, speed = 0.05;
 let currentOrbit = 0;
+let currentItem = "sensor";
 let targetAngle = 0;
 
 // GUI控制
@@ -212,6 +216,7 @@ function locateChecker() {
     let view = document.querySelector('.window-view');
     if (view && window.itemReady) {
         view.classList.add('ready');
+        view.style.backgroundImage = `url("/img/${currentItem}.png")`;
     }
     if (!window.itemReady && !view.classList.contains('active') && view.classList.contains('ready')) {
         view.classList.remove('ready');
@@ -385,33 +390,38 @@ function debug() {
     }
 }
 
-let curremtItem = null;
-let curremtListItem = null;
+let currentListItem = null;
 
 function listItemActive() {
     setTimeout(() => {
         if (currentOrbit != 0) {
-            curremtItem = galaxy[currentOrbit].find(starPivot => starPivot.children[0].userData.index == Math.abs(cubeAngle / targetAngle));
-            curremtItem = curremtItem.children[0].userData.name;
+            currentItem = galaxy[currentOrbit].find(starPivot => starPivot.children[0].userData.index == Math.abs(cubeAngle / targetAngle));
+            if(currentItem == undefined) {
+                console.error('undefined');
+                listItemActive();
+                return;
+            }
+            currentItem = currentItem.children[0].userData.name;
         } else {
-            curremtItem = items[0];
+            currentItem = items[0];
         }
         document.querySelectorAll('.mx-list-item').forEach(item => {
             item.classList.remove('hover');
         });
-        console.log(curremtItem);
-        curremtListItem = document.getElementById(`${curremtItem}`);
-        curremtListItem.classList.add('hover');
-        scrollTo(0, curremtListItem.offsetTop - 100);
+        console.log(currentItem);
+        currentListItem = document.getElementById(`${currentItem}`);
+        currentListItem.classList.add('hover');
+        scrollTo(0, currentListItem.offsetTop - 100);
     }, 10); // 延遲等方塊旋轉完成，獲取的度數才準確
 }
 
 
 // DOM 列表按鈕
-window.selector = function (items) {
-    if (items != null) {
+window.selector = function (item) {
+    if (item != null) {
         galaxy.flat().forEach(starPivot => {
-            if (starPivot.children[0].userData.name == items) {
+            if (starPivot.children[0].userData.name == item) {
+                currentItem = item;
                 currentOrbit = starPivot.children[0].userData.orbit;
                 camPos = currentOrbit * params.radius;
                 targetAngle = 360 / -orbit[starPivot.children[0].userData.orbit];

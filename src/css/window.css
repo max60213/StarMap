@@ -8,24 +8,25 @@
   pointer-events: none;
 }
 .window-view {
+  width: 415px;
   min-width: 415px;
   aspect-ratio: 1/1;
-  background-color: rgba(255, 0, 0, 0.485);
+  background-color: white;
   border-radius: 100%;
   opacity: 0;
   transition: all 1s cubic-bezier(0.2, 0, 0, 1), opacity 0.05s;
-  background-image: url("../img/sensor.png");
+  background-image: url("/img/sensor.png");
   background-position: center;
   background-size: contain;
 }
 .window-view.ready {
   opacity: 1;
-  transition: all 1s cubic-bezier(0.2, 0, 0, 1), opacity 0.5s ease-out;
+  transition: all 1s cubic-bezier(0.2, 0, 0, 1), opacity 0.5s ease-out, background-image 0s;
 }
 .window-view.active {
   width: 80%;
   opacity: 1;
   aspect-ratio: 4/3;
   border-radius: 8px;
-  transition: all 1s cubic-bezier(0.2, 0, 0, 1), border-radius 0.5s ease-out;
+  transition: all 1s cubic-bezier(0.2, 0, 0, 1), border-radius 0.5s ease-out, background-image 0s;
 }/*# sourceMappingURL=window.css.map */

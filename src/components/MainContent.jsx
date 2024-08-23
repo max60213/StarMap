@@ -1,8 +1,23 @@
-import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { itemsData, group } from '../js/items-data.js';
+import { useNavigate } from 'react-router-dom';
 
 function MainContent(props) {
+    const navigate = useNavigate();
+
+    const handleNavigation = (path) => {
+        if (window.itemReady) {
+            navigate(path);
+        } else {
+            // 可以設置一個間聽器來監聽 itemReady 變為 true
+            const interval = setInterval(() => {
+                if (window.itemReady) {
+                    clearInterval(interval);
+                    navigate(path);
+                }
+            }, 100); // 每 100 毫秒檢查一次
+        }
+    };
 
     // 定義一個函數來渲染特定群組的項目
     const itemGroup = (groupIndex) => {
@@ -14,28 +29,28 @@ function MainContent(props) {
         // 從 itemsData.items 對象中獲取特定範圍的項目並映射為 Link 元素
         return Object.entries(itemsData.items).slice(startIndex, endIndex).map(([key, itemData]) => {
             return (
-                <Link key={key} to={`./${key}`} id={key} className="mx-list-item">
+                <div key={key} id={key} className="mx-list-item" onClick={() => handleNavigation(`./starmap/${key}`)}>
                     <h3>
                         {itemData.name.zh}<span className="subTitle">{itemData.name.en}</span>
                     </h3>
                     <p>{itemData.description}</p>
-                </Link>
+                </div>
             );
         });
     };
-
     useEffect(() => {
         const script = document.createElement('script');
         script.src = '../src/js/selector.js';
         script.type = 'module';
         document.body.appendChild(script);
-
+    
         return () => {
-            // 在組件卸載時移除腳本
-            document.body.removeChild(script);
+            // Ensure the script is removed when the component unmounts
+            if (document.body.contains(script)) {
+                document.body.removeChild(script);
+            }
         };
-    }, []);  // 空依賴數組表示此效果只在組件掛載時執行一次
-
+    }, []); 
 
     // 渲染主要內容
     return (

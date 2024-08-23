@@ -43,7 +43,7 @@ function Aperture() {
                                     <div className="img-container">
                                         <img
                                             className="mb-3 img-focusable"
-                                            src="img/sensor/Bayer_matrix.png"
+                                            src="/img/sensor/Bayer_matrix.png"
                                             alt=""
                                         />
                                     </div>
@@ -61,7 +61,7 @@ function Aperture() {
                                     <div className="img-container">
                                         <img
                                             className="mb-3 img-focusable"
-                                            src="img/sensor/RYYB_sensor.png"
+                                            src="/img/sensor/RYYB_sensor.png"
                                             alt=""
                                         />
                                     </div>
@@ -79,7 +79,7 @@ function Aperture() {
                                     <div className="img-container">
                                         <img
                                             className="mb-3 img-focusable"
-                                            src="img/sensor/Xtranscolourfilter.png"
+                                            src="/img/sensor/Xtranscolourfilter.png"
                                             alt=""
                                         />
                                     </div>

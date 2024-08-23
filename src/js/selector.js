@@ -24,9 +24,12 @@ list_items.forEach(item => {
     });
 
     item.addEventListener('click', function () {
-        console.log(item);
-        window.selector(item);
+        window.selector(item.id);
         document.querySelector('.mx-list').classList.add('fade-out');
-        visual.classList.add('shrink');
+        while(1){
+            if(window.itemReady)
+                visual.classList.add('shrink');
+            return;
+        }
     });
 });

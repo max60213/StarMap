@@ -25,13 +25,18 @@
 .mx-container .mx-first {
   position: relative;
   z-index: 1;
+  transition: transform 1s ease;
   height: 100%;
   width: 100%;
   display: flex;
 }
 @media all and (min-width: 786px) {
-  .mx-container .mx-first:has(.arrows) {
+  .mx-container .mx-first:has(.arrows-container) {
     transform: translateX(10%);
+  }
+  .mx-container .mx-first:has(.fade-out) {
+    transform: translateX(5%);
+    transition: transform 1s cubic-bezier(0.2, 0, 0, 1);
   }
 }
 .mx-container .mx-last {
@@ -83,8 +88,8 @@
   height: 100%;
   -webkit-mask: url("/navigate.svg") center/contain no-repeat;
           mask: url("/navigate.svg") center/contain no-repeat;
+  backdrop-filter: blur(15px) saturate(0) invert(1) contrast(2) blur(15px);
   -webkit-backdrop-filter: blur(15px) saturate(0) invert(1) contrast(2) blur(15px);
-          backdrop-filter: blur(15px) saturate(0) invert(1) contrast(2) blur(15px);
   background-color: transparent;
   opacity: 1;
   transition: background-color 0.3s ease;
