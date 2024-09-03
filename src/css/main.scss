@@ -6,7 +6,6 @@ $phone-up: 'min-width: 786px' !default;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    transition: height 0.5s ease;
 
     .scene {
         position: absolute;
@@ -14,10 +13,19 @@ $phone-up: 'min-width: 786px' !default;
         width: 100%;
         mix-blend-mode: screen;
     }
-
-    &.shrink {
-        height: 85vh;
+    @media all and (max-height: 500px) {
+        &.shrink {
+            height: 100vh;
+            transition: height 0.5s ease;
+        }
     }
+    @media all and (min-height: 500.5px) {
+        &.shrink {
+            height: 85vh;
+            transition: height 0.5s ease;
+        }
+    }
+
 }
 
 @mixin full-size {
@@ -39,10 +47,11 @@ $phone-up: 'min-width: 786px' !default;
         @include full-size;
 
         @media all and ($phone-up) {
-            &:has(.arrows-container){
+            &:has(.arrows-container) {
                 transform: translateX(10%);
             }
-            &:has(.fade-out){
+
+            &:has(.fade-out) {
                 transform: translateX(5%);
                 transition: transform 1s cubic-bezier(.2, 0, 0, 1);
             }
@@ -70,7 +79,7 @@ $phone-up: 'min-width: 786px' !default;
 .arrows-container {
     position: relative;
     width: min(100%, 100vh);
-    max-width: 760px;
+    max-width: max(760px, 30vw);
     aspect-ratio: 1/1;
     margin: auto;
 
@@ -170,7 +179,7 @@ $phone-up: 'min-width: 786px' !default;
 // 內容區域
 #visual {
     .mx-list {
-        max-width: 680px;
+        max-width: max(680px, 30vw);
         padding: 0 48px 0 8vw;
         scroll-padding-top: 6px;
 

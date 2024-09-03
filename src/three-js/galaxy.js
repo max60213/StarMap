@@ -1,445 +1,463 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GUI } from 'dat.gui';
 import { group, itemsData } from '../js/items-data';
 
 
-// 調試模式開關
-var isDebug = false;
-console.log('galaxy.js loaded');
+class Galaxy {
+  constructor(containerId) {
+    this.containerId = containerId;
+    this.isDebug = false;
 
-// 初始化場景、相機和渲染器
-const visual = document.getElementById('scene');
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(50, visual.clientWidth / visual.clientHeight, 0.1, 1000);
-const mobileDistance = 1.4, pcDistance = 0.8, pcShift = [-2 / 10, 0], mobileShift = [0, 1 / 4];
-const respondTime = 0.02;
-var camDistance, camShift; // 相機與星系的距離
-const breakpoint = 785.9; // 斷點寬度
-const cameraAnchor = new THREE.Group();
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-const controls = new OrbitControls(camera, renderer.domElement);
-const gui = new GUI();
-const camTarget = new THREE.Vector3(0, 1.2, 6);
-const guiDOM = document.getElementsByClassName('dg ac');
-controls.enabled = false;
+    this.config = {
+      mobileDistance: 1,
+      pcDistance: 0.8,
+      pcShift: [-2 / 10, 0],
+      mobileShift: [0, 1 / 4],
+      respondTime: 0.02,
+      breakpoint: 785.9,
+      maxSpeed: 2,
+      speed: 0.05,
+      baseUrl: import.meta.env.BASE_URL
+    };
 
-// Ensure everything else in the projection matrix remains consistent with a typical perspective camera
-camera.updateProjectionMatrix();
+    this.state = {
+      cubeAngle: 0,
+      rotSpeed: 0,
+      camPos: 0,
+      currentOrbit: 0,
+      currentItem: "sensor",
+      targetAngle: 0
+    };
 
-// 設置渲染器和相機
-renderer.setSize(visual.clientWidth, visual.clientHeight);
-visual.appendChild(renderer.domElement);
-cameraAnchor.add(camera);
-scene.add(cameraAnchor);
-guiDOM[0].style.display = 'none';
-camInit();
+    this.controlState = {
+      leftKey: false,
+      rightKey: false,
+      leftKeyUp: false,
+      rightKeyUp: false,
+      upKey: false,
+      downKey: false,
+      upKeyUp: false,
+      downKeyUp: true,
+      leftFirst: true,
+      rightFirst: true
+    };
 
-// 創建基本幾何體和材質
-const boxGeometry = new THREE.BoxGeometry();
-const ballGeometry = new THREE.SphereGeometry(0.8);
-const greenMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const redMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-const yellowMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    this.params = { radius: 5 };
+    this.orbit = group;
+    this.items = Object.keys(itemsData.items);
+    this.starSize = [1, 0.4, 0.2];
+    this.galaxy = [];
+    this.mouse = new THREE.Vector2();
 
-// 旋轉角度參考
-const cube = new THREE.Mesh(boxGeometry, greenMaterial);
-const point = new THREE.Mesh(boxGeometry, redMaterial);
-point.position.set(0, 0, 1);
-point.scale.set(0.2, 0.2, 1);
-cube.add(point);
+    this.init();
+  }
 
-// 平滑旋轉參考
-const cube2 = new THREE.Mesh(boxGeometry, redMaterial);
-cube2.position.set(0, 1, 0);
+  init = () => {
+    console.log('galaxy.js loaded');
+    this.initScene();
+    this.initCamera();
+    this.initRenderer();
+    this.initControls();
+    this.initLights();
+    this.createGalaxy();
+    this.setupEventListeners();
+    this.initGUI();
+    this.animate();
+    window.sceneLoaded = true;
+  }
 
-// 相機位置參考
-const orbitPositioner = new THREE.Mesh(ballGeometry, yellowMaterial);
+  initScene = () => {
+    this.visual = document.getElementById(this.containerId);
+    this.scene = new THREE.Scene();
+    this.cameraAnchor = new THREE.Group();
+    this.scene.add(this.cameraAnchor);
 
-// Add Grid
-const gridGeometry = new THREE.PlaneGeometry(150, 150, 150, 150);
-const gridMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, wireframe: true });
-const grid = new THREE.Mesh(gridGeometry, gridMaterial);
-scene.add(grid);
+    this.starGroup = new THREE.Group();
+    this.scene.add(this.starGroup);
 
-grid.position.y = -1.5;
-grid.rotation.x = -Math.PI / 2;
+    // Create cube and cube2
+    const boxGeometry = new THREE.BoxGeometry();
+    const greenMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const redMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 
-// 創建星系結構
-const orbit = group; // 各軌道上的星星數量
-const items = [];
-for (const key in itemsData.items) {
-    items.push(key);  // 將 key 推入陣列
-}
-const starSize = [1, 0.4, 0.2]; // 各軌道上的星星大小
-const galaxy = []; // 二維陣列來儲存星星
-const params = { radius: 4 };
-const starGroup = new THREE.Group();
-const starMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide });
-const pointLight = new THREE.PointLight(0xffffff, 50, 200, 1.8);
-camera.add(pointLight);
+    this.cube = new THREE.Mesh(boxGeometry, greenMaterial);
+    const point = new THREE.Mesh(boxGeometry, redMaterial);
+    point.position.set(0, 0, 1);
+    point.scale.set(0.2, 0.2, 1);
+    this.cube.add(point);
 
-// Function to apply shift effect
-function applyShift(camera, camShift) {
+    this.cube2 = new THREE.Mesh(boxGeometry, redMaterial);
+    this.cube2.position.set(0, 1, 0);
+    // Add Grid
+    const gridGeometry = new THREE.PlaneGeometry(150, 150, 150, 150);
+    const gridMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, wireframe: true });
+    const grid = new THREE.Mesh(gridGeometry, gridMaterial);
+    grid.position.y = -1.5;
+    grid.rotation.x = -Math.PI / 2;
+    this.scene.add(grid);
+  }
+
+  initCamera = () => {
+    this.camera = new THREE.PerspectiveCamera(50, this.visual.clientWidth / this.visual.clientHeight, 0.1, 1000);
+    this.camTarget = new THREE.Vector3(0, 1.2, 6);
+    this.cameraAnchor.add(this.camera);
+    this.camInit();
+  }
+
+  initRenderer = () => {
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    this.renderer.setSize(this.visual.clientWidth, this.visual.clientHeight);
+    this.visual.appendChild(this.renderer.domElement);
+  }
+
+  initControls = () => {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enabled = false;
+  }
+
+  initLights = () => {
+    const pointLight = new THREE.PointLight(0xffffff, 50, 200, 1.8);
+    this.camera.add(pointLight);
+  }
+
+  createGalaxy = () => {
+    const starMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+    let order = 0;
+    const loader = new THREE.TextureLoader();
+    for (let i = 0; i < this.orbit.length; i++) {
+      this.galaxy[i] = [];
+      for (let j = 0; j < this.orbit[i]; j++) {
+        const starGeometry = new THREE.CircleGeometry(this.starSize[i], 64);
+        const star = new THREE.Mesh(starGeometry, starMaterial.clone());
+        loader.load(`${this.config.baseUrl}/img/${this.items[order]}.png`, (texture) => {
+          star.material.map = texture;
+          star.material.needsUpdate = true;
+        });
+        star.userData = { orbit: i, index: j, order: order, name: this.items[order] };
+        const starPivot = new THREE.Object3D();
+        starPivot.add(star);
+        star.position.set(0, 0, this.params.radius * i);
+        starPivot.rotation.y = (Math.PI * 2 / this.orbit[i]) * j;
+        this.galaxy[i].push(starPivot);
+        this.starGroup.add(starPivot);
+        order++;
+      }
+    }
+  }
+
+  getCurrentItem = () => {
+    return this.state.currentItem;
+  }
+
+  setupEventListeners = () => {
+    document.addEventListener('mousemove', this.onMouseMove);
+    document.addEventListener('keydown', this.onKeyDown);
+    document.addEventListener('keyup', this.onKeyUp);
+    //window.addEventListener('resize', this.onResize);
+    window.addEventListener('orientationchange', this.onResize);
+
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.onResize(entry);
+      }
+    });
+    resizeObserver.observe(this.visual);
+  }
+
+  initGUI = () => {
+    this.gui = new GUI();
+    this.gui.add(this.params, 'radius', 0, 10).onChange(this.adjustRadius);
+    document.getElementsByClassName('dg ac')[0].style.display = 'none';
+  }
+
+  animate = () => {
+    this.keyControl();
+    this.camControl();
+    this.starLookAt();
+    this.locateChecker();
+    this.applyShift(this.camera, this.camShift);
+    this.renderer.render(this.scene, this.camera);
+    requestAnimationFrame(this.animate);
+  }
+
+  starLookAt = () => {
+    this.starGroup.children.forEach(starPivot => {
+      starPivot.children[0].lookAt(this.camera.getWorldPosition(new THREE.Vector3()));
+    });
+  }
+
+  keyControl = () => {
+    if (this.controlState.leftKey || this.controlState.rightKey) {
+      console.log('side');
+      this.controlState.leftKey ? this.state.cubeAngle += this.state.rotSpeed : this.state.cubeAngle -= this.state.rotSpeed;
+      if (this.state.rotSpeed < this.config.maxSpeed) this.state.rotSpeed += this.config.speed;
+      if (this.controlState.leftFirst || this.controlState.rightFirst) {
+        this.state.rotSpeed = 0;
+        this.controlState.leftFirst = this.controlState.rightFirst = false;
+      }
+    }
+    if (this.controlState.leftKeyUp || this.controlState.rightKeyUp) {
+      if (this.state.currentOrbit != 0)
+        this.state.cubeAngle = Math[this.controlState.leftKeyUp ? 'ceil' : 'floor'](this.state.cubeAngle / this.state.targetAngle) * this.state.targetAngle;
+      this.controlState.leftKeyUp ? this.controlState.leftFirst = true : this.controlState.rightFirst = true;
+      this.state.rotSpeed = 0;
+    }
+    if (this.controlState.upKey || this.controlState.downKey) {
+      if (this.controlState.upKey && this.state.camPos > 0) {
+        this.state.camPos -= this.config.speed * 3;
+      }
+      if (this.controlState.downKey && this.state.camPos < this.params.radius * (this.galaxy.length - 1)) {
+        this.state.camPos += this.config.speed;
+      }
+    }
+    if (this.controlState.upKeyUp || this.controlState.downKeyUp) {
+      if (this.state.camPos >= 0 && this.state.camPos < this.params.radius * (this.galaxy.length - 1)) {
+        this.state.camPos = Math[this.controlState.upKeyUp ? 'floor' : 'ceil'](this.state.camPos / this.params.radius) * this.params.radius;
+        this.state.currentOrbit = this.state.camPos / this.params.radius;
+      }
+      if (this.state.camPos > this.params.radius * (this.galaxy.length - 1)) {
+        this.state.camPos = this.params.radius * (this.galaxy.length - 1);
+        this.state.currentOrbit = this.galaxy.length - 1;
+      }
+      this.state.targetAngle = 360 / this.orbit[this.state.currentOrbit];
+    }
+    this.state.cubeAngle = this.state.cubeAngle % 360;
+
+    this.cube.rotation.y = THREE.MathUtils.degToRad(this.state.cubeAngle);
+    this.cube2.quaternion.slerp(this.cube.quaternion, this.config.maxSpeed / 20);
+    this.starGroup.quaternion.slerp(this.cube.quaternion, this.config.maxSpeed / 20);
+  }
+
+  camControl = () => {
+    let targetQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(this.mouse.y / -20, this.mouse.x / -10, 0));
+
+    this.cameraAnchor.quaternion.slerp(targetQuaternion, this.config.respondTime);
+    this.camera.position.lerp(this.camTarget, this.config.respondTime);
+
+    const orbitPositioner = new THREE.Vector3(0, 0, this.state.camPos);
+    this.cameraAnchor.position.lerp(orbitPositioner, 0.1);
+
+    this.cameraAnchor.scale.lerp(new THREE.Vector3(this.starSize[this.state.currentOrbit] * this.camDistance, this.starSize[this.state.currentOrbit] * this.camDistance, this.starSize[this.state.currentOrbit] * this.camDistance), 0.1);
+
+    this.camera.lookAt(this.cameraAnchor.position);
+
+    if (this.state.camPos < 0) this.state.camPos = 0;
+  }
+
+  locateChecker = () => {
+    let threshold = 0.004 / ((this.state.currentOrbit + 0.2) * 5);
+    if (Math.abs(this.cameraAnchor.position.z - this.state.camPos) < threshold) {
+      if (this.state.currentOrbit == 0) {
+        if (this.camera.position.distanceTo(this.camTarget) < threshold * 10) {
+          window.itemReady = true;
+        } else {
+          window.itemReady = false;
+        }
+      } else if (this.cube2.quaternion.angleTo(this.cube.quaternion) < threshold) {
+        window.itemReady = true;
+      } else {
+        window.itemReady = false;
+      }
+    } else {
+      window.itemReady = false;
+    }
+    let view = document.querySelector('.window-view');
+    if (view && window.itemReady) {
+      view.classList.add('ready');
+    }
+    if (!window.itemReady && !view.classList.contains('active') && view.classList.contains('ready')) {
+      view.classList.remove('ready');
+      console.log('remove ready');
+    }
+  }
+
+  onMouseMove = (event) => {
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  onKeyDown = (event) => {
+    if (event.key === 'ArrowLeft') {
+      this.handleInput('left', 'down');
+    } else if (event.key === 'ArrowUp') {
+      this.handleInput('up', 'down');
+    } else if (event.key === 'ArrowRight') {
+      this.handleInput('right', 'down');
+    } else if (event.key === 'ArrowDown') {
+      this.handleInput('down', 'down');
+    } else if (event.key === '`' || event.key === '~' || event.code === 'Backquote') {
+      this.isDebug = !this.isDebug;
+      this.debug();
+    }
+  }
+
+  onKeyUp = (event) => {
+    if (event.key === 'ArrowLeft') {
+      this.handleInput('left', 'up');
+    } else if (event.key === 'ArrowRight') {
+      this.handleInput('right', 'up');
+    } else if (event.key === 'ArrowUp') {
+      this.handleInput('up', 'up');
+    } else if (event.key === 'ArrowDown') {
+      this.handleInput('down', 'up');
+    }
+  }
+
+  onResize = (event) => {
+    if (event instanceof ResizeObserverEntry) {
+      // 來自 ResizeObserver 的事件
+      const { width, height } = event.contentRect;
+      this.camera.aspect = width / height;
+    } else {
+      // 來自 window resize 的事件
+      this.camera.aspect = this.visual.clientWidth / this.visual.clientHeight;
+    }
+
+    // 呼叫 camInit() 來更新相機設置和投影矩陣
+    this.camInit();
+
+    // 更新渲染器大小
+    this.renderer.setSize(this.visual.clientWidth, this.visual.clientHeight);
+
+    // 重繪場景
+    this.applyShift(this.camera, this.camShift);
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  handleInput = (direction, action) => {
+    console.log(direction, action);
+    if (action == 'down') {
+      switch (direction) {
+        case 'left':
+          this.controlState.leftKey = true;
+          this.controlState.rightKey = this.controlState.leftKeyUp = this.controlState.rightKeyUp = false;
+          break;
+        case 'up':
+          this.controlState.upKey = true;
+          this.controlState.downKey = this.controlState.upKeyUp = this.controlState.downKeyUp = false;
+          break;
+        case 'right':
+          this.controlState.rightKey = true;
+          this.controlState.leftKey = this.controlState.leftKeyUp = this.controlState.rightKeyUp = false;
+          break;
+        case 'down':
+          this.controlState.downKey = true;
+          this.controlState.upKey = this.controlState.upKeyUp = this.controlState.downKeyUp = false;
+          break;
+      }
+    }
+    if (action == 'up') {
+      switch (direction) {
+        case 'left':
+          this.controlState.leftKey = false;
+          this.controlState.leftKeyUp = true;
+          this.controlState.rightKeyUp = false;
+          break;
+        case 'up':
+          this.controlState.upKey = false;
+          this.controlState.upKeyUp = true;
+          this.controlState.downKeyUp = false;
+          break;
+        case 'right':
+          this.controlState.rightKey = false;
+          this.controlState.leftKeyUp = false;
+          this.controlState.rightKeyUp = true;
+          break;
+        case 'down':
+          this.controlState.downKey = false;
+          this.controlState.upKeyUp = false;
+          this.controlState.downKeyUp = true;
+          break;
+      }
+      this.listItemActive();
+      console.log(this.state.currentOrbit, this.state.currentItem);
+    }
+  }
+
+  listItemActive = () => {
+    setTimeout(() => {
+      if (this.state.currentOrbit != 0) {
+        const foundItem = this.galaxy[this.state.currentOrbit].find(starPivot =>
+          starPivot.children[0].userData.index == Math.abs(this.state.cubeAngle / this.state.targetAngle)
+        );
+        if (!foundItem) {
+          console.log('undefined');
+          this.listItemActive();
+          return;
+        }
+        this.state.currentItem = foundItem.children[0].userData.name;
+      } else {
+        this.state.currentItem = this.items[0];
+      }
+
+      document.querySelectorAll('.mx-list-item').forEach(item => {
+        item.classList.remove('hover');
+      });
+
+      console.log(this.state.currentItem);
+      const currentListItem = document.getElementById(`${this.state.currentItem}`);
+      currentListItem.classList.add('hover');
+      scrollTo(currentListItem);
+    }, 10);
+  }
+
+  selector = (item) => {
+    if (item != null) {
+      console.log(item);
+      this.galaxy.flat().forEach(starPivot => {
+        if (starPivot.children[0].userData.name === item) {
+          this.state.currentItem = item;
+          this.state.currentOrbit = starPivot.children[0].userData.orbit;
+          this.state.camPos = this.state.currentOrbit * this.params.radius;
+          this.state.targetAngle = 360 / -this.orbit[this.state.currentOrbit];
+          this.state.cubeAngle = starPivot.children[0].userData.index * this.state.targetAngle;
+        }
+      });
+    }
+  }
+
+  debug = () => {
+    if (this.isDebug) {
+      this.scene.add(this.cube, this.cube2);
+      this.controls.enabled = true;
+    } else {
+      this.scene.remove(this.cube, this.cube2);
+      this.controls.enabled = false;
+    }
+  }
+
+  adjustRadius = () => {
+    this.galaxy.forEach((orbitStars, i) => {
+      orbitStars.forEach(starPivot => {
+        starPivot.children[0].position.set(0, 0, this.params.radius * i);
+      });
+    });
+    this.cameraAnchor.position.z = this.params.radius * 2;
+  }
+
+  camInit = () => {
+    if (window.innerWidth <= this.config.breakpoint) {
+      this.camDistance = this.config.mobileDistance;
+      this.camShift = this.config.mobileShift;
+    } else {
+      this.camDistance = this.config.pcDistance;
+      this.camShift = this.config.pcShift;
+    }
+    this.camera.updateProjectionMatrix();
+  }
+
+  applyShift = (camera, camShift) => {
     const projectionMatrix = camera.projectionMatrix.clone();
     let shiftX = camShift[0];
     let shiftY = camShift[1];
 
-    // Apply shift
     projectionMatrix.elements[8] = -shiftX * 2;
     projectionMatrix.elements[9] = -shiftY * 2;
 
-    // Update camera's projection matrix
     camera.projectionMatrix.copy(projectionMatrix);
     camera.projectionMatrixInverse.copy(projectionMatrix).invert();
+  }
 }
 
-function camInit() {
-    // 將相機偏移，讓世界中心在螢幕偏左，手機版偏上
-    // 0為中心，0.5為最右或最下，-0.5為最左或最上
-    if (window.innerWidth <= breakpoint) {
-        camDistance = mobileDistance;
-        camShift = mobileShift
-    } else {
-        camDistance = pcDistance;
-        camShift = pcShift;
-    }
-    camera.updateProjectionMatrix();
-    applyShift(camera, camShift);
-}
-
-
-// 創建星星並添加到星系中
-let order = 0;
-const loader = new THREE.TextureLoader();
-for (let i = 0; i < orbit.length; i++) {
-    galaxy[i] = [];
-    for (let j = 0; j < orbit[i]; j++) {
-        const starGeometry = new THREE.CircleGeometry(starSize[i], 64);
-        const star = new THREE.Mesh(starGeometry, starMaterial.clone());
-        loader.load(`./img/${items[order]}.png`, (texture) => {
-            star.material.map = texture;
-            star.material.needsUpdate = true;
-        });
-        star.userData = { orbit: i, index: j, order: order, name: items[order] };
-        const starPivot = new THREE.Object3D();
-        starPivot.add(star);
-        star.position.set(0, 0, params.radius * i);
-        starPivot.rotation.y = (Math.PI * 2 / orbit[i]) * j;
-        galaxy[i].push(starPivot);
-        starGroup.add(starPivot);
-        order++;
-    }
-}
-scene.add(starGroup);
-
-// 控制變量
-let leftKey = false, rightKey = false, leftKeyUp = false, rightKeyUp = false;
-let upKey = false, downKey = false, upKeyUp = false, downKeyUp = true; // downKeyUp = true to fix initial camera movement
-let leftFirst = true, rightFirst = true;
-let cubeAngle = 0, rotSpeed = 0, camPos = 0, maxSpeed = 2, speed = 0.05;
-let currentOrbit = 0;
-let currentItem = "sensor";
-let targetAngle = 0;
-
-// GUI控制
-gui.add(params, 'radius', 0, 10).onChange(adjustRadius);
-
-// 調整星系半徑
-function adjustRadius() {
-    galaxy.forEach((orbitStars, i) => {
-        orbitStars.forEach(starPivot => {
-            starPivot.children[0].position.set(0, 0, params.radius * i);
-        });
-    });
-    cameraAnchor.position.z = params.radius * 2;
-}
-
-// 讓星星始終面向相機
-function starLookAt() {
-    starGroup.children.forEach(starPivot => {
-        starPivot.children[0].lookAt(camera.getWorldPosition(new THREE.Vector3()));
-    });
-}
-
-// 初始化滑鼠向量
-let mouse = new THREE.Vector2();
-
-// 監聽滑鼠移動
-document.addEventListener('mousemove', event => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-});
-
-// 相機控制
-function camControl() {
-    let targetQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(mouse.y / -20, mouse.x / -10, 0));
-
-    // 使用四元數的球面線性插值（slerp）方法，讓 cameraAnchor 平滑地從當前旋轉過渡到目標旋轉
-    cameraAnchor.quaternion.slerp(targetQuaternion, respondTime);
-
-    // 平滑地將相機位置插值到目標位置
-    camera.position.lerp(camTarget, respondTime);
-
-    orbitPositioner.position.z = camPos;
-
-    // 平滑地將 cameraAnchor 的位置插值到 orbitPositioner 的位置
-    cameraAnchor.position.lerp(orbitPositioner.position, 0.1);
-
-    // 平滑地插值縮放比例
-    cameraAnchor.scale.lerp(new THREE.Vector3(starSize[currentOrbit] * camDistance, starSize[currentOrbit] * camDistance, starSize[currentOrbit] * camDistance), 0.1);
-
-    camera.lookAt(cameraAnchor.position);
-
-    // 確保 camPos 不會小於 0
-    if (camPos < 0) camPos = 0;
-}
-
-
-function locateChecker() {
-    let threshold = 0.004 / ((currentOrbit + 0.2) * 5);
-    if (Math.abs(cameraAnchor.position.z - camPos) < threshold) {
-        if (currentOrbit == 0) {
-            if (camera.position.distanceTo(camTarget) < threshold * 10) {
-                window.itemReady = true;
-            } else {
-                window.itemReady = false;
-            }
-        } else if (cube2.quaternion.angleTo(cube.quaternion) < threshold) {
-            window.itemReady = true;
-        } else {
-            window.itemReady = false;
-        }
-    } else {
-        window.itemReady = false;
-    }
-    let view = document.querySelector('.window-view');
-    if (view && window.itemReady) {
-        view.classList.add('ready');
-        view.style.backgroundImage = `url("/img/${currentItem}.png")`;
-    }
-    if (!window.itemReady && !view.classList.contains('active') && view.classList.contains('ready')) {
-        view.classList.remove('ready');
-        console.log('remove ready');
-    }
-}
-
-
-// 鍵盤控制
-function keyControl() {
-    if (leftKey || rightKey) {
-        leftKey ? cubeAngle += rotSpeed : cubeAngle -= rotSpeed;
-        if (rotSpeed < maxSpeed) rotSpeed += speed;
-        if (leftFirst || rightFirst) {
-            rotSpeed = 0;
-            leftFirst = rightFirst = false;
-        }
-    }
-    if (leftKeyUp || rightKeyUp) {
-        if (currentOrbit != 0)
-            cubeAngle = Math[leftKeyUp ? 'ceil' : 'floor'](cubeAngle / targetAngle) * targetAngle;
-        leftKeyUp ? leftFirst = true : rightFirst = true;
-        rotSpeed = 0;
-    }
-    if (upKey || downKey) {
-        if (upKey && camPos > 0) {
-            camPos -= speed * 3;
-        }
-        if (downKey && camPos < params.radius * (galaxy.length - 1)) {
-            camPos += speed * 3;
-        }
-    }
-    if (upKeyUp || downKeyUp) {
-        if (camPos >= 0 && camPos < params.radius * (galaxy.length - 1)) {
-            camPos = Math[upKeyUp ? 'floor' : 'ceil'](camPos / params.radius) * params.radius;
-            currentOrbit = camPos / params.radius;
-        }
-        if (camPos > params.radius * (galaxy.length - 1)) {
-            camPos = params.radius * (galaxy.length - 1);
-            currentOrbit = galaxy.length - 1;
-        }
-        targetAngle = 360 / orbit[currentOrbit];
-    }
-    cubeAngle = cubeAngle % 360;
-
-    cube.rotation.y = THREE.MathUtils.degToRad(cubeAngle);
-    cube2.quaternion.slerp(cube.quaternion, maxSpeed / 20);
-    starGroup.quaternion.slerp(cube.quaternion, maxSpeed / 20);
-}
-
-// 鍵盤事件監聽器
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'ArrowLeft') {
-        handleInput('left', 'down')
-    } else if (event.key === 'ArrowUp') {
-        handleInput('up', 'down')
-    } else if (event.key === 'ArrowRight') {
-        handleInput('right', 'down')
-    } else if (event.key === 'ArrowDown') {
-        handleInput('down', 'down')
-    }
-});
-
-document.addEventListener('keyup', function (event) {
-    if (event.key === 'ArrowLeft') {
-        handleInput('left', 'up')
-    } else if (event.key === 'ArrowRight') {
-        handleInput('right', 'up')
-    } else if (event.key === 'ArrowUp') {
-        handleInput('up', 'up')
-    } else if (event.key === 'ArrowDown') {
-        handleInput('down', 'up')
-    }
-});
-
-window.handleInput = function (direction, action) {
-    console.log(direction, action);
-    if (action == 'down') {
-        switch (direction) {
-            case 'left':
-                leftKey = true;
-                rightKey = leftKeyUp = rightKeyUp = false;
-                break;
-            case 'up':
-                upKey = true;
-                downKey = upKeyUp = downKeyUp = false;
-                break;
-            case 'right':
-                rightKey = true;
-                leftKey = leftKeyUp = rightKeyUp = false;
-                break;
-            case 'down':
-                downKey = true;
-                upKey = upKeyUp = downKeyUp = false;
-                break;
-        }
-    }
-    if (action == 'up') {
-        switch (direction) {
-            case 'left':
-                leftKey = false;
-                leftKeyUp = true;
-                rightKeyUp = false;
-                break;
-            case 'up':
-                upKey = false;
-                upKeyUp = true;
-                downKeyUp = false;
-                break;
-            case 'right':
-                rightKey = false;
-                leftKeyUp = false;
-                rightKeyUp = true;
-                break;
-            case 'down':
-                downKey = false;
-                upKeyUp = false;
-                downKeyUp = true;
-                break;
-        }
-        listItemActive();
-    }
-}
-
-document.addEventListener('keydown', (event) => {
-    if (event.key === '`' || event.key === '~' || event.code === 'Backquote') {
-        isDebug = !isDebug;
-        debug();
-    }
-});
-
-// 視窗大小調整處理
-window.addEventListener('resize', onWindowResize);
-window.addEventListener('orientationchange', onWindowResize);
-
-function onWindowResize() {
-    camera.aspect = visual.clientWidth / visual.clientHeight;
-    camInit();
-    renderer.setSize(visual.clientWidth, visual.clientHeight);
-    console.log("resize");
-}
-
-// 定義一個函數來處理尺寸變化
-function onResize(entries) {
-    for (let entry of entries) {
-        if (entry.target === visual) {
-            const { width, height } = entry.contentRect;
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-            applyShift(camera, camShift, 0);
-            renderer.setSize(width, height);
-            renderer.render(scene, camera); // 如果想直接渲染一次
-        }
-    }
-}
-
-// 創建一個 ResizeObserver 來監聽 'visual' 元素
-const resizeObserver = new ResizeObserver(onResize);
-resizeObserver.observe(visual);
-
-// 調試模式切換
-function debug() {
-    if (isDebug) {
-        scene.add(cube, cube2);
-        guiDOM[0].style.display = 'block';
-        controls.enabled = true;
-    } else {
-        scene.remove(cube, cube2);
-        guiDOM[0].style.display = 'none';
-        controls.enabled = false;
-    }
-}
-
-let currentListItem = null;
-
-function listItemActive() {
-    setTimeout(() => {
-        if (currentOrbit != 0) {
-            currentItem = galaxy[currentOrbit].find(starPivot => starPivot.children[0].userData.index == Math.abs(cubeAngle / targetAngle));
-            if(currentItem == undefined) {
-                console.error('undefined');
-                listItemActive();
-                return;
-            }
-            currentItem = currentItem.children[0].userData.name;
-        } else {
-            currentItem = items[0];
-        }
-        document.querySelectorAll('.mx-list-item').forEach(item => {
-            item.classList.remove('hover');
-        });
-        console.log(currentItem);
-        currentListItem = document.getElementById(`${currentItem}`);
-        currentListItem.classList.add('hover');
-        scrollTo(0, currentListItem.offsetTop - 100);
-    }, 10); // 延遲等方塊旋轉完成，獲取的度數才準確
-}
-
-
-// DOM 列表按鈕
-window.selector = function (item) {
-    if (item != null) {
-        galaxy.flat().forEach(starPivot => {
-            if (starPivot.children[0].userData.name == item) {
-                currentItem = item;
-                currentOrbit = starPivot.children[0].userData.orbit;
-                camPos = currentOrbit * params.radius;
-                targetAngle = 360 / -orbit[starPivot.children[0].userData.orbit];
-                cubeAngle = starPivot.children[0].userData.index * targetAngle;
-            }
-        });
-    }
-}
-
-window.sceneLoaded = true;
-
-// 動畫循環
-function animate() {
-    starLookAt();
-    keyControl();
-    camControl();
-    locateChecker();
-    renderer.render(scene, camera);
-}
-
-renderer.setAnimationLoop(animate);
+export default Galaxy;

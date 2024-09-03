@@ -3,7 +3,6 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  transition: height 0.5s ease;
 }
 #visual .scene {
   position: absolute;
@@ -11,8 +10,17 @@
   width: 100%;
   mix-blend-mode: screen;
 }
-#visual.shrink {
-  height: 85vh;
+@media all and (max-height: 500px) {
+  #visual.shrink {
+    height: 100vh;
+    transition: height 0.5s ease;
+  }
+}
+@media all and (min-height: 500.5px) {
+  #visual.shrink {
+    height: 85vh;
+    transition: height 0.5s ease;
+  }
 }
 
 .mx-container {
@@ -60,7 +68,7 @@
 .arrows-container {
   position: relative;
   width: min(100%, 100vh);
-  max-width: 760px;
+  max-width: max(760px, 30vw);
   aspect-ratio: 1/1;
   margin: auto;
 }
@@ -142,7 +150,7 @@
 }
 
 #visual .mx-list {
-  max-width: 680px;
+  max-width: max(680px, 30vw);
   padding: 0 48px 0 8vw;
   scroll-padding-top: 6px;
   display: flex;

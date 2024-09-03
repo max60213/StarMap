@@ -16,7 +16,7 @@ function Landing() {
 
             <div className="mx-last">
                 <MainContent className={isHome ? "fade-in" : "fade-out"} />
-                <Info className={isHome ? "fade-out" : "fade-in"} />
+                {isHome ? null: <Info/> }
             </div>
         </div>
     );

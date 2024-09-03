@@ -4,6 +4,7 @@ import Aside from '../components/Aside'
 function Sensor() {
     // 創建一個狀態變量來存儲標題
     const [titles, setTitles] = useState([]);
+    const baseURL = import.meta.env.BASE_URL;
 
     useEffect(() => {
         // 在組件加載後執行
@@ -43,7 +44,7 @@ function Sensor() {
                                     <div className="img-container">
                                         <img
                                             className="mb-3 img-focusable"
-                                            src="/img/sensor/Bayer_matrix.png"
+                                            src={baseURL + "/img/sensor/Bayer_matrix.png"}
                                             alt=""
                                         />
                                     </div>
@@ -61,7 +62,7 @@ function Sensor() {
                                     <div className="img-container">
                                         <img
                                             className="mb-3 img-focusable"
-                                            src="/img/sensor/RYYB_sensor.png"
+                                            src={baseURL + "/img/sensor/RYYB_sensor.png"}
                                             alt=""
                                         />
                                     </div>
@@ -79,7 +80,7 @@ function Sensor() {
                                     <div className="img-container">
                                         <img
                                             className="mb-3 img-focusable"
-                                            src="../img/sensor/Xtranscolourfilter.png"
+                                            src={baseURL + "/img/sensor/Xtranscolourfilter.png"}
                                             alt=""
                                         />
                                     </div>

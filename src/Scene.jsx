@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import './css/daylight.css';
+import Galaxy from './three-js/Galaxy';
+import GalaxyContext from './components/GalaxyContext';
 
 function Scene() {
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.src = '../src/three-js/galaxy.js';  // 確保路徑正確，通常應該基於public目錄
-        script.type = 'module';
-        document.body.appendChild(script);
+    const galaxyRef = useRef(null);
+    const { setGalaxy } = useContext(GalaxyContext);
 
-        return () => {
-            // 在組件卸載時移除腳本
-            document.body.removeChild(script);
-        };
-    }, []);  // 包含onLoaded以保證回調始終是最新的
+    useEffect(() => {
+        if (galaxyRef.current) {
+            const galaxyInstance = new Galaxy(galaxyRef.current.id);
+            setGalaxy(galaxyInstance);
+            {console.log("Scene useEffect")}
+            return () => {
+                //galaxyInstance.cleanup();  // 假設 Galaxy 有 cleanup 方法
+            };
+        }
+    }, []);
 
     return (
         <>
-            <div id="scene" className="scene mx-mask-fade">
+            <div id="scene" className="scene mx-mask-fade" ref={galaxyRef}>
                 {/* 場景內容 */}
+                {console.log("Scene")}
             </div>
             <div className="daylight">
                 <div className="grad background-1"></div>
