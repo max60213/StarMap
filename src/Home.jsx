@@ -1,39 +1,38 @@
-import React, { Suspense, useState } from 'react';
+// Home.jsx
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Scene from "./Scene";
 import Landing from "./Landing";
 import useIsHome from "./components/PathChecker";
+import { GalaxyProvider } from './components/GalaxyContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/init.css';
 import './css/main.css';
 import './css/article.css';
-import GalaxyContext from './components/GalaxyContext';
 
 const baseUrl = import.meta.env.BASE_URL;
 const LazySensor = React.lazy(() => import('./articles/Sensor'));
 const LazyAperture = React.lazy(() => import('./articles/Aperture'));
 
 function Home() {
-    const isHome = useIsHome();
-    const [galaxy, setGalaxy] = useState(null);  // 初始化為 null，提供設置方法
+    const isHome = useIsHome();  // 使用自定義 Hook 判斷當前是否位於首頁
 
     return (
-        <GalaxyContext.Provider value={{ galaxy, setGalaxy }}>
+        <GalaxyProvider> {/* 使用 GalaxyProvider 包裹整個應用部分，提供 context */}
             <div id="visual" className={isHome ? "" : "shrink"}>
                 <Scene />
                 <Landing />
             </div>
             <div id="content">
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<div>Loading...</div>}> {/* 為懶加載組件提供 fallback */}
                     <Routes>
-                        <Route path={baseUrl + "/"} element={""} />
-                        <Route path={baseUrl} element={""} />
-                        <Route path={baseUrl + "/sensor"} element={<LazySensor />} />
-                        <Route path={baseUrl + "/aperture"} element={<LazyAperture />} />
+                        <Route path={`${baseUrl}/`} element={<div>Home Page</div>} />
+                        <Route path={`${baseUrl}/sensor`} element={<LazySensor />} />
+                        <Route path={`${baseUrl}/aperture`} element={<LazyAperture />} />
                     </Routes>
                 </Suspense>
             </div>
-        </GalaxyContext.Provider>
+        </GalaxyProvider>
     );
 }
 

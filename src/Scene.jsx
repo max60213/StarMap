@@ -1,22 +1,27 @@
 import React, { useEffect, useRef, useContext } from 'react';
-import './css/daylight.css';
 import Galaxy from './three-js/Galaxy';
 import GalaxyContext from './components/GalaxyContext';
 
 function Scene() {
+    const { setGalaxy, setItemReady } = useContext(GalaxyContext);
     const galaxyRef = useRef(null);
-    const { setGalaxy } = useContext(GalaxyContext);
 
     useEffect(() => {
-        if (galaxyRef.current) {
-            const galaxyInstance = new Galaxy(galaxyRef.current.id);
-            setGalaxy(galaxyInstance);
-            {console.log("Scene useEffect")}
-            return () => {
-                //galaxyInstance.cleanup();  // 假設 Galaxy 有 cleanup 方法
-            };
+        if (!galaxyRef.current) {
+            return;
         }
-    }, []);
+
+        // 只在組件首次渲染時創建實例
+        const newGalaxy = new Galaxy(galaxyRef.current.id, setItemReady);
+        setGalaxy(newGalaxy);  // 使用 context 提供的 setGalaxy 來更新狀態
+        console.log("Scene: Galaxy Instance is set.");
+
+        return () => {
+            // 清理資源
+            newGalaxy.cleanup && newGalaxy.cleanup();
+        };
+    }, [setGalaxy, setItemReady, galaxyRef]); // 確保依賴項正確
+
 
     return (
         <>

@@ -4,7 +4,7 @@ import { useContext, useEffect } from 'react';
 import "../css/window.css";
 
 function Window(props) {
-    const { galaxy } = useContext(GalaxyContext);
+    const { galaxy, itemReady } = useContext(GalaxyContext);
     var currentItem = "";
     const video = document.querySelector("video");
     const baseUrl = import.meta.env.BASE_URL;
@@ -15,7 +15,7 @@ function Window(props) {
         video.poster = baseUrl + "/img/" + currentItem + ".png?url";
         video.src = baseUrl + "/video/" + currentItem + ".mp4?url";
         console.log("currentItem: ", currentItem);
-    }, [galaxy]);
+    }, [itemReady]);
 
     return (
         <div className="window">

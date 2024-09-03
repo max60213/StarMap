@@ -5,8 +5,9 @@ import { group, itemsData } from '../js/items-data';
 
 
 class Galaxy {
-  constructor(containerId) {
+  constructor(containerId, setItemReady) {
     this.containerId = containerId;
+    this.setItemReady = setItemReady;  // 保存傳遞的 setItemReady 函數
     this.isDebug = false;
 
     this.config = {
@@ -251,16 +252,21 @@ class Galaxy {
       if (this.state.currentOrbit == 0) {
         if (this.camera.position.distanceTo(this.camTarget) < threshold * 10) {
           window.itemReady = true;
+          this.setItemReady(true);
         } else {
           window.itemReady = false;
+          this.setItemReady(false);
         }
       } else if (this.cube2.quaternion.angleTo(this.cube.quaternion) < threshold) {
         window.itemReady = true;
+        this.setItemReady(true);
       } else {
         window.itemReady = false;
+        this.setItemReady(false);
       }
     } else {
       window.itemReady = false;
+      this.setItemReady(false);
     }
     let view = document.querySelector('.window-view');
     if (view && window.itemReady) {
