@@ -20,13 +20,9 @@ function Window(props) {
     return (
         <div className="window">
             <div className={`window-view ${props.className}`}>
-                {currentItem != undefined ? (
-                    <video controls loop autoPlay muted>
-                        <source src="" type="video/mp4"></source>
-                    </video>) : (
-                    <h1>No item</h1>
-                )
-                }
+                <video loop autoPlay muted>
+                    <source src="" type="video/mp4"></source>
+                </video>
             </div>
         </div>
     )
