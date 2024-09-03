@@ -3,7 +3,7 @@ import Galaxy from './three-js/Galaxy';
 import GalaxyContext from './components/GalaxyContext';
 
 function Scene() {
-    const { setGalaxy, setItemReady } = useContext(GalaxyContext);
+    const { setGalaxy, setItemReady, setCurrentItem } = useContext(GalaxyContext);
     const galaxyRef = useRef(null);
 
     useEffect(() => {
@@ -12,7 +12,7 @@ function Scene() {
         }
 
         // 只在組件首次渲染時創建實例
-        const newGalaxy = new Galaxy(galaxyRef.current.id, setItemReady);
+        const newGalaxy = new Galaxy(galaxyRef.current.id, setItemReady, setCurrentItem);
         setGalaxy(newGalaxy);  // 使用 context 提供的 setGalaxy 來更新狀態
         console.log("Scene: Galaxy Instance is set.");
 

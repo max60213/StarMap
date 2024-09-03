@@ -5,9 +5,10 @@ import { group, itemsData } from '../js/items-data';
 
 
 class Galaxy {
-  constructor(containerId, setItemReady) {
+  constructor(containerId, setItemReady, setCurrentItem) {
     this.containerId = containerId;
     this.setItemReady = setItemReady;  // 保存傳遞的 setItemReady 函數
+    this.setCurrentItem = setCurrentItem;
     this.isDebug = false;
 
     this.config = {
@@ -65,6 +66,7 @@ class Galaxy {
     this.setupEventListeners();
     this.initGUI();
     this.animate();
+    this.setCurrentItem("sensor");
     window.sceneLoaded = true;
   }
 
@@ -393,8 +395,11 @@ class Galaxy {
           return;
         }
         this.state.currentItem = foundItem.children[0].userData.name;
+        this.setCurrentItem(foundItem.children[0].userData.name);
       } else {
         this.state.currentItem = this.items[0];
+        this.setCurrentItem(this.items[0]);
+
       }
 
       document.querySelectorAll('.mx-list-item').forEach(item => {
@@ -414,6 +419,7 @@ class Galaxy {
       this.galaxy.flat().forEach(starPivot => {
         if (starPivot.children[0].userData.name === item) {
           this.state.currentItem = item;
+          this.setCurrentItem(item);
           this.state.currentOrbit = starPivot.children[0].userData.orbit;
           this.state.camPos = this.state.currentOrbit * this.params.radius;
           this.state.targetAngle = 360 / -this.orbit[this.state.currentOrbit];

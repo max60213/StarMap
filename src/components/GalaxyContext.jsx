@@ -10,6 +10,7 @@ export const useGalaxy = () => useContext(GalaxyContext);
 export const GalaxyProvider = ({ children }) => {
   const [galaxy, setGalaxy] = useState(null);
   const [itemReady, setItemReady] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
   useEffect(() => {
     console.log("GalaxyProvider: galaxy has been set", galaxy);
   }, [galaxy]);
@@ -18,8 +19,12 @@ export const GalaxyProvider = ({ children }) => {
     console.log("GalaxyProvider: itemReady has been set", itemReady);
   }, [itemReady]);
 
+  useEffect(() => {
+    console.log("GalaxyProvider: currentItem has been set", currentItem);
+  }, [currentItem]);
+
   return (
-    <GalaxyContext.Provider value={{ galaxy, setGalaxy, itemReady, setItemReady }}>
+    <GalaxyContext.Provider value={{ galaxy, setGalaxy, itemReady, setItemReady, currentItem, setCurrentItem }}>
       {children}
     </GalaxyContext.Provider>
   );
