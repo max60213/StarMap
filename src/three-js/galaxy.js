@@ -3,7 +3,6 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GUI } from 'dat.gui';
 import { group, itemsData } from '../js/items-data';
 
-
 class Galaxy {
   constructor(containerId, setItemReady, setCurrentItem) {
     this.containerId = containerId;
@@ -14,7 +13,7 @@ class Galaxy {
     this.config = {
       mobileDistance: 1,
       pcDistance: 0.8,
-      pcShift: [-2 / 10, 0],
+      pcShift: [-2.2 / 10, 0],
       mobileShift: [0, 1 / 4],
       respondTime: 0.02,
       breakpoint: 785.9,
@@ -133,7 +132,7 @@ class Galaxy {
       for (let j = 0; j < this.orbit[i]; j++) {
         const starGeometry = new THREE.CircleGeometry(this.starSize[i], 64);
         const star = new THREE.Mesh(starGeometry, starMaterial.clone());
-        loader.load(`${this.config.baseUrl}/img/${this.items[order]}.png`, (texture) => {
+        loader.load(`${this.config.baseUrl}/img/icons/${this.items[order]}.png`, (texture) => {
           star.material.map = texture;
           star.material.needsUpdate = true;
         });
@@ -270,7 +269,7 @@ class Galaxy {
       window.itemReady = false;
       this.setItemReady(false);
     }
-    let view = document.querySelector('.window-view');
+    let view = document.querySelector('.window-frame');
     if (view && window.itemReady) {
       view.classList.add('ready');
     }

@@ -1,0 +1,9 @@
+.mx-aside {
+  height: -moz-fit-content;
+  height: fit-content;
+  overflow: visible;
+  padding-right: 0;
+}
+.mx-aside a {
+  white-space: nowrap;
+}/*# sourceMappingURL=aside.css.map */

@@ -88,7 +88,7 @@ function MainContent(props) {
 
     return (
         <>
-            <div className={`mx-list ${props.className == undefined ? "" : props.className}`}>
+            <div className={`mx-list px-3 pe-xl-5 ${props.className == undefined ? "" : props.className}`}>
                 <h1>Lorem ipsum dolor sit amet consectetur.</h1>
                 <p className="mb-1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit

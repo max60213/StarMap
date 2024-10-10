@@ -8,10 +8,11 @@ function useIsHome() {
     return location.pathname === '/' || location.pathname === '' || location.pathname === baseUrl || location.pathname === baseUrl + '/';
 }
 
-function currentPath() {    
+function currentPath() {
     const location = useLocation();
-    return location.pathname;
+    const baseUrl = import.meta.env.BASE_URL;
+    // 返回去除 baseUrl 後的路徑
+    return location.pathname.replace(new RegExp(`^${baseUrl}/`), '');
 }
 
-export default useIsHome;
-export { currentPath };
+export { useIsHome, currentPath };

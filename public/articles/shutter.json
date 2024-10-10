@@ -1,0 +1,53 @@
+{
+  "components": {
+    "Basic": {
+      "path": "./MxBasics",
+      "modules": [
+        "Title",
+        "Paragraphs",
+        "Images"
+      ]
+    }
+  },
+  "content": [
+    {
+      "module": "Title",
+      "text": "快門？是有多快？",
+      "id": "How fast is the shutter?"
+    },
+    {
+      "module": "Paragraphs",
+      "textList": [
+        "快門速度 (shutter speed)，也就是曝光時間，是指感光元件從開始吸收光線，到結束的這段時間，時間越長，吸收的光線越多，畫面就越亮。但如果在吸收光線的這段期間，相機有震動或是畫面中有物體移動，就會讓畫面模糊，不過這未必是壞事，有時讓物體模糊反而能拍出「速度感」「時間流動感」(我自己掰的詞……)"
+      ]
+    },
+    {
+      "module": "Images",
+      "srcList": [
+        {
+          "src": "/img/sensor/Bayer_matrix.png",
+          "caption": "​常見的RGGB陣列",
+          "linkText": "wikiwand.com/zh-tw/布萊斯·拜爾",
+          "link": "https://wikiwand.com/zh-tw/布萊斯·拜爾"
+        },
+        {
+          "src": "/img/sensor/Bayer_matrix.png",
+          "caption": "​常見的RGGB陣列",
+          "linkText": "wikiwand.com/zh-tw/布萊斯·拜爾",
+          "link": "https://wikiwand.com/zh-tw/布萊斯·拜爾"
+        }
+      ]
+    },
+    {
+      "module": "Title",
+      "text": "對畫質的影響",
+      "id": "affects-on-image-quality"
+    },
+    {
+      "module": "Paragraphs",
+      "textList": [
+        "感光元件的尺寸( 每個像素的面積)與品質將大大的影響畫質。尺寸越大，理論上雜點也會越少(在夜間、室內等較暗處會更明顯)，但也要它的看品質，有品質好小尺寸的感光元件( 高階手機)，也有大尺寸但品質較差的感光元件( 低階攝錄影機)。現在的手機靠著演算法，和一堆超屌的技術，甚至可以拍出超越單眼的畫質。"
+      ]
+    }
+  ]
+}

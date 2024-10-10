@@ -1,0 +1,42 @@
+.block {
+  margin-bottom: 2rem;
+}
+
+.mx-title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+.mx-title:not(:first-child) {
+  margin-top: 4rem;
+}
+
+.mx-paragraphs p {
+  margin-top: 0.5em;
+}
+
+.mx-images {
+  overflow: visible !important;
+}
+.mx-images .swiper-pagination {
+  position: relative;
+  bottom: 0 !important;
+}
+.mx-images > * {
+  overflow: visible !important;
+}
+.mx-images-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mx-images-item img {
+  width: 100%;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.mx-images-item img:hover, .mx-images-item img:active, .mx-images-item img:focus {
+  transform: scale(1.05);
+  box-shadow: 0 8px 10px 0 var(--shadow-float);
+}
+.mx-images-item figcaption {
+  margin-top: 1.2em;
+}/*# sourceMappingURL=mxBasics.css.map */

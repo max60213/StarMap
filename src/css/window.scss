@@ -1,38 +1,177 @@
+@import './variables.scss';
+
 .window {
-    position: absolute;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    position: absolute;
     display: flex;
     justify-content: center;
-    align-items: center;
-    pointer-events: none;
 
-    &-view {
-        width: 44vh;
-        min-width: 44vh;
+    &-frame {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin: auto 0;
         aspect-ratio: 1/1;
-        background-color: white;
-        border-radius: 100%;
+        width: 100%;
+        min-width: 44vh;
+        width: 44vh;
         opacity: 0;
-        transition: all 1s cubic-bezier(.2, 0, 0, 1), opacity 0.05s;
-        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.01s;
+
+        .player {
+            position: absolute;
+            border-radius: 100%;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            top: 0;
+
+            &:first-child {
+                position: relative;
+            }
+
+            #icon-player {
+                height: 100%;
+            }
+
+            video {
+                width: 100%;
+                object-fit: cover;
+            }
+        }
 
         &.ready {
             opacity: 1;
-            transition: all 1s cubic-bezier(.2, 0, 0, 1), opacity 0.5s ease-out, background-image 0s, width 0s, min-width 0s;
+            border-radius: 100%;
+            aspect-ratio: 1/1;
+            transition: all 0.5s ease-in-out, opacity 0.2s;
+
         }
 
         &.active {
-            width: calc(80%);
-            opacity: 1;
-            aspect-ratio: 4/3;
-            border-radius: 8px;
-            transition: all 1s cubic-bezier(.2, 0, 0, 1), border-radius 0.5s ease-out, background-image 0s;
-        }
-        video{
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            min-width: initial;
+            aspect-ratio: 4/3;
+            transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
+
+            @media all and (#{$phone-only}) {
+                max-height: 100%;
+            }
+
+            .player {
+                aspect-ratio: 4/3;
+                border-radius: 8px;
+                transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
+
+                video {
+                    width: 100%;
+                }
+
+                #view-player {
+                    width: 200%;
+                }
+            }
+        }
+    }
+}
+
+.slider {
+    width: min(360px, 90%);
+    height: 4px;
+    bottom: 15px;
+    position: absolute;
+    padding: 0 8px;
+
+    &-bar {
+        height: 4px;
+        background-color: hsl(0, 0%, 100%);
+        border-radius: 100px;
+        outline: solid hsl(0, 0%, 40%) 1px;
+    }
+
+    &-thumb {
+        top: -8px;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        transform: translateX(-25%);
+
+        &-btn {
+            top: -4px;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+            position: absolute;
+            border: rgba(0, 0, 0, 0.6) solid 1px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+            z-index: 2;
+
+            &:hover {
+                transform: scale(1.5);
+            }
+
+            &:active {
+                transform: scale(1);
+
+                // 當按下時，隱藏 highlight
+                ~ &-highlight {
+                    scale: 10;
+                }
+            }
+        }
+
+        &-highlight {
+            width: 20px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            background-color: var(--theme-color);
+            border-radius: 100%;
+            top: 5px;
+            left: 10px;
+            animation: highlight 1s infinite;
+            z-index: 1;
+
+            @keyframes highlight {
+                0% {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                100% {
+                    width: 60px;
+                    height: 60px;
+                    background-color: rgba(var(--theme-color), 0.5);
+                }
+            }
+        }
+
+        &-state {
+            padding: 0.2em 0.4em;
+            font-size: 24px;
+            font-weight: 300;
+            width: fit-content;
+            margin: 10px;
+            background-color: hsl(0, 0%, 0%, 0.4);
+            transform: translateX(-50%);
+            backdrop-filter: blur(10px);
+            position: absolute;
+            bottom: 24px;
+            left: 0;
+            opacity: 0;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        &-btn:hover ~ &-state, &-btn:active ~ &-state {
+            opacity: 1;
         }
     }
 }

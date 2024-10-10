@@ -1,12 +1,11 @@
-$phone-only: 'max-width: 785.9px' !default;
-$phone-up: 'min-width: 786px' !default;
+@import './variables.scss';
 
 #visual {
     position: relative;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    transition: height 0.5s ease;
+    transition: height 0.8s ease;
 
     .scene {
         position: absolute;
@@ -14,17 +13,18 @@ $phone-up: 'min-width: 786px' !default;
         width: 100%;
         mix-blend-mode: screen;
     }
+
     @media all and (max-height: 500px) {
         &.shrink {
             height: 100vh;
         }
     }
+
     @media all and (min-height: 500.5px) {
         &.shrink {
-            height: 85vh;
+            height: 65vh;
         }
     }
-
 }
 
 @mixin full-size {
@@ -38,28 +38,31 @@ $phone-up: 'min-width: 786px' !default;
     position: absolute;
     @include full-size;
     align-items: center;
+    padding: 0 8vw;
+    gap: 4vw;
+    @media all and ($tablet-only) {
+        padding: 0 max(20px, 3%);
+        gap: 20px;
+    }
+    @media all and ($phone-only) {
+        gap: 0;
+        
+    }
 
     .mx-first {
         position: relative;
         z-index: 1;
         transition: transform 1s ease;
         @include full-size;
-
-        @media all and ($phone-up) {
-            &:has(.arrows-container) {
-                transform: translateX(10%);
-            }
-
-            &:has(.fade-out) {
-                transform: translateX(5%);
-                transition: transform 1s cubic-bezier(.2, 0, 0, 1);
-            }
-        }
     }
 
     .mx-last {
         position: relative;
         @include full-size;
+        @media all and ($phone-only) {
+            width: initial;
+            
+        }
     }
 
     @media all and ($phone-only) {
@@ -76,7 +79,10 @@ $phone-up: 'min-width: 786px' !default;
 
 // 箭頭導航
 .arrows-container {
-    position: relative;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: min(100%, 100vh);
     max-width: max(760px, 30vw);
     aspect-ratio: 1/1;
@@ -94,9 +100,14 @@ $phone-up: 'min-width: 786px' !default;
         height: 100%;
 
         .mx-button {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             position: absolute;
+            mask: url("/navigate.svg") center/contain no-repeat;
+            transform: translateX(3px) scale(0.8);
+            background-color: hsl(0, 0%, 30%);
+            opacity: 1;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
 
             &::before {
                 content: '';
@@ -104,40 +115,21 @@ $phone-up: 'min-width: 786px' !default;
                 width: 100%;
                 height: 100%;
                 mask: url("/navigate.svg") center/contain no-repeat;
-                backdrop-filter: blur(15px) saturate(0) invert(1) contrast(2) blur(15px);
-                -webkit-backdrop-filter: blur(15px) saturate(0) invert(1) contrast(2) blur(15px);
-                background-color: transparent;
-                opacity: 1;
-                transition: background-color 0.3s ease;
-            }
-
-            &::after {
-                content: '';
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                background: url("/navigate.svg") center/contain no-repeat;
-                cursor: pointer;
-                opacity: 0;
-                transition: opacity 0.3s ease, transform 0.3s ease;
-                pointer-events: auto;
+                background-color: white;
+                transform: scale(0.7) translateX(2.5px);
+                transition: background-color 0.3s ease, transform 0.3s ease;
             }
 
             &:hover {
-                filter: drop-shadow(0 0 5px rgba(var(--theme-color), 1));
-
                 &::before {
-                    background-color: var(--theme-color);
-                }
-
-                &::after {
-                    transform: translateX(3px) scale(0.6);
                     opacity: 1;
+                    transform: scale(1);
+                    background-color: var(--theme-color);
                 }
             }
 
             &.fade-in {
-                &::after {
+                &::before {
                     opacity: 1;
                 }
             }
@@ -179,7 +171,6 @@ $phone-up: 'min-width: 786px' !default;
 #visual {
     .mx-list {
         max-width: max(680px, 30vw);
-        padding: 0 48px 0 8vw;
         scroll-padding-top: 6px;
 
         @media all and ($phone-only) {
@@ -203,11 +194,11 @@ $phone-up: 'min-width: 786px' !default;
         }
 
         &>*:first-child {
-            padding-top: 20vh;
+            padding-top: 25vh;
         }
 
         &>*:last-child {
-            margin-bottom: 20vh;
+            margin-bottom: 25vh;
         }
 
         @media all and ($phone-only) {
@@ -263,7 +254,7 @@ $phone-up: 'min-width: 786px' !default;
             &.hover {
                 outline: 6px solid white;
                 gap: 4px;
-                margin-bottom: -24px;
+                margin-bottom: -26px;
                 background-color: white;
                 box-shadow: 0 0 15px black;
                 z-index: 3;
@@ -282,7 +273,7 @@ $phone-up: 'min-width: 786px' !default;
                 }
 
                 p {
-                    max-height: 20px;
+                    max-height: 22px;
                     color: var(--text-primary);
                     filter: invert(1);
                 }

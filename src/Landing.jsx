@@ -1,7 +1,7 @@
 import MainContent from "./components/MainContent";
 import Navigate from './components/Navigate';
 import Window from "./components/Window";
-import useIsHome from './components/PathChecker';
+import { useIsHome } from './components/PathChecker';
 import Info from "./components/Info";
 
 function Landing() {
@@ -11,9 +11,8 @@ function Landing() {
         <div className="mx-container">
             <div className="mx-first">
                 <Window className={isHome ? "" : "active"} />
-                <Navigate className={isHome ? "fade-in" : "fade-out"} />
+                {isHome && <Navigate className="fade-in" />}
             </div>
-
             <div className="mx-last">
                 <MainContent className={isHome ? "fade-in" : "fade-out"} />
                 {isHome ? null: <Info/> }

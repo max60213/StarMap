@@ -22,12 +22,9 @@ function Scene() {
         };
     }, [setGalaxy, setItemReady, galaxyRef]); // 確保依賴項正確
 
-
     return (
         <>
             <div id="scene" className="scene mx-mask-fade" ref={galaxyRef}>
-                {/* 場景內容 */}
-                {console.log("Scene")}
             </div>
             <div className="daylight">
                 <div className="grad background-1"></div>

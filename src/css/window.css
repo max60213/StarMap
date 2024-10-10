@@ -1,36 +1,156 @@
 .window {
-  position: absolute;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  position: absolute;
   display: flex;
   justify-content: center;
-  align-items: center;
-  pointer-events: none;
 }
-.window-view {
-  width: 44vh;
-  min-width: 44vh;
+.window-frame {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: auto 0;
   aspect-ratio: 1/1;
-  background-color: white;
-  border-radius: 100%;
+  width: 100%;
+  min-width: 44vh;
+  width: 44vh;
   opacity: 0;
-  transition: all 1s cubic-bezier(0.2, 0, 0, 1), opacity 0.05s;
+  transition: all 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.01s;
+}
+.window-frame .player {
+  position: absolute;
+  border-radius: 100%;
   overflow: hidden;
-}
-.window-view.ready {
-  opacity: 1;
-  transition: all 1s cubic-bezier(0.2, 0, 0, 1), opacity 0.5s ease-out, background-image 0s, width 0s, min-width 0s;
-}
-.window-view.active {
-  width: 80%;
-  opacity: 1;
-  aspect-ratio: 4/3;
-  border-radius: 8px;
-  transition: all 1s cubic-bezier(0.2, 0, 0, 1), border-radius 0.5s ease-out, background-image 0s;
-}
-.window-view video {
   width: 100%;
   height: 100%;
+  top: 0;
+}
+.window-frame .player:first-child {
+  position: relative;
+}
+.window-frame .player #icon-player {
+  height: 100%;
+}
+.window-frame .player video {
+  width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+.window-frame.ready {
+  opacity: 1;
+  border-radius: 100%;
+  aspect-ratio: 1/1;
+  transition: all 0.5s ease-in-out, opacity 0.2s;
+}
+.window-frame.active {
+  width: 100%;
+  min-width: initial;
+  aspect-ratio: 4/3;
+  transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
+}
+@media all and (max-width: 785.9px) {
+  .window-frame.active {
+    max-height: 100%;
+  }
+}
+.window-frame.active .player {
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
+}
+.window-frame.active .player video {
+  width: 100%;
+}
+.window-frame.active .player #view-player {
+  width: 200%;
+}
+
+.slider {
+  width: min(360px, 90%);
+  height: 4px;
+  bottom: 15px;
+  position: absolute;
+  padding: 0 8px;
+}
+.slider-bar {
+  height: 4px;
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 100px;
+  outline: solid hsl(0, 0%, 40%) 1px;
+}
+.slider-thumb {
+  top: -8px;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  transform: translateX(-25%);
+}
+.slider-thumb-btn {
+  top: -4px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  border: rgba(0, 0, 0, 0.6) solid 1px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  z-index: 2;
+}
+.slider-thumb-btn:hover {
+  transform: scale(1.5);
+}
+.slider-thumb-btn:active {
+  transform: scale(1);
+}
+~ .slider-thumb-btn:active-highlight {
+  scale: 10;
+}
+.slider-thumb-highlight {
+  width: 20px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-color: var(--theme-color);
+  border-radius: 100%;
+  top: 5px;
+  left: 10px;
+  animation: highlight 1s infinite;
+  z-index: 1;
+}
+@keyframes highlight {
+  0% {
+    width: 20px;
+    height: 20px;
+  }
+  100% {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(var(--theme-color), 0.5);
+  }
+}
+.slider-thumb-state {
+  padding: 0.2em 0.4em;
+  font-size: 24px;
+  font-weight: 300;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 10px;
+  background-color: hsla(0, 0%, 0%, 0.4);
+  transform: translateX(-50%);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  opacity: 0;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.slider-thumb-btn:hover ~ .slider-thumb-state, .slider-thumb-btn:active ~ .slider-thumb-state {
+  opacity: 1;
 }/*# sourceMappingURL=window.css.map */

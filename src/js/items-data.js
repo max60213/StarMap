@@ -1,4 +1,4 @@
-export const group = [1, 3, 9];
+export const group = [1, 3, 8];
 export const itemsData = {
     "items": {
         "sensor": {
@@ -7,7 +7,10 @@ export const itemsData = {
                 "en": "Sensor"
             },
             "description": "數位攝影中的影像感測器",
-            "content": "感光元件是相機中負責捕捉光線並將其轉換為電子信號的重要部分。常見類型包括CMOS和CCD。CMOS常用於多數數位相機因其低功耗特性；CCD則因其出色的光線捕捉能力在高品質影像方面表現卓越。"
+            "content": "感光元件是相機中負責捕捉光線並將其轉換為電子信號的重要部分。常見類型包括CMOS和CCD。CMOS常用於多數數位相機因其低功耗特性；CCD則因其出色的光線捕捉能力在高品質影像方面表現卓越。",
+            "states": ["f/22", "f/16", "f/8", "f/3.5", "f/1.8"],
+            "initState" : "2",
+            "url": "/articles/sensor.json"
         },
         "aperture": {
             "name": {
@@ -31,12 +34,14 @@ export const itemsData = {
                 "en": "ISO"
             },
             "description": "感光元件對光的敏感程度",
-            "content": "ISO 的設置影響攝影中的光線捕捉能力。提高 ISO 可以在低光環境中拍攝，但同時會增加影像的雜訊。適當的控制 ISO 能夠在不同光線條件下獲得清晰的照片。"
+            "content": "ISO 的設置影響攝影中的光線捕捉能力。提高 ISO 可以在低光環境中拍攝，但同時會增加影像的雜訊。適當的控制 ISO 能夠在不同光線條件下獲得清晰的照片。",
+            "states": ["100", "400", "1600", "6400", "12800", "102000"],
+            "initState" : "2"
         },
         "exposure-value": {
             "name": {
                 "zh": "曝光值",
-                "en": "Exposure Value (EV)"
+                "en": "Exposure Value"
             },
             "description": "影像的總曝光量",
             "content": "曝光值是根據 ISO、光圈和快門速度的設定來確定的，它決定了照片的總光量。正確的曝光能夠使照片展現出最佳的亮度和對比，避免過曝或欠曝。"
@@ -64,14 +69,6 @@ export const itemsData = {
             },
             "description": "相機測量場景亮度的方法",
             "content": "測光模式影響相機如何評估場景中的光線分布，進而決定適當的曝光設定。常見的測光模式包括點測光、中央重點測光和評價測光，適用於不同的拍攝情境。"
-        },
-        "depth-of-field": {
-            "name": {
-                "zh": "景深",
-                "en": "Depth of Field"
-            },
-            "description": "圖像中清晰範圍的深度",
-            "content": "景深是指在照片中清晰顯示的距離範圍，通過調整光圈大小來控制。小光圈提高景深，使得更多的背景和前景保持清晰；大光圈則減少景深，突出主題。"
         },
         "focus": {
             "name": {

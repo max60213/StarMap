@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Aside from '../components/Aside'
+import Aside from '../components/article/Aside';
 
-function Aperture() {
+
+function Article() {
     // 創建一個狀態變量來存儲標題
     const [titles, setTitles] = useState([]);
     const baseURL = import.meta.env.BASE_URL;
@@ -17,13 +18,7 @@ function Aperture() {
         <div className="container mt-5">
             <div className="row">
                 <main className="col-12 col-md-9 col-xl-10">
-                    <div
-                        data-bs-spy="scroll"
-                        data-bs-target="#navbar"
-                        data-bs-smooth-scroll="true"
-                        className="scrollspy-example-2 section container"
-                        tabIndex={0}
-                    >
+                    <div className="section container">
                         <h2 className="title" id="感光元件的種類">光圈的作用</h2>
                         <div className="content">
                             <p>
@@ -38,6 +33,8 @@ function Aperture() {
                                 彩色的影像就出來了。
                             </p>
                         </div>
+                    </div>
+                    <div className="section container">
                         <div className="row row-gap-4 justify-content-around">
                             <div className="col-10 col-sm-6 col-md-3">
                                 <div className="row  justify-content-center position-relative">
@@ -75,24 +72,7 @@ function Aperture() {
                                     </a>
                                 </div>
                             </div>
-                            <div className="col-10 col-sm-6 col-md-3">
-                                <div className="row justify-content-center position-relative">
-                                    <div className="img-container">
-                                        <img
-                                            className="mb-3 img-focusable"
-                                            src={baseURL + "/img/sensor/Xtranscolourfilter.png"}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <p className="text-center">​常見的RGGB陣列</p>
-                                    <a
-                                        className="text-center link link-secondary"
-                                        href="https://wikiwand.com/zh-tw/布萊斯·拜爾"
-                                    >
-                                        wikiwand.com/zh-tw/布萊斯·拜爾
-                                    </a>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div className="section container">
@@ -113,4 +93,4 @@ function Aperture() {
     )
 }
 
-export default Aperture
+export default Article
