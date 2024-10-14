@@ -9,6 +9,8 @@ class Galaxy {
     this.setItemReady = setItemReady;  // 保存傳遞的 setItemReady 函數
     this.setCurrentItem = setCurrentItem;
     this.isDebug = false;
+    this.isRendering = true;  // Track whether rendering is active
+    this.animationId = null;  // Store requestAnimationFrame ID for pausing/resuming
 
     this.config = {
       mobileDistance: 1,
@@ -174,13 +176,16 @@ class Galaxy {
   }
 
   animate = () => {
+    if (!this.isRendering) return;  // Stop rendering if paused
+
     this.keyControl();
     this.camControl();
     this.starLookAt();
     this.locateChecker();
     this.applyShift(this.camera, this.camShift);
     this.renderer.render(this.scene, this.camera);
-    requestAnimationFrame(this.animate);
+    // Save the requestAnimationFrame ID to control it
+    this.animationId = requestAnimationFrame(this.animate);
   }
 
   starLookAt = () => {
@@ -248,7 +253,7 @@ class Galaxy {
   }
 
   locateChecker = () => {
-    let threshold = 0.004 / ((this.state.currentOrbit + 0.2) * 5);
+    let threshold = 0.01 / ((this.state.currentOrbit + 0.2) * 5);
     if (Math.abs(this.cameraAnchor.position.z - this.state.camPos) < threshold) {
       if (this.state.currentOrbit == 0) {
         if (this.camera.position.distanceTo(this.camTarget) < threshold * 10) {
@@ -468,6 +473,22 @@ class Galaxy {
 
     camera.projectionMatrix.copy(projectionMatrix);
     camera.projectionMatrixInverse.copy(projectionMatrix).invert();
+  }
+
+  // Function to pause rendering
+  pauseRendering = () => {
+    this.isRendering = false;  // Set rendering flag to false
+    if (this.animationId) cancelAnimationFrame(this.animationId);  // Stop the loop
+    console.log('Rendering paused');
+  }
+
+  // Function to resume rendering
+  resumeRendering = () => {
+    if (!this.isRendering) {
+      this.isRendering = true;  // Set rendering flag to true
+      this.animate();  // Restart the animation loop
+      console.log('Rendering resumed');
+    }
   }
 }
 

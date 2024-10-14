@@ -20,7 +20,7 @@ function Window(props) {
         if (!isHome) {
             const timer = setTimeout(() => {
                 setShowView(true);
-            }, 500); // 延遲 2 秒
+            }, 500); // 延遲 0.5 秒
 
             // 在 component unmount 時清除 timer
             return () => clearTimeout(timer);

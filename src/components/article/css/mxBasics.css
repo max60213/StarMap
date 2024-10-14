@@ -23,6 +23,7 @@
 }
 .mx-images > * {
   overflow: visible !important;
+  justify-content: center;
 }
 .mx-images-item {
   display: flex;

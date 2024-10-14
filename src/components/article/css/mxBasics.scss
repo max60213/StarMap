@@ -23,13 +23,14 @@
 
     &>* {
         overflow: visible !important;
+        justify-content: center;
     }
 
     &-item {
         display: flex;
         flex-direction: column;
         align-items: center;
-
+        
         img {
             width: 100%;
             transition: transform 0.5s ease, box-shadow 0.5s ease;

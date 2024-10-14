@@ -58,8 +58,7 @@ const Images = ({ srcList }) => {
       modules={[Navigation, Pagination]}
     >
       {srcList.map((image, index) => (
-        <SwiperSlide key={index} clas
-        sName="swiper-wrapper mx-images-item d-flex align-items-center">
+        <SwiperSlide key={index} className="swiper-wrapper mx-images-item d-flex align-items-center">
           {/* 僅渲染圖片，無論是否有 link */}
           <img src={`${baseUrl}${image.src}`} alt={image.alt} />
 

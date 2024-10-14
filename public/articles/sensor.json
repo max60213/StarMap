@@ -11,11 +11,6 @@
   },
   "content": [
     {
-      "module": "Title",
-      "text": "感光元件的種類",
-      "id": "modules-of-sensors"
-    },
-    {
       "module": "Paragraphs",
       "textList": [
         "感光元件相當於人眼的視網膜，吸收光線，並轉換成數位訊號輸入機器。",

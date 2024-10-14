@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import Aside from './Aside';
-
+import './css/article.css';
 
 const Article = () => {
     const { articleId } = useParams(); // 從 URL 中取得 articleId
@@ -65,7 +65,7 @@ const Article = () => {
 
     return (
         <div className="mx-article">
-            <main className="container">
+            <main className="col-9">
                 {articleData.content.map((item, index) => {
                     const Component = components[item.module]; // 獲取相應的組件
 
@@ -81,7 +81,7 @@ const Article = () => {
                     );
                 })}
             </main>
-            <Aside/>
+            <Aside className="col-3"/>
         </div>
     );
 };

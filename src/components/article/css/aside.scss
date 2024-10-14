@@ -3,7 +3,13 @@
     height: fit-content;
     overflow: visible;
     padding-right: 0;
+    width: 200px;
     a {
         white-space: nowrap;
+        padding-right: 0;
+        color: var(--text-secondary);
+        &:hover {
+            color: var(--text-primary);
+        }
     }
 }
