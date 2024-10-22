@@ -82,14 +82,6 @@ body::-webkit-scrollbar {
     }
 }
 
-.fade-in{
-    animation: fade 0.3s ease backwards;
-}
-
-.fade-out{
-    animation: fade 0.3s ease reverse forwards;
-}
-
 @keyframes fade {
     from {
         opacity: 0;

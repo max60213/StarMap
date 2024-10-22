@@ -40,4 +40,10 @@
 }
 .mx-images-item figcaption {
   margin-top: 1.2em;
+}
+.mx-images-item .link {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 300;
+  opacity: 0.6;
 }/*# sourceMappingURL=mxBasics.css.map */

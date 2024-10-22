@@ -2,7 +2,6 @@ import { itemsData } from '../js/items-data.js';
 import GalaxyContext from './GalaxyContext';
 import { useContext, useEffect, useState } from 'react';
 import { currentPath } from './PathChecker.jsx';
-import '../css/info.css';
 
 function Info(props) {
   const { galaxy } = useContext(GalaxyContext);
@@ -21,7 +20,7 @@ function Info(props) {
   }, [galaxy]);
 
   return (
-    <div className={`info d-flex align-items-center full-size ${props.className === undefined ? "" : props.className}`}>
+    <div className={`info px-3 pe-xl-5 d-flex align-items-center full-size ${props.className === undefined ? "" : props.className}`}>
       {itemData ? (
         <div className='info-content'>
           <h1 className='info-content-title pb-1'>{itemData.name.zh} <span>{itemData.name.en}</span></h1>

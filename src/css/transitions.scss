@@ -1,0 +1,101 @@
+/* Transition styles */
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+.fade-exit-done {
+    opacity: 0;
+}
+
+.slideRight-enter {
+    opacity: 0;
+    transform: translateX(20%);
+}
+
+
+.slideRight-enter-active {
+    opacity: 1;
+    transform: translateX(0%);
+    transition: opacity 600ms cubic-bezier(0, .5, .5, 1), transform 600ms cubic-bezier(0, .5, .5, 1);
+}
+
+.slideRight-exit {
+    opacity: 1;
+    transform: translateX(0%);
+}
+
+.slideRight-exit-active {
+    opacity: 0;
+    transform: translateX(20%);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+
+}
+
+.slideLeft-enter {
+    opacity: 0;
+    transform: translateX(-20%);
+}
+
+
+.slideLeft-enter-active {
+    opacity: 1;
+    transform: translateX(0%);
+    transition: opacity 600ms cubic-bezier(0, .5, .5, 1), transform 600ms cubic-bezier(0, .5, .5, 1);
+}
+
+.slideLeft-exit {
+    opacity: 1;
+    transform: translateX(0%);
+}
+
+.slideLeft-exit-active {
+    opacity: 0;
+    transform: translateX(-20%);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+
+/* main.css */
+
+/* 進場動畫的初始狀態：由下往上滑入 */
+.slideUp-enter {
+    opacity: 0;
+    transform: translateY(20%);
+    /* 從畫面下方開始 */
+}
+
+/* 進場動畫進行中 */
+.slideUp-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    /* 回到原始位置 */
+    transition: opacity 300ms, transform 300ms;
+}
+
+/* 退場動畫的初始狀態 */
+.slideUp-exit {
+    opacity: 1;
+    transform: translateY(0);
+    /* 從原始位置開始 */
+}
+
+/* 退場動畫進行中：滑出至上方 */
+.slideUp-exit-active {
+    opacity: 0;
+    transform: translateY(20%);
+    /* 滑出到畫面上方 */
+    transition: opacity 300ms, transform 300ms;
+}

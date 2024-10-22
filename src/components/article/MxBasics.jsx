@@ -67,7 +67,7 @@ const Images = ({ srcList }) => {
 
           {/* 如果有 link，則顯示連結 */}
           {image.link && (
-            <a href={image.link} className="link-secondary" target="_blank" rel="noopener noreferrer">
+            <a href={image.link} className="link" target="_blank" rel="noopener noreferrer">
               {image.linkText}
             </a>
           )}

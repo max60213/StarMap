@@ -2,6 +2,7 @@ import { useEffect, useContext } from 'react';
 import { itemsData, group } from '../js/items-data.js';
 import { useNavigate } from 'react-router-dom';
 import GalaxyContext from '../components/GalaxyContext';
+import "../css/transitions.css";
 
 function MainContent(props) {
     const navigate = useNavigate();
@@ -47,6 +48,7 @@ function MainContent(props) {
 
             const handleClick = () => {
                 galaxy.selector(item.id);
+
                 document.querySelector('.mx-list').classList.add('fade-out');
                 const interval = setInterval(() => {
                     if (window.itemReady) {
@@ -88,7 +90,7 @@ function MainContent(props) {
 
     return (
         <>
-            <div className={`mx-list px-3 pe-xl-5 ${props.className == undefined ? "" : props.className}`}>
+            <div className="mx-list px-3 pe-xl-5">
                 <h1>Lorem ipsum dolor sit amet consectetur.</h1>
                 <p className="mb-1">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit

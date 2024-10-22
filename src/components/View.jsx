@@ -29,21 +29,17 @@ function View() {
     }, [baseUrl]); // Added dependencies
 
     return (
-        <>
-            <div className="player fade-in">
-                <video ref={viewVideo} autoPlay preload="auto" muted loop id="view-player" src={baseUrl + `/video/${currentItem}.mp4?url`}></video>
-            </div>
-            <div id='slider' className="slider fade-in" data-init={initState} data-states={JSON.stringify(states)}>
+        <div className="player">
+            <video ref={viewVideo} autoPlay preload="auto" muted loop id="view-player" src={baseUrl + `/video/${currentItem}.mp4`}></video>
+            <div id='slider' className="slider" data-init={initState} data-states={JSON.stringify(states)}>
                 <div id='slider-bar' className="slider-bar"></div>
                 <div id='slider-thumb' className="slider-thumb">
                     <div className="slider-thumb-btn"></div>
                     <div id="slider-thumb-highlight" className="slider-thumb-highlight"></div>
                     <h3 id='slider-thumb-state' className="slider-thumb-state"></h3>
-
                 </div>
             </div>
-            {console.log("View DOM")}
-        </>
+        </div>
     );
 }
 

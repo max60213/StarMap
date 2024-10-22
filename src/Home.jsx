@@ -1,6 +1,7 @@
 // Home.jsx
 import React, { Suspense, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom'; // 移除 BrowserRouter
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/init.css';
 import './css/daylight.css';
@@ -13,9 +14,10 @@ import { useIsHome } from "./components/PathChecker";
 import { GalaxyProvider } from './components/GalaxyContext';
 
 function Home() {
-    const isHome = useIsHome();  // 使用自定義 Hook 判斷當前是否位於首頁
+    const isHome = useIsHome();
     const [isLoading, setIsLoading] = useState(true);
     const baseUrl = import.meta.env.BASE_URL;
+    const location = useLocation(); // 使用 useLocation 取得當前路由位置
 
     useEffect(() => {
         const assets = [
@@ -33,10 +35,8 @@ function Home() {
             `${baseUrl}/img/icons/shutter.png`,
             `${baseUrl}/img/icons/white-balance.png`,
             `${baseUrl}/video/aperture.mp4`
+        ].map(asset => fetch(asset));
 
-        ].map(asset => fetch(asset));  // 載入 public 目錄下的資源
-
-        // 合併所有資源的 Promise
         Promise.all(assets)
             .then(() => setIsLoading(false))
             .catch(error => {
@@ -47,23 +47,27 @@ function Home() {
 
     if (isLoading) {
         return <Loading />;
-    }
-    else {
+    } else {
         return (
-            <GalaxyProvider> {/* 使用 GalaxyProvider 包裹整個應用部分，提供 context */}
+            <GalaxyProvider> {/* 包裹整個應用部分，提供 context */}
                 <div id="visual" className={isHome ? "" : "shrink"}>
                     <Scene />
                     <Landing />
                 </div>
-                <>
-                    <Suspense fallback={<div>Loading...</div>}> {/* 為懶加載組件提供 fallback */}
-                        <Routes>
-                            <Route path={`${baseUrl}/`} element={""} />
-                            {/* 使用 articleId 來動態載入不同的文章*/}
-                            <Route path={`${baseUrl}/:articleId`} element={<Article />} />
-                        </Routes>
-                    </Suspense>
-                </>
+                <TransitionGroup>
+                    <CSSTransition
+                        key={location.key}
+                        classNames="slideUp"
+                        timeout={300}
+                    >
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Routes location={location}> {/* 使用 Routes 而非多層 Router */}
+                                <Route path={`${baseUrl}/`} element={""} />
+                                <Route path={`${baseUrl}/:articleId`} element={<Article />} />
+                            </Routes>
+                        </Suspense>
+                    </CSSTransition>
+                </TransitionGroup>
             </GalaxyProvider>
         );
     }

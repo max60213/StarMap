@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useContext } from 'react';
 import Galaxy from './three-js/Galaxy';
 import GalaxyContext from './components/GalaxyContext';
 import { useIsHome } from './components/PathChecker';  // 引入路徑檢查工具
+import { CSSTransition } from 'react-transition-group';
 
 function Scene() {
     const { galaxy, setGalaxy, setItemReady, setCurrentItem } = useContext(GalaxyContext);
@@ -23,21 +24,28 @@ function Scene() {
         };
     }, [setGalaxy, setItemReady, setCurrentItem]);
 
-    // 根據是否在首頁動態控制渲染
     useEffect(() => {
-        console.log('Scene: isHome =', isHome);
         if (galaxy) {
             if (isHome) {
                 galaxy.resumeRendering();
+                galaxyRef.current.classList.remove('opacity-0');
+
             } else {
                 galaxy.pauseRendering();
             }
         }
-    }, [isHome]);  // 依據路徑變化重新檢查
+    }, [isHome, galaxy]);
+
 
     return (
         <>
-            <div id="scene" className="scene mx-mask-fade" ref={galaxyRef}></div>
+            <CSSTransition
+                in={isHome}
+                timeout={300}
+                classNames="fade"
+            >
+                <div id="scene" className="scene opacity-0" ref={galaxyRef}></div>
+            </CSSTransition>
             <div className="daylight">
                 <div className="grad background-1"></div>
                 <div className="grad background-2"></div>

@@ -17,10 +17,10 @@ class Galaxy {
       pcDistance: 0.8,
       pcShift: [-2.2 / 10, 0],
       mobileShift: [0, 1 / 4],
-      respondTime: 0.02,
+      respondTime: 0.04,
       breakpoint: 785.9,
-      maxSpeed: 2,
-      speed: 0.05,
+      maxSpeed: 4,
+      speed: 0.1,
       baseUrl: import.meta.env.BASE_URL
     };
 
