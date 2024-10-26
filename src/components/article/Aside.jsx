@@ -9,7 +9,8 @@ function Aside({ className }) {
     useEffect(() => {
         // 在組件加載後執行
         const titleElements = document.querySelectorAll('.title');  // 獲取所有的 .title 元素
-        document.querySelector(".block").id = "overview";  // 為概述添加 id
+        if(document.querySelector(".block"))
+            document.querySelector(".block").id = "overview";  // 為概述添加 id
 
         // 提取每個標題元素的文本和已有的 id
         const titleData = Array.from(titleElements).map((elem) => {

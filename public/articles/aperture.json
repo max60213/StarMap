@@ -1,6 +1,6 @@
 {
     "components": {
-      "Basic": {
+      "MxBasic": {
         "path": "./MxBasics",
         "modules": [
           "Title",

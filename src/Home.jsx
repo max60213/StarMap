@@ -34,7 +34,6 @@ function Home() {
             `${baseUrl}/img/icons/sensor.png`,
             `${baseUrl}/img/icons/shutter.png`,
             `${baseUrl}/img/icons/white-balance.png`,
-            `${baseUrl}/video/aperture.mp4`
         ].map(asset => fetch(asset));
 
         Promise.all(assets)

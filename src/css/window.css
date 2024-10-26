@@ -38,7 +38,7 @@
      object-fit: cover;
 }
 .window-frame .player #view-player {
-  height: 300%;
+  height: 301%;
 }
 .window-frame.ready {
   opacity: 1;
@@ -67,7 +67,7 @@
 }
 .window-frame.active .player #view-player {
   width: 200%;
-  height: 300%;
+  height: 301%;
 }
 
 .slider {
