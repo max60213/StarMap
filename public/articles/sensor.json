@@ -4,6 +4,7 @@
       "path": "./MxBasics",
       "modules": [
         "Heading1",
+        "Heading2",
         "Paragraphs",
         "Images",
         "Table"
@@ -29,6 +30,26 @@
       ]
     },
     {
+      "module": "Images",
+      "align": "start",
+      "srcList": [
+        {
+          "src": "/img/sensor/sensor-of-DSLR.jpg",
+          "caption": "相機鏡頭下的CMOS"
+        },
+        {
+          "src": "/img/sensor/sensor-of-carcam.jpg",
+          "caption": "行車記錄器的CMOS"
+        },
+        {
+          "src": "/img/sensor/CCD.jpg",
+          "caption": "一組用於紫外線影像處理用的CCD",
+          "linkText": "zh.wikipedia.org/zh-tw/感光耦合元件",
+          "link": "https://zh.wikipedia.org/zh-tw/感光耦合元件"
+        }
+      ]
+    },
+    {
       "module": "Table",
       "columns": ["比較項目", "CMOS", "CCD"],
       "rows": [
@@ -49,7 +70,7 @@
       "textList": [
         "感光元件是由許多細小的像素（Pixel）組合而成，像素的數量與尺寸決定了影像的解析度和感光能力。每個像素只能捕捉某一特定範圍的電磁波，即一種顏色的光，因此需要多個像素的組合來捕捉彩色的畫面。",
         "目前最常見的排列方式是 <mark>Bayer 濾色鏡</mark>（Bayer Filter），它包含紅（R）、綠（G）、藍（B）像素的規律排列。由於人眼對綠色較為敏感，Bayer 陣列中綠色像素的數量是紅色和藍色的兩倍，這種排列稱為 <mark>RGGB 陣列</mark>。",
-        "除了 RGB 排列外，還有其他變種，如 <mark>CMYW 陣列</mark> 和 <mark>RYYB 陣列</mark>。CMYW 增加白色像素以提升進光量，而 RYYB 將部分綠色像素替換為黃色，提升低光表現。這些排列方式在特殊場景或品牌中應用，以強化影像品質。"
+        "除了 RGB 陣列外，還有其他變種，如 <mark>CYGM 陣列</mark> 和 <mark>RYYB 陣列</mark>，他們透過特殊的顏色濾鏡來提升進光量，但在顏色的準確度上有所犧牲。"
       ]
     },
     {
@@ -62,16 +83,16 @@
           "link": "https://wikiwand.com/zh-tw/布萊斯·拜爾"
         },
         {
-          "src": "/img/sensor/Bayer_matrix.png",
-          "caption": "​常見的RGGB陣列",
-          "linkText": "wikiwand.com/zh-tw/布萊斯·拜爾",
-          "link": "https://wikiwand.com/zh-tw/布萊斯·拜爾"
+          "src": "/img/sensor/sensors-type.png",
+          "caption": "​各種特殊的陣列",
+          "linkText": "zh.wikipedia.org/wiki/拜爾濾色鏡",
+          "link": "http://zh.wikipedia.org/wiki/拜爾濾色鏡"
         },
         {
-          "src": "/img/sensor/Bayer_matrix.png",
-          "caption": "​常見的RGGB陣列",
-          "linkText": "wikiwand.com/zh-tw/布萊斯·拜爾",
-          "link": "https://wikiwand.com/zh-tw/布萊斯·拜爾"
+          "src": "/img/sensor/CYGM-filter.png",
+          "caption": "CYGM陣列，以明度較高的顏色濾鏡來提升進光量",
+          "linkText": "wikipedia.org/wiki/CYGM_filter",
+          "link": "https://en.wikipedia.org/wiki/CYGM_filter"
         }
       ]
     },
@@ -84,6 +105,18 @@
       "module": "Paragraphs",
       "textList": [
         "感光元件的尺寸越大，通常能提升畫質、降低雜訊，並在低光環境中提供更好的表現。然而，這並不代表影像一定會更亮。影像的亮度主要由光圈、快門速度和感光度（ISO）共同決定，而非單純依賴感光元件的大小。"
+      ]
+    },
+    {
+      "module": "Heading2",
+      "text": "尺寸越大≠亮度越高",
+      "id": "bigger-sensor-≠-brighter-image"
+    },
+    {
+      "module": "Paragraphs",
+      "textList": [
+        "感光元件越大，畫面會更亮是<mark>常見的迷思</mark>。事實上，影像的亮度並非單單由感光元件的大小決定，而是需要光圈、快門速度和感光度 (ISO) 這三者的綜合調整。感光元件的尺寸增大，通常能提升畫質、降低雜訊，並在低光環境中有更好的表現。然而，這不代表影像一定會更亮",
+        "<mark>以量筒測量降雨為例</mark>，不同尺寸的量筒在同場雨中，儘管大量筒能容納更多雨水，但與小量筒相比，每<mark>單位面積的雨量是一致的</mark>。類似地，感光元件的大小影響的是光線總量的收集能力，但每單位像素的曝光仍主要由光圈、快門速度和感光度（ISO）共同決定。"
       ]
     },
     {

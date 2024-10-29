@@ -20,7 +20,6 @@ function Aside({ className }) {
 
             return { text: titleText, id: titleId };
         });
-
         setTitles(titleData);  // 更新狀態
         console.log("Aside run");
     }, []);

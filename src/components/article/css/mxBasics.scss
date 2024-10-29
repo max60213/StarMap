@@ -2,12 +2,16 @@
     margin-bottom: 2rem;
 }
 
-.mx-title {
+.mx-heading1 {
     font-size: 2rem;
     margin-bottom: 1rem;
     &:not(:first-child) {
         margin-top: 4rem;
     }
+}
+
+.mx-heading2{
+    margin-bottom: 0rem;
 }
 
 .mx-paragraphs p {
@@ -41,6 +45,7 @@
     &>* {
         overflow: visible !important;
         justify-content: center;
+        align-items: end;
     }
 
     &-item {
@@ -60,6 +65,7 @@
 
         figcaption {
             margin-top: 1.2em;
+            text-align: center;
         }
         .link{
             margin-top: 0.2rem;

@@ -2,12 +2,16 @@
   margin-bottom: 2rem;
 }
 
-.mx-title {
+.mx-heading1 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
-.mx-title:not(:first-child) {
+.mx-heading1:not(:first-child) {
   margin-top: 4rem;
+}
+
+.mx-heading2 {
+  margin-bottom: 0rem;
 }
 
 .mx-paragraphs p {
@@ -39,6 +43,7 @@
 .mx-images > * {
   overflow: visible !important;
   justify-content: center;
+  align-items: end;
 }
 .mx-images-item {
   display: flex;
@@ -55,6 +60,7 @@
 }
 .mx-images-item figcaption {
   margin-top: 1.2em;
+  text-align: center;
 }
 .mx-images-item .link {
   margin-top: 0.2rem;

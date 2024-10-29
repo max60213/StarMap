@@ -10,11 +10,11 @@ import 'swiper/css/navigation';
 
 
 // 標題元件
-const Heading1 = ({ id, text }) => <><h2 id={id} className="block title mx mx-title">{text}</h2><hr></hr></>;
+const Heading1 = ({ id, text }) => <><h2 id={id} className="block title mx mx-heading1">{text}</h2><hr></hr></>;
 const small = 600;
 const medium = 1200;
 
-const Heading2 = ({ id, text }) => <h4 id={id} className="block title mx mx-title">{text}</h4>;
+const Heading2 = ({ id, text }) => <h5 id={id} className="block mx mx-heading2">{text}</h5>;
 
 const List = ({ ordered, textList }) => {
   // 根據 ordered 的值來選擇是否使用 <ul> 或 <ol>
@@ -46,8 +46,11 @@ const Paragraphs = ({ textList }) => (
 );
 
 // 圖片元件，處理多張圖片並包含可選的說明和連結
-const Images = ({ srcList }) => {
+const Images = ({ align = 'start', srcList }) => {
   const baseUrl = import.meta.env.BASE_URL; // 從環境變數獲取 baseUrl
+
+// 根據 align 參數決定對應的對齊類別
+const alignClass = `align-items-${align}`;
 
   return (
     <Swiper
