@@ -38,7 +38,7 @@
      object-fit: cover;
 }
 .window-frame .player #view-player {
-  height: 301%;
+  height: 300%;
 }
 .window-frame.ready {
   opacity: 1;
@@ -67,7 +67,7 @@
 }
 .window-frame.active .player #view-player {
   width: 200%;
-  height: 301%;
+  height: 300%;
 }
 
 .slider {
@@ -141,8 +141,8 @@
   padding: 0.2em 0.4em;
   font-size: 24px;
   font-weight: 300;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: -moz-max-content;
+  width: max-content;
   margin: 10px;
   background-color: hsla(0, 0%, 0%, 0.4);
   transform: translateX(-50%);

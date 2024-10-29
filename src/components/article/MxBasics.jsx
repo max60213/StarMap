@@ -1,6 +1,6 @@
 import "./css/mxBasics.css";
 // import Swiper core and required modules
-import { Navigation, Pagination} from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -10,16 +10,37 @@ import 'swiper/css/navigation';
 
 
 // 標題元件
-const Title = ({ id, text }) => <h3 id={id} className="block title mx-title">{text}</h3>;
+const Heading1 = ({ id, text }) => <><h2 id={id} className="block title mx mx-title">{text}</h2><hr></hr></>;
 const small = 600;
 const medium = 1200;
 
+const Heading2 = ({ id, text }) => <h4 id={id} className="block title mx mx-title">{text}</h4>;
 
-// 內文元件，處理多個段落
+const List = ({ ordered, textList }) => {
+  // 根據 ordered 的值來選擇是否使用 <ul> 或 <ol>
+  const ListTag = ordered ? 'ol' : 'ul';
+  return (
+    <div className="block mx mx-list">
+      <ListTag>
+        {textList.map((text, index) => (
+          <li
+            key={index}
+            dangerouslySetInnerHTML={{ __html: text }}
+          />
+        ))}
+      </ListTag>
+    </div>
+  );
+};
+
+// 內文元件，處理多個段落，支援 HTML 格式的渲染
 const Paragraphs = ({ textList }) => (
-  <div className="block mx-paragraphs">
+  <div className="block mx mx-paragraphs">
     {textList.map((text, index) => (
-      <p key={index}>{text}</p>
+      <p
+        key={index}
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
     ))}
   </div>
 );
@@ -30,7 +51,7 @@ const Images = ({ srcList }) => {
 
   return (
     <Swiper
-      className="block mx-images"
+      className="block mx mx-images"
       cssMode={true}
       navigation={true}
       spaceBetween={30}
@@ -58,7 +79,7 @@ const Images = ({ srcList }) => {
       modules={[Navigation, Pagination]}
     >
       {srcList.map((image, index) => (
-        <SwiperSlide key={index} className="swiper-wrapper mx-images-item d-flex align-items-center">
+        <SwiperSlide key={index} className="swiper-wrapper mx mx-images-item d-flex align-items-center">
           {/* 僅渲染圖片，無論是否有 link */}
           <img src={`${baseUrl}${image.src}`} alt={image.alt} />
 
@@ -78,4 +99,32 @@ const Images = ({ srcList }) => {
   );
 };
 
-export { Title, Paragraphs, Images };
+
+// 新增表格元件，支援從 JSON 動態生成表格
+const Table = ({ columns, rows }) => (
+  <div className="block mx mx-table">
+    <table className="table table-striped table-hover">
+      <thead>
+        <tr>
+          {columns.map((col, index) => (
+            <th scope="col" key={index}>
+              {col}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((cell, cellIndex) => (
+              <td key={cellIndex}>{cell}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+
+export { Heading1, Heading2, List, Paragraphs, Images, Table };

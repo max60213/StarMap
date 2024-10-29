@@ -26,11 +26,13 @@ function View() {
             sliderInit(); // Call the initialization function
         }).catch(err => console.error("Error loading view.js", err));
 
-    }, [baseUrl]); // Added dependencies
+    }, []); // Added dependencies
 
     return (
-        <div className="player">
-            <video ref={viewVideo} autoPlay preload="auto" muted loop id="view-player" src={baseUrl + `/video/${currentItem}.mp4`}></video>
+        <>
+            <div className="player">
+                <video ref={viewVideo} autoPlay preload="auto" muted loop id="view-player" src={baseUrl + `/video/${currentItem}.mp4`}></video>
+            </div>
             <div id='slider' className="slider" data-init={initState} data-states={JSON.stringify(states)}>
                 <div id='slider-bar' className="slider-bar"></div>
                 <div id='slider-thumb' className="slider-thumb">
@@ -39,7 +41,7 @@ function View() {
                     <h3 id='slider-thumb-state' className="slider-thumb-state"></h3>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

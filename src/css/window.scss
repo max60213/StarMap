@@ -43,7 +43,7 @@
             }
 
             #view-player {
-                height: 301%;
+                height: 300%;
             }
         }
 
@@ -77,7 +77,7 @@
 
                 #view-player {
                     width: 200%;
-                    height: 301%;
+                    height: 300%;
                 }
             }
         }
@@ -164,7 +164,7 @@
             padding: 0.2em 0.4em;
             font-size: 24px;
             font-weight: 300;
-            width: fit-content;
+            width: max-content;
             margin: 10px;
             background-color: hsl(0, 0%, 0%, 0.4);
             transform: translateX(-50%);

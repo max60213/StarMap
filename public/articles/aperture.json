@@ -1,43 +1,94 @@
 {
-    "components": {
-      "MxBasic": {
-        "path": "./MxBasics",
-        "modules": [
-          "Title",
-          "Paragraphs",
-          "Images"
-        ]
-      }
+  "components": {
+    "MxBasic": {
+      "path": "./MxBasics",
+      "modules": [
+        "Heading1",
+        "Paragraphs",
+        "Images",
+        "Table",
+        "List"
+      ]
+    }
+  },
+  "content": [
+    {
+      "module": "Paragraphs",
+      "textList": [
+        "光圈是相機鏡頭內的可調節開口，控制進入感光元件的光線量，就像<mark>人眼的瞳孔</mark>調節光線一樣。透過改變光圈的大小，不僅能控制進光量，還能影響影像的亮度、景深及整體的曝光效果。"
+      ]
     },
-    "content": [
-      {
-        "module": "Paragraphs",
-        "textList": [
-          "快門速度 (shutter speed)，也就是曝光時間，是指感光元件從開始吸收光線，到結束的這段時間，時間越長，吸收的光線越多，畫面就越亮。但如果在吸收光線的這段期間，相機有震動或是畫面中有物體移動，就會讓畫面模糊，不過這未必是壞事，有時讓物體模糊反而能拍出「速度感」或「時間流動感」。"
-        ]
-      },
-      {
-        "module": "Images",
-        "srcList": [
-          {
-            "src": "/img/shutter/1-1.jpg",
-            "caption": "曝光20/1秒"
-          },
-          {
-            "src": "/img/shutter/1-2.jpg",
-            "caption": "曝光20/1秒"
-          },
-          {
-            "src": "/img/shutter/1-3.jpg",
-            "caption": "曝光20/1秒"
-          }
-        ]
-      },
-      {
-        "module": "Paragraphs",
-        "textList": [
-          "相反地，若要拍攝高速移動的物體的瞬間，或是錄製慢動作影片，則要用高速快門，但相對的畫面也會變暗，感光度就要提高，雜點就會變多，所以很多手機的慢動作功能都會建議使用者在光線明亮處拍攝。"
-        ]
-      }
-    ]
-  }
+    {
+      "module": "Table",
+      "columns": ["光圈大小 (f 值)", "光圈開口", "亮度", "景深", "快門速度需求"],
+      "rows": [
+        ["f/1.4 – f/2.8", "大", "高亮度", "景深淺，背景模糊", "快門速度可較快"],
+        ["f/4 – f/5.6", "中", "適中亮度", "中等景深", "需中等快門速度"],
+        ["f/8 – f/11", "小", "光線減少", "景深較深，背景清晰", "需要較慢快門速度"],
+        ["f/16 及以上", "很小", "光線大幅減少", "整體畫面清晰", "快門速度較慢"]
+      ]
+    },
+    {
+      "module": "Heading1",
+      "text": "光圈的數值",
+      "id": "aperture-values"
+    },
+    {
+      "module": "Paragraphs",
+      "textList": [
+        "光圈的 <mark>f 值</mark>（Aperture Value）是由鏡頭焦距除以光圈口徑得出來的。例如，焦距 50mm 的鏡頭，如果光圈口徑為 25mm，則 f 值為 2（50 ÷ 25 = 2）。<mark>f 值越小，光圈越大，進光量越多</mark>，影像亮度就越高。根據光圈大小，攝影師會稱大光圈鏡頭為「Fast Lens」，因為它能在弱光下使用較快的快門速度；而小光圈則稱為「Slow Lens」，需要較慢的快門速度來獲得適當曝光。",
+        "除了常見的 f 值（Aperture Value），在電影製作中也經常使用 <mark>T 值</mark>（Transmission Value）。f 值主要描述光圈的幾何大小，而 T 值則更準確地反映了實際進入感光元件的光線量。"
+      ]
+    },
+    {
+      "module": "Table",
+      "columns": [
+        "比較項目",
+        "f 值 (f-stop)",
+        "T 值 (T-stop)"
+      ],
+      "rows": [
+        ["定義", "焦距 ÷ 光圈口徑", "實際進光量測量"],
+        ["準確性", "忽略光線損失", "考慮透光效率"],
+        ["優勢", "計算簡單，適合大眾使用", "多鏡頭間曝光一致"],
+        ["常見場合", "一般相機、手機", "電影鏡頭、專業影片設備"]
+      ]
+    },
+    {
+      "module": "Heading1",
+      "text": "對景深的影響",
+      "id": "depth-of-field"
+    },
+    {
+      "module": "Paragraphs",
+      "textList": [
+        "光圈的大小會顯著影響景深（Depth of Field）。景深指的是影像中從前景到背景的清晰範圍："
+      ]
+    },
+    {
+      "module": "List",
+      "ordered": false,
+      "textList": [
+        "<strong>大光圈（f/1.4 - f/2.8）：</strong>進光量多，景深較淺，主體清晰，背景模糊。常用於人像攝影或創造背景虛化效果（Bokeh）。",
+        "<strong>小光圈（f/8 - f/16）：</strong>進光量少，但景深加深，整體畫面更加清晰，適合風景或建築攝影。"
+      ]
+    },
+    {
+      "module": "Paragraphs",
+      "textList": [
+          "此外，景深還會受到<mark>感光元件尺寸</mark>的影響。例如，全畫幅相機（Full-frame）因為感光元件較大，即使使用相同的光圈值，相較於手機或 APS-C 感光元件，景深會更淺。詳見「<a class='link'>感光元件</a>」以深入了解。"
+      ]
+    },
+    {
+      "module": "Heading1",
+      "text": "手機內的光圈",
+      "id": "aperture-in-smartphones"
+    },
+    {
+      "module": "Paragraphs",
+      "textList":[
+        "受限於手機鏡頭的物理尺寸，大部分手機無法像傳統相機那樣調整光圈的大小。手機常見的「光圈數值」大多是<mark>軟體模擬</mark>的效果，例如在人像模式下，利用演算法模擬出大光圈的效果來模糊背景。"
+      ]
+    }
+  ]
+}

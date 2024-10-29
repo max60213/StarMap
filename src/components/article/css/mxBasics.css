@@ -3,15 +3,30 @@
 }
 
 .mx-title {
-  margin-bottom: 1rem;
   font-size: 2rem;
+  margin-bottom: 1rem;
 }
 .mx-title:not(:first-child) {
   margin-top: 4rem;
 }
 
 .mx-paragraphs p {
-  margin-top: 0.5em;
+  margin-top: 0.8em;
+}
+
+.mx mark {
+  background-color: transparent;
+  color: var(--theme-color);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.mx-list ul {
+  margin-top: -0.6rem;
+  list-style: disc;
+}
+.mx-list ul li {
+  margin-bottom: 0.4em;
 }
 
 .mx-images {
@@ -46,4 +61,5 @@
   font-size: 0.8rem;
   font-weight: 300;
   opacity: 0.6;
+  color: var(--primary-color);
 }/*# sourceMappingURL=mxBasics.css.map */

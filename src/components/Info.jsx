@@ -24,7 +24,7 @@ function Info(props) {
       {itemData ? (
         <div className='info-content'>
           <h1 className='info-content-title pb-1'>{itemData.name.zh} <span>{itemData.name.en}</span></h1>
-          <h2>{itemData.description}</h2>
+          <h3>{itemData.description}</h3>
           <hr/>
           <p className='pt-2'>{itemData.content}</p>
         </div>

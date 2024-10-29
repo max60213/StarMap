@@ -19,7 +19,7 @@ export const itemsData = {
             },
             "description": "鏡頭中用於控制進光量的開口大小",
             "content": "光圈的大小直接影響到影像的景深和亮度。開大光圈可以增加背景模糊，使主體更突出，適合肖像攝影；縮小光圈則能提高景深，保持更多的場景焦點清晰，適合風景攝影。",
-            "states": ["f/22", "f/16", "f/8", "f/3.5", "f/1.8"],
+            "states": ["f/2.8", "f/3.5", "f/4.6", "f/6.3", "f/13"],
             "initState" : 2,
             "url": "/articles/aperture.json"
         },
@@ -52,7 +52,7 @@ export const itemsData = {
             },
             "description": "鏡頭與成像感光元件之間的距離",
             "content": "焦距影響鏡頭的視角，短焦距鏡頭提供廣闊的視野，適合風景或建築攝影；長焦距鏡頭能放大遠處物體，常用於野生動物或運動攝影。",
-            "states": ["13mm", "24mm", "50mm", "85mm", "120mm"],
+            "states": ["14mm", "24mm", "50mm", "70mm", "120mm"],
             "initState" : 2,
             "url": "/articles/focal-length.json"
         },
