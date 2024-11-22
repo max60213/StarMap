@@ -1,7 +1,8 @@
-import { itemsData } from '../js/items-data.js';
-import GalaxyContext from './GalaxyContext';
+import { itemsData } from '../../js/items-data.js';
+import GalaxyContext from '../GalaxyContext.jsx';
 import { useContext, useEffect, useState } from 'react';
-import { currentPath } from './PathChecker.jsx';
+import { useNavigate } from "react-router-dom";
+import { currentPath } from '../PathChecker.jsx';
 
 function Info(props) {
   const { galaxy } = useContext(GalaxyContext);
@@ -19,14 +20,25 @@ function Info(props) {
     setItemData(currentItemData); // 將目前選中的項目數據保存到狀態中
   }, [galaxy]);
 
+  let navigate = useNavigate(); 
+  const toHome = () =>{ 
+    let path = `../`;
+    scrollTo(0, 0);
+    navigate(path);
+  }
+
   return (
     <div className={`info px-3 pe-xl-5 d-flex align-items-center full-size ${props.className === undefined ? "" : props.className}`}>
       {itemData ? (
         <div className='info-content'>
-          <h1 className='info-content-title pb-1'>{itemData.name.zh} <span>{itemData.name.en}</span></h1>
-          <h3>{itemData.description}</h3>
-          <hr/>
-          <p className='pt-2'>{itemData.content}</p>
+          <div className='info-content-title d-flex align-items-center'>
+            <h1>{itemData.name.zh}<span className='en ps-2'>{itemData.name.en}</span></h1>
+            <button className='ms-auto mx_btn' onClick={toHome}>
+              <img src="./close.svg" alt="" />
+            </button>
+          </div>
+          <hr />
+          <p>{itemData.content}</p>
         </div>
       ) : (
         <h1>No item selected</h1>

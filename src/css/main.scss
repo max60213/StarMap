@@ -14,15 +14,15 @@
         mix-blend-mode: screen;
     }
 
-    @media all and (max-height: 500px) {
+    @media all and (max-height: 700px) {
         &.shrink {
             height: 100vh;
         }
     }
 
-    @media all and (min-height: 500.5px) {
+    @media all and (min-height: 700.5px) {
         &.shrink {
-            height: 65vh;
+            height: calc(100px + 60vh);
         }
     }
 }
@@ -287,15 +287,4 @@
     font-weight: 300;
     font-size: 1.2rem;
     margin-left: 0.5rem;
-}
-
-.info{
-    max-width: max(680px, 30vw);
-    &-content{
-        &-title{
-            .en{
-                font-weight: 300;
-            }
-        }
-    }
 }

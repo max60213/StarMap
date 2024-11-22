@@ -34,15 +34,15 @@
       "align": "start",
       "srcList": [
         {
-          "src": "/img/sensor/sensor-of-DSLR.jpg",
+          "src": "/img/principles/sensor-of-DSLR.jpg",
           "caption": "相機鏡頭下的CMOS"
         },
         {
-          "src": "/img/sensor/sensor-of-carcam.jpg",
+          "src": "/img/principles/sensor-of-carcam.jpg",
           "caption": "行車記錄器的CMOS"
         },
         {
-          "src": "/img/sensor/CCD.jpg",
+          "src": "/img/principles/CCD.jpg",
           "caption": "一組用於紫外線影像處理用的CCD",
           "linkText": "zh.wikipedia.org/zh-tw/感光耦合元件",
           "link": "https://zh.wikipedia.org/zh-tw/感光耦合元件"
@@ -77,19 +77,19 @@
       "module": "Images",
       "srcList": [
         {
-          "src": "/img/sensor/Bayer_matrix.png",
+          "src": "/img/principles/Bayer_matrix.png",
           "caption": "​常見的RGGB陣列",
           "linkText": "wikiwand.com/zh-tw/布萊斯·拜爾",
           "link": "https://wikiwand.com/zh-tw/布萊斯·拜爾"
         },
         {
-          "src": "/img/sensor/sensors-type.png",
+          "src": "/img/principles/principles-type.png",
           "caption": "​各種特殊的陣列",
           "linkText": "zh.wikipedia.org/wiki/拜爾濾色鏡",
           "link": "http://zh.wikipedia.org/wiki/拜爾濾色鏡"
         },
         {
-          "src": "/img/sensor/CYGM-filter.png",
+          "src": "/img/principles/CYGM-filter.png",
           "caption": "CYGM陣列，以明度較高的顏色濾鏡來提升進光量",
           "linkText": "wikipedia.org/wiki/CYGM_filter",
           "link": "https://en.wikipedia.org/wiki/CYGM_filter"

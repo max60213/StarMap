@@ -3,28 +3,28 @@
 }
 
 .mx-heading1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
+  margin-top: 1.2em;
+  padding-top: 2rem;
 }
-.mx-heading1:not(:first-child) {
-  margin-top: 4rem;
-}
-
 .mx-heading2 {
+  font-size: 1.5rem;
   margin-bottom: 0rem;
+  margin-top: 1em;
 }
-
-.mx-paragraphs p {
+.mx-text p {
   margin-top: 0.8em;
 }
-
+.mx-table .table > :not(caption) > * > * {
+  background-color: transparent;
+}
 .mx mark {
   background-color: transparent;
   color: var(--theme-color);
   padding-top: 0;
   padding-bottom: 0;
 }
-
 .mx-list ul {
   margin-top: -0.6rem;
   list-style: disc;
@@ -32,7 +32,10 @@
 .mx-list ul li {
   margin-bottom: 0.4em;
 }
-
+.mx-label {
+  text-align: center;
+  margin-top: -0.8rem;
+}
 .mx-images {
   overflow: visible !important;
 }
@@ -52,11 +55,11 @@
 }
 .mx-images-item img {
   width: 100%;
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  transition: transform 0.5s ease, filter 0.5s ease;
 }
-.mx-images-item img:hover, .mx-images-item img:active, .mx-images-item img:focus {
+.mx-images-item img:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 10px 0 var(--shadow-float);
+  filter: drop-shadow(0 8px 10px var(--shadow-float));
 }
 .mx-images-item figcaption {
   margin-top: 1.2em;
@@ -68,4 +71,43 @@
   font-weight: 300;
   opacity: 0.6;
   color: var(--primary-color);
+}
+.mx_btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  position: relative;
+  background: transparent;
+}
+.mx_btn::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: all 0.6s cubic-bezier(0.3, 0, 0, 1);
+}
+.mx_btn img {
+  filter: invert(1);
+  width: 70%;
+  transition: filter 0.6s cubic-bezier(0.3, 0, 0, 1), transform 0.6s cubic-bezier(0.3, 0, 0, 1);
+}
+.mx_btn-lg img {
+  width: 85%;
+}
+.mx_btn:hover img {
+  filter: invert(0);
+}
+.mx_btn:hover:before {
+  width: 150%;
+  height: 150%;
+  background: white;
+}
+.mx_btn:hover:after {
+  background-color: black;
 }/*# sourceMappingURL=mxBasics.css.map */

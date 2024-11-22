@@ -14,7 +14,7 @@ const Heading1 = ({ id, text }) => <><h2 id={id} className="block title mx mx-he
 const small = 600;
 const medium = 1200;
 
-const Heading2 = ({ id, text }) => <h5 id={id} className="block mx mx-heading2">{text}</h5>;
+const Heading2 = ({ id, text }) => <h3 id={id} className="block mx mx-heading2">{text}</h3>;
 
 const List = ({ ordered, textList }) => {
   // 根據 ordered 的值來選擇是否使用 <ul> 或 <ol>
@@ -34,8 +34,15 @@ const List = ({ ordered, textList }) => {
 };
 
 // 內文元件，處理多個段落，支援 HTML 格式的渲染
-const Paragraphs = ({ textList }) => (
-  <div className="block mx mx-paragraphs">
+const Label = ({ text }) => (
+  <div className="block mx mx-label">
+      <p>{text}</p>
+  </div>
+);
+
+// 內文元件，處理多個段落，支援 HTML 格式的渲染
+const Text = ({ textList }) => (
+  <div className="block mx mx-text">
     {textList.map((text, index) => (
       <p
         key={index}
@@ -130,4 +137,4 @@ const Table = ({ columns, rows }) => (
 );
 
 
-export { Heading1, Heading2, List, Paragraphs, Images, Table };
+export { Heading1, Heading2, List, Text, Images, Table, Label };

@@ -1,12 +1,23 @@
 .mx-aside {
   padding-right: 0;
   width: 200px;
+  padding-top: 0.5rem;
 }
-.mx-aside a {
+.mx-aside > div {
+  top: 2rem;
+}
+.mx-aside .nav:hover > :not(:hover) {
+  color: var(--text-tertiary);
+}
+.mx-aside .nav a {
   white-space: nowrap;
   padding-right: 0;
   color: var(--text-secondary);
 }
-.mx-aside a:hover {
+.mx-aside .nav a:hover {
   color: var(--text-primary);
+}
+
+.nav-link:focus {
+  color: var(--theme-color) !important;
 }/*# sourceMappingURL=aside.css.map */

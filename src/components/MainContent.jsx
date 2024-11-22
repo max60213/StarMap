@@ -89,27 +89,23 @@ function MainContent(props) {
     };
 
     return (
-        <>
-            <div className="mx-list px-3 pe-xl-5">
-                <h1>Lorem ipsum dolor sit amet consectetur.</h1>
-                <p className="mb-1">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
-                    provident sequi est dolores neque corporis sunt nihil aspernatur nulla
-                    hic?
-                </p>
+        <div className="mx-list px-3 pe-xl-5">
+            <h1>Lorem ipsum dolor sit amet consectetur.</h1>
+            <p className="mb-1">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
+                provident sequi est dolores neque corporis sunt nihil aspernatur nulla
+                hic?
+            </p>
 
-                {itemGroup(0)}
-                <hr />
+            {itemGroup(0)}
+            <hr />
 
-                <h2>曝光三要素</h2>
-                {itemGroup(1)}
-                <hr />
+            {itemGroup(1)}
+            <hr />
 
-                <h2>其他</h2>
-                {itemGroup(2)}
-                <div></div>
-            </div>
-        </>
+            {itemGroup(2)}
+            <div></div>
+        </div>
     );
 }
 

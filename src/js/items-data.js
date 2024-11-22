@@ -1,16 +1,32 @@
-export const group = [1, 3, 8];
+export const group = [2, 4, 4];
 export const itemsData = {
     "items": {
-        "sensor": {
+        "principles": {
             "name": {
-                "zh": "感光元件",
-                "en": "Sensor"
+                "zh": "成像與機身",
+                "en": "Principles"
             },
-            "description": "數位攝影中的影像感測器",
+            "description": "感光元件與機身結構",
             "content": "感光元件是相機中負責捕捉光線並將其轉換為電子信號的重要部分。常見類型包括CMOS和CCD。CMOS常用於多數數位相機因其低功耗特性；CCD則因其出色的光線捕捉能力在高品質影像方面表現卓越。",
             "states": ["1\"", "APS-C", "Full Frame"],
             "initState" : 1,
-            "url": "/articles/sensor.json"
+            "url": "/articles/principles/principles.json"
+        },
+        "format": {
+            "name": {
+                "zh": "儲存與格式",
+                "en": "File Formats"
+            },
+            "description": "不同格式的用途與特性",
+            "content": "影像或視頻的格式決定了其數據的組織方式，如 JPEG、RAW、MP4 等。不同的格式有不同的特點，如壓縮比、編輯靈活性和檔案大小。"
+        },
+        "exposure-value": {
+            "name": {
+                "zh": "曝光值",
+                "en": "Exposure Value"
+            },
+            "description": "影像的總曝光量",
+            "content": "曝光值是根據 ISO、光圈和快門速度的設定來確定的，它決定了照片的總光量。正確的曝光能夠使照片展現出最佳的亮度和對比，避免過曝或欠曝。"
         },
         "aperture": {
             "name": {
@@ -25,8 +41,8 @@ export const itemsData = {
         },
         "shutter": {
             "name": {
-                "zh": "快門",
-                "en": "Shutter"
+                "zh": "快門速度",
+                "en": "Shutter Speed"
             },
             "description": "控制接收光線的時間長短",
             "content": "快門速度決定了相機感光元件曝光的時間長短。快門速度越快，適合拍攝運動或快速移動的主題，可以凍結畫面；慢快門則適合拍攝夜景或流水等靜態場景，產生流暢的效果。",
@@ -56,14 +72,6 @@ export const itemsData = {
             "initState" : 2,
             "url": "/articles/focal-length.json"
         },
-        "exposure-value": {
-            "name": {
-                "zh": "曝光值",
-                "en": "Exposure Value"
-            },
-            "description": "影像的總曝光量",
-            "content": "曝光值是根據 ISO、光圈和快門速度的設定來確定的，它決定了照片的總光量。正確的曝光能夠使照片展現出最佳的亮度和對比，避免過曝或欠曝。"
-        },
         "white-balance": {
             "name": {
                 "zh": "白平衡",
@@ -71,22 +79,6 @@ export const itemsData = {
             },
             "description": "調整相機色溫的設定",
             "content": "白平衡用於調整攝影圖像中的色溫，使色彩呈現自然。根據不同光源的色溫差異調整，可以消除不自然的色彩偏差，如日光、螢光燈或白熾燈下的攝影。"
-        },
-        "dynamic-range": {
-            "name": {
-                "zh": "動態範圍",
-                "en": "Dynamic Range"
-            },
-            "description": "相機捕捉亮部和暗部細節的能力",
-            "content": "動態範圍描述相機感測光線強度的範圍，高動態範圍有助於在同一幅圖片中保留更多的細節，特別是在非常亮或非常暗的區域。這是風景攝影中非常重要的特性。"
-        },
-        "metering-mode": {
-            "name": {
-                "zh": "測光模式",
-                "en": "Metering Mode"
-            },
-            "description": "相機測量場景亮度的方法",
-            "content": "測光模式影響相機如何評估場景中的光線分布，進而決定適當的曝光設定。常見的測光模式包括點測光、中央重點測光和評價測光，適用於不同的拍攝情境。"
         },
         "focus": {
             "name": {
@@ -103,14 +95,6 @@ export const itemsData = {
             },
             "description": "每秒顯示的影格數",
             "content": "幀率決定了視頻播放的流暢程度。高幀率如60幀/秒，可以使動作看起來更流暢自然，適合高速動作的拍攝；較低的幀率可能產生較為跳躍的效果，有時用於特殊效果或節省儲存空間。"
-        },
-        "format": {
-            "name": {
-                "zh": "格式",
-                "en": "Format"
-            },
-            "description": "影像或視頻的檔案格式",
-            "content": "影像或視頻的格式決定了其數據的組織方式，如 JPEG、RAW、MP4 等。不同的格式有不同的特點，如壓縮比、編輯靈活性和檔案大小。"
         }
     }
 };

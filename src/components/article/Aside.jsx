@@ -1,45 +1,85 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import "./css/aside.css";
 
 function Aside({ className }) {
-    // 創建一個狀態變量來存儲標題
     const [titles, setTitles] = useState([]);
 
-    useEffect(() => {
-        const titleElements = document.querySelectorAll('.title');  // 獲取所有的 .title 元件
-        console.log("TitleElements:", titleElements);
+    // 使用 useCallback 記憶化處理標題的函數
+    const processTitles = useCallback(() => {
+        const titleElements = document.querySelectorAll('.title');
 
         // 為概述添加 id
-        if (document.querySelector(".block"))
-            document.querySelector(".block").id = "overview";
+        const overviewBlock = document.querySelector(".block");
+        if (overviewBlock && !overviewBlock.id) {
+            overviewBlock.id = "overview";
+        }
 
-        // 提取每個標題元素的文本和已有的 id
-        const titleData = Array.from(titleElements).map((elem) => {
-            const titleText = elem.textContent; // 提取標題的文本
-            const titleId = elem.id;  // 直接抓取元素的 id
+        // 只在標題列表為空或有變化時更新
+        const newTitleData = Array.from(titleElements).map((elem) => ({
+            text: elem.textContent,
+            id: elem.id
+        }));
 
-            return { text: titleText, id: titleId };
+        // 比較新舊標題是否相同，避免不必要的更新
+        setTitles(prev => {
+            const isDifferent = prev.length !== newTitleData.length ||
+                prev.some((item, index) => 
+                    item.text !== newTitleData[index]?.text || 
+                    item.id !== newTitleData[index]?.id
+                );
+            
+            return isDifferent ? newTitleData : prev;
         });
-        setTitles(titleData);  // 更新狀態
-        console.log("Aside run");
     }, []);
 
+    // 處理點擊事件
+    const handleClick = useCallback((e) => {
+        e.preventDefault();
+        const href = e.currentTarget.getAttribute('href');
+        const element = document.querySelector(href);
+        if (element) {
+            element.scrollIntoView();
+        }
+    }, []);
+
+    // 初始化時處理標題
+    useEffect(() => {
+        processTitles();
+    }, [processTitles]);
+
+    // 使用 useMemo 記憶化導航列表
+    const navLinks = useMemo(() => (
+        <>
+            <a 
+                key="overview" 
+                className="nav-link" 
+                href="#overview"
+                onClick={handleClick}
+            >
+                概述
+            </a>
+            {titles.map(({ text, id }) => (
+                <a 
+                    key={id} 
+                    className="nav-link" 
+                    href={`#${id}`}
+                    onClick={handleClick}
+                >
+                    {text}
+                </a>
+            ))}
+        </>
+    ), [titles, handleClick]);
+
     return (
-        <aside className={`mx-aside sticky-top ${className}`}>
-            <div id="navbar" className="h-100 flex-column">
+        <aside className={`mx-aside ${className}`}>
+            <div id="navbar" className="sticky-top flex-column">
                 <div className="nav flex-column border-start">
-                    <a key="overview" className="nav-link" href="#overview">
-                        概述
-                    </a>
-                    {titles.map(({ text, id }) => (
-                        <a key={id} className="nav-link" href={`#${id}`}>
-                            {text}
-                        </a>
-                    ))}
+                    {navLinks}
                 </div>
             </div>
         </aside>
     );
 }
 
-export default Aside;
+export default React.memo(Aside);

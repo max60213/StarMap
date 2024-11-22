@@ -1,9 +1,9 @@
 import MainContent from "./components/MainContent";
 import Navigate from './components/Navigate';
-import Window from "./components/Window";
+import Window from "./components/pages/Window";
 import { CSSTransition } from 'react-transition-group';
 import { useIsHome } from './components/PathChecker';
-import Info from "./components/Info";
+import Info from "./components/pages/Info";
 import "./css/transitions.css";
 
 function Landing() {

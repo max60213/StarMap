@@ -1,0 +1,289 @@
+{
+  "components": {
+    "Basic": {
+      "path": "./MxBasics",
+      "modules": [
+        "Heading1",
+        "Heading2",
+        "Text",
+        "Images",
+        "Table",
+        "List",
+        "Label"
+      ]
+    }
+  },
+  "landing":{
+    "data":{
+      "lens": ["28MM"],
+      "WB": ["6500K"],
+      "shutter": ["60/1"],
+      "aperture": ["3.5"],
+      "iso": ["800"],
+      "EV": ["0"]
+    },
+    "info": [
+      "攝影設備種類繁多，但其基礎概念與原理始終如一。",
+      "不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
+    ],
+    "states": ["1\"", "APS-C", "Full Frame"],
+    "initState" : 1,
+    "url": "/articles/principles/principles.json"
+  },
+  "content": {
+    "beginner": [
+      {
+        "module": "Text",
+        "textList": [
+          "成像的原理涉及成像的原理涉及<mark>光線</mark>如何經過<mark>鏡頭</mark>和<mark>感光元件</mark>，最終形成影像。理解這些基礎概念有助於使用者選擇適合的相機，並在實際拍攝中靈活運用相機功能。"
+        ]
+      },
+      {
+        "module": "Heading2",
+        "text": "光學成像的原理",
+        "id": "optical-imaging-principles"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "光學成像是基於<mark>克卜勒</mark>（Kepler）的<mark>倒像成像</mark>觀點，光線通過鏡頭聚焦，並在感光元件或底片上形成<mark>倒像</mark>。這一過程運用了光線的<mark>折射</mark>，使影像能夠精確地被捕捉。"
+        ]
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "/img/principles/inverted-image.jpg",
+            "caption": "光線經過鏡頭聚焦形成倒像的示意圖"
+          }
+        ]
+      },
+      {
+        "module": "Heading1",
+        "text": "常用功能構造",
+        "id": "common-buttons-on-camera-body"
+      },
+      {
+        "module": "Heading2",
+        "text": "模式轉盤",
+        "id": "mode-dial"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "模式轉盤通常位於相機的頂部，用於切換不同的拍攝模式。主要模式包括手動模式（M）、自動模式（AUTO）、光圈優先模式（A/Av）和快門優先模式（S/Tv）。這些模式讓使用者可以快速調整拍攝的曝光參數，以適應不同場景需求。"
+        ]
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "/img/examples/sony-mode-dial.jpg"
+          },
+          {
+            "src": "/img/examples/canon-mode-dial.jpg"
+          },
+          {
+            "src": "/img/examples/nikon-mode-dial.jpg"
+          }
+        ]
+      },
+      {
+        "module": "Label",
+        "text": "各種機身上的模式轉盤，不同廠牌標示可能不同，不過功能大同小異"
+      },
+      {
+        "module": "Heading2",
+        "text": "白平衡按鈕 (WB)",
+        "id": "white-balance-button"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "白平衡按鈕讓使用者能夠快速調整相機的白平衡設定，以應對不同的光線條件，保持影像色彩的準確性。白平衡選項通常包括自動模式、日光、陰影、螢光燈、鎢絲燈等，以適應不同的拍攝環境。"
+        ]
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "/img/examples/sony-wb-button.jpg"
+          },
+          {
+            "src": "/img/examples/canon-wb-button.jpg"
+          },
+          {
+            "src": "/img/examples/nikon-wb-button.jpg"
+          }
+        ]
+      },
+      {
+        "module": "Label",
+        "text": "各種機身上的白平衡按鈕，有些尺寸較小的機種會放在選單內"
+      },
+      {
+        "module": "Heading2",
+        "text": "ISO按鈕",
+        "id": "iso-button"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "ISO按鈕用於調整相機的感光度，影響影像的亮度。在暗光環境中，可以提高ISO來增加亮度，但會帶來噪點，因此需要根據需求適當調整。"
+        ]
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "/img/examples/sony-iso-button.jpg"
+          },
+          {
+            "src": "/img/examples/canon-iso-button.jpg"
+          },
+          {
+            "src": "/img/examples/nikon-iso-button.jpg"
+          }
+        ]
+      },
+      {
+        "module": "Label",
+        "text": "各種機身上的iso按鈕，有些尺寸較小的機種會放在選單內"
+      },
+      {
+        "module": "Heading2",
+        "text": "其他功能按鈕",
+        "id": "other-buttons"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "其他功能（如曝光補償、自動對焦模式、驅動模式等）通常會放在Menu選單內，以便在需要時進行設置。這些選項可以通過選單來自訂和調整，避免機身上出現過多的按鈕，保持操作的簡潔。"
+        ]
+      }
+    ],
+    "advance": [
+      {
+        "module": "Heading1",
+        "text": "感光元件的種類",
+        "id": "types-of-sensors"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "感光元件是成像的核心，常見的有 <mark>CMOS</mark>（互補金屬氧化物半導體）和 <mark>CCD</mark>（電荷耦合元件），兩者在<mark>成本</mark>、<mark>功耗</mark>、<mark>影像品質</mark>等方面存在差異。"
+        ]
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "/img/cmos-sensor.jpg",
+            "caption": "相機鏡頭中的CMOS感光元件"
+          }
+        ]
+      },
+      {
+        "module": "Table",
+        "columns": [
+          "比較項目",
+          "CMOS",
+          "CCD"
+        ],
+        "rows": [
+          [
+            "製造成本",
+            "低",
+            "高"
+          ],
+          [
+            "功耗",
+            "低",
+            "高"
+          ],
+          [
+            "影像雜訊",
+            "較高，需校正",
+            "低"
+          ],
+          [
+            "傳輸速度",
+            "快速",
+            "較慢"
+          ],
+          [
+            "應用範圍",
+            "手機、一般相機",
+            "天文攝影、高精度設備"
+          ]
+        ]
+      },
+      {
+        "module": "Heading1",
+        "text": "像素排列",
+        "id": "pixel-array"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "感光元件是由許多細小的<mark>像素</mark>（Pixel）組合而成，像素的數量與尺寸決定了影像的<mark>解析度</mark>和<mark>感光能力</mark>。每個像素只能捕捉某一特定範圍的電磁波，即一種顏色的光，因此需要多個像素的組合來捕捉<mark>彩色</mark>的畫面。",
+          "目前最常見的排列方式是 <mark>Bayer 濾色鏡</mark>（Bayer Filter），它包含<mark>紅</mark>（R）、<mark>綠</mark>（G）、<mark>藍</mark>（B）像素的規律排列。由於人眼對綠色較為敏感，Bayer 陣列中綠色像素的數量是紅色和藍色的兩倍，這種排列稱為 <mark>RGGB 陣列</mark>。",
+          "除了 RGB 陣列外，還有其他變種，如 <mark>CYGM 陣列</mark> 和 <mark>RYYB 陣列</mark>，它們透過特殊的顏色濾鏡來提升<mark>進光量</mark>，但在<mark>顏色準確度</mark>上有所犧牲。"
+        ]
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "/img/Bayer_matrix.png",
+            "caption": "常見的RGGB陣列",
+            "linkText": "wikiwand.com/zh-tw/布萊斯·拜爾",
+            "link": "https://wikiwand.com/zh-tw/布萊斯·拜爾"
+          },
+          {
+            "src": "/img/principles-type.png",
+            "caption": "​各種特殊的陣列",
+            "linkText": "zh.wikipedia.org/wiki/拜爾濾色鏡",
+            "link": "http://zh.wikipedia.org/wiki/拜爾濾色鏡"
+          },
+          {
+            "src": "/img/CYGM-filter.png",
+            "caption": "CYGM陣列，以明度較高的顏色濾鏡來提升進光量",
+            "linkText": "wikipedia.org/wiki/CYGM_filter",
+            "link": "https://en.wikipedia.org/wiki/CYGM_filter"
+          }
+        ]
+      },
+      {
+        "module": "Heading1",
+        "text": "不同尺寸的影響",
+        "id": "size-matters"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "感光元件的尺寸越大，通常能提升<mark>畫質</mark>、降低<mark>雜訊</mark>，並在低光環境中提供更好的表現。然而，這並不代表影像一定會更<mark>亮</mark>。影像的亮度主要由<mark>光圈</mark>、<mark>快門速度</mark>和<mark>感光度（ISO）</mark>共同決定，而非單純依賴感光元件的大小。"
+        ]
+      },
+      {
+        "module": "Heading2",
+        "text": "尺寸越大≠亮度越高",
+        "id": "bigger-sensor-≠-brighter-image"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "感光元件越大，畫面會更亮是<mark>常見的迷思</mark>。事實上，影像的亮度並非單單由感光元件的大小決定，而是需要光圈、快門速度和感光度 (ISO) 這三者的綜合調整。感光元件的尺寸增大，通常能提升畫質、降低雜訊，並在低光環境中有更好的表現。然而，這不代表影像一定會更亮",
+          "以量筒測量降雨為例，不同尺寸的量筒在同場雨中，儘管大量筒能容納更多雨水，但與小量筒相比，每<mark>單位面積的雨量是一致的</mark>。類似地，感光元件的大小影響的是光線總量的收集能力，但每單位像素的曝光仍主要由光圈、快門速度和感光度（ISO）共同決定。"
+        ]
+      }
+    ],
+    "learnedMore": [
+      {
+        "module": "Heading1",
+        "text": "延伸閱讀",
+        "id": "learn-more"
+      }
+    ]
+  }
+}

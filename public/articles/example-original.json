@@ -1,0 +1,44 @@
+{
+  "components": {
+    "Basic": {
+      "path": "./MxBasics",
+      "modules": [
+        "Heading1",
+        "Heading2",
+        "Paragraphs",
+        "Images",
+        "Table",
+        "List",
+        "Label"
+      ]
+    }
+  },
+  "content": [
+    {
+      "module": "Paragraphs",
+      "textList": [
+        "成像的原理涉及成像的原理涉及<mark>光線</mark>如何經過<mark>鏡頭</mark>和<mark>感光元件</mark>，最終形成影像。理解這些基礎概念有助於使用者選擇適合的相機，並在實際拍攝中靈活運用相機功能。"
+      ]
+    },
+    {
+      "module": "Heading2",
+      "text": "光學成像的原理",
+      "id": "optical-imaging-principles"
+    },
+    {
+      "module": "Paragraphs",
+      "textList": [
+        "光學成像是基於<mark>克卜勒</mark>（Kepler）的<mark>倒像成像</mark>觀點，光線通過鏡頭聚焦，並在感光元件或底片上形成<mark>倒像</mark>。這一過程運用了光線的<mark>折射</mark>，使影像能夠精確地被捕捉。"
+      ]
+    },
+    {
+      "module": "Images",
+      "srcList": [
+        {
+          "src": "/img/principles/inverted-image.jpg",
+          "caption": "光線經過鏡頭聚焦形成倒像的示意圖"
+        }
+      ]
+    }
+  ]
+}

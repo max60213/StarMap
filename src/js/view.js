@@ -26,6 +26,24 @@ export function sliderInit() {
     thumb.style.left = initPosition + 'px'; // 設定滑塊的初始位置
     state.innerHTML = array[init]; // 顯示初始狀態
     video.style.transform = transforms[init]; // 根據初始步進設定影片的位移
+
+    // 點擊 slider 以移動 thumb 到點擊位置
+    slider.onclick = function (event) {
+        let clickPosition = event.clientX - slider.getBoundingClientRect().left;
+        let newLeft = Math.round(clickPosition / stepPixel) * stepPixel;
+
+        if (newLeft < 0) {
+            newLeft = 0;
+        } else if (newLeft > slider.offsetWidth - thumb.offsetWidth) {
+            newLeft = slider.offsetWidth - thumb.offsetWidth;
+        }
+
+        const currentStep = Math.min(Math.floor(newLeft / stepPixel), totalSteps);
+        state.innerHTML = array[currentStep];
+        thumb.style.left = newLeft + 'px';
+        video.style.transform = transforms[currentStep];
+    };
+
     thumb.onmousedown = function (event) {
         event.preventDefault();
         highlight.style.display = 'none';
@@ -34,20 +52,17 @@ export function sliderInit() {
 
         document.onmousemove = function (event) {
             let newLeft = event.clientX - shiftX - slider.getBoundingClientRect().left;
-            // 套用步進值並限制拇指的移動範圍
             newLeft = Math.round(newLeft / stepPixel) * stepPixel;
+
             if (newLeft < 0) {
                 newLeft = 0;
             } else if (newLeft > slider.offsetWidth - thumb.offsetWidth) {
                 newLeft = slider.offsetWidth - thumb.offsetWidth;
             }
 
-            // 根據拇指的位置計算當前步進索引
             const currentStep = Math.min(Math.floor(newLeft / stepPixel), totalSteps);
-            state.innerHTML = array[currentStep]; // 根據當前步進顯示相對應的狀態
+            state.innerHTML = array[currentStep];
             thumb.style.left = newLeft + 'px';
-
-            // 根據當前步進索引來更新影片的 translate 位移
             video.style.transform = transforms[currentStep];
         };
 

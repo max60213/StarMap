@@ -1,10 +1,10 @@
-import GalaxyContext from './GalaxyContext';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import GalaxyContext from '../GalaxyContext';
+import { CSSTransition } from 'react-transition-group';
 import { useContext, useEffect, useRef } from 'react';
-import "../css/window.css";
-import "../css/article.css";
+import "./css/window.css";
 import View from './View';
-import { useIsHome } from "./PathChecker";
+import Slider from './Slider';
+import { useIsHome } from "../PathChecker";
 
 
 function Window(props) {
@@ -33,15 +33,24 @@ function Window(props) {
                 <div className="player">
                     <video ref={iconVideo} id='icon-player' loop muted></video>
                 </div>
-                    <CSSTransition
-                        in={!isHome}
-                        timeout={300}
-                        classNames="fade"
-                        unmountOnExit
-                    >
-                        <View />
-                    </CSSTransition>
+                <CSSTransition
+                    in={!isHome}
+                    timeout={300}
+                    classNames="fade"
+                    unmountOnExit
+                >
+                    <View />
+                </CSSTransition>
+
             </div>
+            <CSSTransition
+                    in={!isHome}
+                    timeout={300}
+                    classNames="fade"
+                    unmountOnExit
+                >
+                    <Slider />
+                </CSSTransition>
         </div>
     );
 }
