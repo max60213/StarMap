@@ -15,7 +15,7 @@ class Galaxy {
     this.config = {
       mobileDistance: 1,
       pcDistance: 0.8,
-      pcShift: [-2.2 / 10, 0],
+      pcShift: [-2.3 / 10, 0],
       mobileShift: [0, 1 / 4],
       respondTime: 0.04,
       breakpoint: 785.9,

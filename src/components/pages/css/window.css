@@ -5,6 +5,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0;
+  transition: gap 0.5s ease;
+}
+.window:has(.active) {
   gap: 1rem;
 }
 .window-frame {
@@ -113,8 +117,17 @@
 .info-content-title .en {
   font-weight: 300;
   font-size: 1.8rem;
+  text-wrap: nowrap;
 }
-.info p {
+.info p:not(.second) {
   font-size: 1.4rem;
   color: var(--text-primary);
+  mix-blend-mode: overlay;
+}
+.info .second {
+  position: absolute;
+  top: 0;
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  opacity: 0.6;
 }/*# sourceMappingURL=window.css.map */

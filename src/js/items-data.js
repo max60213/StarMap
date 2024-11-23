@@ -12,13 +12,14 @@ export const itemsData = {
             "initState" : 1,
             "url": "/articles/principles/principles.json"
         },
-        "format": {
+        "storage-methods": {
             "name": {
                 "zh": "儲存與格式",
-                "en": "File Formats"
+                "en": "Storage Methods"
             },
             "description": "不同格式的用途與特性",
-            "content": "影像或視頻的格式決定了其數據的組織方式，如 JPEG、RAW、MP4 等。不同的格式有不同的特點，如壓縮比、編輯靈活性和檔案大小。"
+            "content": "影像或視頻的格式決定了其數據的組織方式，如 JPEG、RAW、MP4 等。不同的格式有不同的特點，如壓縮比、編輯靈活性和檔案大小。",
+            "url": "/articles/storage-methods/storage-methods.json"
         },
         "exposure-value": {
             "name": {

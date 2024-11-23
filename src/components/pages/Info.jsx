@@ -20,8 +20,22 @@ function Info(props) {
     setItemData(currentItemData); // 將目前選中的項目數據保存到狀態中
   }, [galaxy]);
 
-  let navigate = useNavigate(); 
-  const toHome = () =>{ 
+  // 加載 JSON 文件
+  useEffect(() => {
+    const fetchItemsData = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/articles/${articleId}/${articleId}.json`); // 修改為 JSON 文件的路徑
+        const data = await response.json();
+        setItemsData(data);
+      } catch (error) {
+        console.error('Failed to fetch items-data.json:', error);
+      }
+    };
+    fetchItemsData();
+  }, []);
+
+  let navigate = useNavigate();
+  const toHome = () => {
     let path = `../`;
     scrollTo(0, 0);
     navigate(path);
@@ -32,13 +46,20 @@ function Info(props) {
       {itemData ? (
         <div className='info-content'>
           <div className='info-content-title d-flex align-items-center'>
-            <h1>{itemData.name.zh}<span className='en ps-2'>{itemData.name.en}</span></h1>
+            <div className="d-flex flex-wrap align-items-baseline">
+              <h1 className='pe-2'>{itemData.name.zh}</h1>
+              <h2 className='en'>{itemData.name.en}</h2>
+            </div>
+
             <button className='ms-auto mx_btn' onClick={toHome}>
               <img src="./close.svg" alt="" />
             </button>
           </div>
           <hr />
-          <p>{itemData.content}</p>
+          <div className='position-relative'>
+            <p>{itemData.content}</p>
+            <p className='second'>{itemData.content}</p>
+          </div>
         </div>
       ) : (
         <h1>No item selected</h1>

@@ -16,7 +16,7 @@
     &-heading2 {
         font-size: 1.5rem;
         margin-bottom: 0rem;
-        margin-top: 1em;
+        margin-top: 1.8em;
     }
 
     &-text p {
@@ -100,6 +100,7 @@
         border: none;
         position: relative;
         background: transparent;
+        flex-shrink: 0;
         &::before{
             content: "";
             display: block;

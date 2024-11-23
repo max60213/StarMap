@@ -10,17 +10,24 @@ import 'swiper/css/navigation';
 
 
 // 標題元件
-const Heading1 = ({ id, text }) => <><h2 id={id} className="block title mx mx-heading1">{text}</h2><hr></hr></>;
+const Heading1 = ({ id, text, customClass = "" }) => (
+  <>
+    <h2 id={id} className={`block title mx mx-heading1 ${customClass}`}>{text}</h2>
+    <hr />
+  </>
+);
 const small = 600;
 const medium = 1200;
 
-const Heading2 = ({ id, text }) => <h3 id={id} className="block mx mx-heading2">{text}</h3>;
+const Heading2 = ({ id, text, customClass = "" }) => (
+  <h3 id={id} className={`block mx mx-heading2 ${customClass}`}>{text}</h3>
+);
 
-const List = ({ ordered, textList }) => {
+const List = ({ ordered, textList, customClass = "" }) => {
   // 根據 ordered 的值來選擇是否使用 <ul> 或 <ol>
   const ListTag = ordered ? 'ol' : 'ul';
   return (
-    <div className="block mx mx-list">
+    <div className={`block mx mx-list ${customClass}`}>
       <ListTag>
         {textList.map((text, index) => (
           <li
@@ -34,26 +41,23 @@ const List = ({ ordered, textList }) => {
 };
 
 // 內文元件，處理多個段落，支援 HTML 格式的渲染
-const Label = ({ text }) => (
-  <div className="block mx mx-label">
-      <p>{text}</p>
+const Label = ({ text, customClass = "" }) => (
+  <div className={`block mx mx-label ${customClass}`}>
+    <p>{text}</p>
   </div>
 );
 
 // 內文元件，處理多個段落，支援 HTML 格式的渲染
-const Text = ({ textList }) => (
-  <div className="block mx mx-text">
+const Text = ({ textList, customClass = "" }) => (
+  <div className={`block mx mx-text ${customClass}`}>
     {textList.map((text, index) => (
-      <p
-        key={index}
-        dangerouslySetInnerHTML={{ __html: text }}
-      />
+      <p key={index} dangerouslySetInnerHTML={{ __html: text }} />
     ))}
   </div>
 );
 
 // 圖片元件，處理多張圖片並包含可選的說明和連結
-const Images = ({ align = 'start', srcList }) => {
+const Images = ({ align = 'center', srcList, customClass = "" }) => {
   const baseUrl = import.meta.env.BASE_URL; // 從環境變數獲取 baseUrl
 
 // 根據 align 參數決定對應的對齊類別
@@ -61,7 +65,7 @@ const alignClass = `align-items-${align}`;
 
   return (
     <Swiper
-      className="block mx mx-images"
+      className={`block mx mx-images ${customClass}`}
       cssMode={true}
       navigation={true}
       spaceBetween={30}
@@ -89,7 +93,7 @@ const alignClass = `align-items-${align}`;
       modules={[Navigation, Pagination]}
     >
       {srcList.map((image, index) => (
-        <SwiperSlide key={index} className="swiper-wrapper mx mx-images-item d-flex align-items-center">
+        <SwiperSlide key={index} className={`swiper-wrapper mx mx-images-item d-flex ${alignClass}`}>
           {/* 僅渲染圖片，無論是否有 link */}
           <img src={`${baseUrl}${image.src}`} alt={image.alt} />
 
@@ -111,8 +115,8 @@ const alignClass = `align-items-${align}`;
 
 
 // 新增表格元件，支援從 JSON 動態生成表格
-const Table = ({ columns, rows }) => (
-  <div className="block mx mx-table">
+const Table = ({ columns, rows, customClass = "" }) => (
+  <div className={`block mx mx-table ${customClass}`}>
     <table className="table table-striped table-hover">
       <thead>
         <tr>
@@ -136,5 +140,9 @@ const Table = ({ columns, rows }) => (
   </div>
 );
 
+const Embed = ({ content, customClass = ""}) => (
+  <div className={`block mx mx-embed ${customClass}`} dangerouslySetInnerHTML={{ __html: content }}>
+  </div>
+);
 
-export { Heading1, Heading2, List, Text, Images, Table, Label };
+export { Heading1, Heading2, List, Text, Images, Table, Label, Embed };

@@ -7,7 +7,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0;
+    transition: gap 0.5s ease;
+
+    &:has(.active) {
+        gap: 1rem;
+
+    }
 
     &-frame {
         position: relative;
@@ -52,7 +58,6 @@
             border-radius: 100%;
             aspect-ratio: 1/1;
             transition: all 0.5s ease-in-out, opacity 0.2s;
-
         }
 
         &.active {
@@ -63,7 +68,6 @@
             aspect-ratio: 4/3;
             border-radius: 8px;
             transition: all 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.02s;
-
 
             @media all and (#{$phone-only}) {
                 max-height: 100%;
@@ -128,18 +132,31 @@
     }
 }
 
-.info{
+.info {
     max-width: max(680px, 30vw);
-    &-content{
-        &-title{
-            .en{
+
+    &-content {
+        &-title {
+            .en {
                 font-weight: 300;
                 font-size: 1.8rem;
+                text-wrap: nowrap;
             }
+
         }
     }
-    p{
+
+    p:not(.second) {
         font-size: 1.4rem;
         color: var(--text-primary);
+        mix-blend-mode: overlay;
+    }
+
+    .second {
+        position: absolute;
+        top: 0;
+        font-size: 1.4rem;
+        color: var(--text-primary);
+        opacity: 0.6;
     }
 }

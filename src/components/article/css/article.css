@@ -21,10 +21,6 @@
   position: relative;
 }
 
-.mx-section:not(:first-child) {
-  margin-top: 6rem;
-}
-
 .advance {
   display: grid;
   margin-top: 0 !important;
