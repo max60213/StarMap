@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GridHelper } from 'three';
 import { GUI } from 'dat.gui';
+import { InfiniteGridHelper } from './InfiniteGridHelper'; // 請確認路徑是否正確
 import { group, itemsData } from '../js/items-data';
 
 class Galaxy {
@@ -93,12 +95,13 @@ class Galaxy {
 
     this.cube2 = new THREE.Mesh(boxGeometry, redMaterial);
     this.cube2.position.set(0, 1, 0);
+
     // Add Grid
-    const gridGeometry = new THREE.PlaneGeometry(150, 150, 150, 150);
-    const gridMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, wireframe: true });
-    const grid = new THREE.Mesh(gridGeometry, gridMaterial);
+
+    // 加入 InfiniteGridHelper
+    // 初始化 InfiniteGridHelper
+    const grid = new InfiniteGridHelper(1, 0, new THREE.Color('white'), 50, 'xzy');
     grid.position.y = -1.5;
-    grid.rotation.x = -Math.PI / 2;
     this.scene.add(grid);
   }
 
