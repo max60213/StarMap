@@ -11,7 +11,9 @@ html, body, * {
 }
 
 [data-bs-theme=dark] {
-  --background-color: #181818;
+  --background-color: hsl(0, 0%, 9%);
+  --layer-1: rgba(255, 255, 255, 0.1);
+  --layer-2: rgba(255, 255, 255, 0.2);
   --primary-color: #ffffff;
   --text-primary: hsl(0, 0%, 100%);
   --text-secondary: hsla(0, 0%, 100%, 0.8);
@@ -24,6 +26,8 @@ html, body, * {
 
 [data-bs-theme=light] {
   --background-color: #ffffff;
+  --layer-1: rgba(0, 0, 0, 0.06);
+  --layer-2: rgba(0, 0, 0, 0.12);
   --primary-color: #181818;
   --text-primary: hsla(0, 0%, 0%, 0.8);
   --text-secondary: hsla(0, 0%, 0%, 0.7);

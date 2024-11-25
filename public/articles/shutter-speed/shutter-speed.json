@@ -1,0 +1,61 @@
+{
+	"components": {
+		"Basic": {
+			"path": "./MxBasics",
+			"modules": [
+				"Heading1",
+				"Heading2",
+				"Text",
+				"Images",
+				"Table",
+				"List",
+				"Label"
+			]
+		}
+	},
+	"landing": {
+		"data": {
+			"lens": [
+				"28MM"
+			],
+			"WB": [
+				"6500K"
+			],
+			"shutter": [
+				"60/1"
+			],
+			"aperture": [
+				"3.5"
+			],
+			"iso": [
+				"800"
+			],
+			"EV": [
+				"0"
+			]
+		},
+		"info": [
+			"攝影設備種類繁多，但其基礎概念與原理始終如一。",
+			"不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
+		],
+		"states": [
+			"1\"",
+			"APS-C",
+			"Full Frame"
+		],
+		"initState": 1,
+		"url": "/articles/principles/principles.json"
+	},
+	"content": {
+		"beginner": [
+			{
+				"module": "Text",
+				"textList": [
+					"快門速度是攝影中控制光線進入相機的時間長短的重要參數。當快門打開時，光線會通過鏡頭進入相機並到達感光元件，快門的開啟時間越長，感光元件接收到的光線就越多，影像越亮；反之，快門開啟時間越短，光線越少，影像越暗。"
+				]
+			}
+		],
+		"advance": [],
+		"learnMore": []
+	}
+}

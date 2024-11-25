@@ -111,6 +111,7 @@
 
         * {
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+            color: white;
         }
 
         p {
@@ -136,6 +137,9 @@
     max-width: max(680px, 30vw);
 
     &-content {
+        * {
+            color: white;
+        }
         &-title {
             .en {
                 font-weight: 300;
@@ -148,7 +152,7 @@
 
     p:not(.second) {
         font-size: 1.4rem;
-        color: var(--text-primary);
+        color: white;
         mix-blend-mode: overlay;
     }
 
@@ -156,7 +160,7 @@
         position: absolute;
         top: 0;
         font-size: 1.4rem;
-        color: var(--text-primary);
+        color: white;
         opacity: 0.6;
     }
 }

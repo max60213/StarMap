@@ -1,44 +1,36 @@
 import "./css/mxBasics.css";
-// import Swiper core and required modules
-import { Navigation, Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React from "react";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
-
-// 標題元件
-const Heading1 = ({ id, text, customClass = "" }) => (
-  <>
-    <h2 id={id} className={`block title mx mx-heading1 ${customClass}`}>{text}</h2>
-    <hr />
-  </>
-);
-const small = 600;
-const medium = 1200;
-
-const Heading2 = ({ id, text, customClass = "" }) => (
-  <h3 id={id} className={`block mx mx-heading2 ${customClass}`}>{text}</h3>
-);
-
-const List = ({ ordered, textList, customClass = "" }) => {
-  // 根據 ordered 的值來選擇是否使用 <ul> 或 <ol>
-  const ListTag = ordered ? 'ol' : 'ul';
-  return (
-    <div className={`block mx mx-list ${customClass}`}>
-      <ListTag>
-        {textList.map((text, index) => (
-          <li
-            key={index}
-            dangerouslySetInnerHTML={{ __html: text }}
-          />
-        ))}
-      </ListTag>
-    </div>
-  );
+/**
+ * 渲染嵌套模組的輔助函數
+ * @param {Array} nestedItems - 子模組的結構
+ * @param {Object} components - 可用的元件集合
+ */
+const renderNestedModules = (nestedItems, components) => {
+  if (!nestedItems || !Array.isArray(nestedItems)) return null;
+  return nestedItems.map((item, index) => {
+    const Component = components[item.module] || DefaultComponent;
+    return (
+      <Component key={index} {...item}>
+        {item.nestedItems && renderNestedModules(item.nestedItems, components)}
+      </Component>
+    );
+  });
 };
+
+// 預設元件 - 用於處理找不到的模組
+const DefaultComponent = ({ module }) => (
+  <div className="default-component">
+    無法渲染模組 {module}，請確認資料或元件配置是否正確。
+  </div>
+);
 
 // 內文元件，處理多個段落，支援 HTML 格式的渲染
 const Label = ({ text, customClass = "" }) => (
@@ -47,21 +39,72 @@ const Label = ({ text, customClass = "" }) => (
   </div>
 );
 
-// 內文元件，處理多個段落，支援 HTML 格式的渲染
-const Text = ({ textList, customClass = "" }) => (
+// 標題元件
+const Heading1 = ({ id, text, customClass = "", nestedItems }) => (
+  <>
+    <h2 id={id} className={`block title mx mx-heading1 ${customClass}`}>{text}</h2>
+    <hr />
+    {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
+  </>
+);
+
+const Heading2 = ({ id, text, customClass = "", nestedItems }) => (
+  <div className={`block mx mx-heading2 ${customClass}`}>
+    <h3 id={id}>{text}</h3>
+    {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
+  </div>
+);
+
+const List = ({ ordered, textList, customClass = "", nestedItems }) => {
+  const ListTag = ordered ? "ol" : "ul";
+  return (
+    <div className={`block mx mx-list ${customClass}`}>
+      <ListTag>
+        {textList.map((text, index) => (
+          <li key={index} dangerouslySetInnerHTML={{ __html: text }} />
+        ))}
+      </ListTag>
+      {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
+    </div>
+  );
+};
+
+// 內文元件
+const Text = ({ textList, customClass = "", nestedItems }) => (
   <div className={`block mx mx-text ${customClass}`}>
     {textList.map((text, index) => (
       <p key={index} dangerouslySetInnerHTML={{ __html: text }} />
     ))}
+    {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
+  </div>
+);
+
+const Image = ({
+  src,
+  alt = "",
+  caption = "",
+  link = "",
+  linkText = "",
+  customClass = "",
+  nestedItems,
+}) => (
+  <div className={`block mx mx-image ${customClass}`}>
+    <img src={src} alt={alt} />
+    {caption && <figcaption className="text-center">{caption}</figcaption>}
+    {link && (
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        {linkText || "More Info"}
+      </a>
+    )}
+    {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
   </div>
 );
 
 // 圖片元件，處理多張圖片並包含可選的說明和連結
-const Images = ({ align = 'center', srcList, customClass = "" }) => {
+const Images = ({ align = "center", srcList, customClass = "", nestedItems }) => {
   const baseUrl = import.meta.env.BASE_URL; // 從環境變數獲取 baseUrl
 
-// 根據 align 參數決定對應的對齊類別
-const alignClass = `align-items-${align}`;
+  const alignClass = `align-items-${align}`;
 
   return (
     <Swiper
@@ -94,13 +137,8 @@ const alignClass = `align-items-${align}`;
     >
       {srcList.map((image, index) => (
         <SwiperSlide key={index} className={`swiper-wrapper mx mx-images-item d-flex ${alignClass}`}>
-          {/* 僅渲染圖片，無論是否有 link */}
           <img src={`${baseUrl}${image.src}`} alt={image.alt} />
-
-          {/* 渲染 caption （如果有） */}
           {image.caption && <figcaption>{image.caption}</figcaption>}
-
-          {/* 如果有 link，則顯示連結 */}
           {image.link && (
             <a href={image.link} className="link" target="_blank" rel="noopener noreferrer">
               {image.linkText}
@@ -108,14 +146,13 @@ const alignClass = `align-items-${align}`;
           )}
         </SwiperSlide>
       ))}
-
+      {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
     </Swiper>
   );
 };
 
-
-// 新增表格元件，支援從 JSON 動態生成表格
-const Table = ({ columns, rows, customClass = "" }) => (
+// 表格元件
+const Table = ({ columns, rows, customClass = "", nestedItems }) => (
   <div className={`block mx mx-table ${customClass}`}>
     <table className="table table-striped table-hover">
       <thead>
@@ -137,12 +174,49 @@ const Table = ({ columns, rows, customClass = "" }) => (
         ))}
       </tbody>
     </table>
+    {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
   </div>
 );
 
-const Embed = ({ content, customClass = ""}) => (
-  <div className={`block mx mx-embed ${customClass}`} dangerouslySetInnerHTML={{ __html: content }}>
+const Embed = ({ content, customClass = "", nestedItems }) => (
+  <div
+    className={`block mx mx-embed ${customClass}`}
+    dangerouslySetInnerHTML={{ __html: content }}
+  >
+    {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
   </div>
 );
 
-export { Heading1, Heading2, List, Text, Images, Table, Label, Embed };
+const Columns = ({ breakpoints, customClass = "", nestedItems }) => {
+  // 將每個斷點的列數設定轉換為 Bootstrap 的類別
+  const breakpointClasses = Object.entries(breakpoints)
+    .map(([breakpoint, columns]) => `col-${breakpoint}-${columns}`)
+    .join(" ");
+
+  return (
+    <div className={`block row ${customClass}`}>
+      {nestedItems &&
+        nestedItems.map((item, index) => (
+          <div className={`d-flex justify-content-center align-items-center col-12 ${breakpointClasses}`} key={index}>
+            {renderNestedModules([item], exportedComponents)}
+          </div>
+        ))}
+    </div>
+  );
+};
+
+// 匯出所有元件，方便在 renderNestedModules 中使用
+const exportedComponents = {
+  Heading1,
+  Heading2,
+  List,
+  Text,
+  Image,
+  Images,
+  Table,
+  Label,
+  Embed,
+  Columns,
+};
+
+export { Heading1, Heading2, List, Text, Image, Images, Table, Label, Embed, Columns };

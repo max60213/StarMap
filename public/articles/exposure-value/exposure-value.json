@@ -1,0 +1,338 @@
+{
+    "components": {
+        "Basic": {
+            "path": "./MxBasics",
+            "modules": [
+                "Heading1",
+                "Heading2",
+                "Text",
+                "Image",
+                "Images",
+                "Table",
+                "List",
+                "Label",
+                "Columns"
+            ]
+        }
+    },
+    "landing": {
+        "data": {
+            "lens": [
+                "28MM"
+            ],
+            "WB": [
+                "6500K"
+            ],
+            "shutter": [
+                "60/1"
+            ],
+            "aperture": [
+                "3.5"
+            ],
+            "iso": [
+                "800"
+            ],
+            "EV": [
+                "0"
+            ]
+        },
+        "info": [
+            "攝影設備種類繁多，但其基礎概念與原理始終如一。",
+            "不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
+        ],
+        "states": [
+            "1\"",
+            "APS-C",
+            "Full Frame"
+        ],
+        "initState": 1,
+        "url": "/articles/principles/principles.json"
+    },
+    "content": {
+        "beginner": [
+            {
+                "module": "Text",
+                "textList": [
+                    "曝光值（EV）是由相機根據測光結果計算出的當下曝光標準，以「檔」作為單位，通常以 EV0 作為基準。它提供了一種簡化操作的方式，幫助使用者快速調整畫面的亮度。",
+                    "相比手動逐一調整快門速度、光圈大小和感光度，透過調整曝光值，相機會自動計算並調整曝光三角的相關參數，以實現所需的亮度效果。"
+                ]
+            },
+            {
+                "module": "Images",
+                "srcList": [
+                    {
+                        "src": "/img/principles/inverted-image.jpg",
+                        "caption": "EV-1 曝光較暗，保留亮部細節"
+                    },
+                    {
+                        "src": "/img/principles/inverted-image.jpg",
+                        "caption": "EV0 曝光整體適中"
+                    },
+                    {
+                        "src": "/img/principles/inverted-image.jpg",
+                        "caption": "EV+1 曝光較亮，保留暗部細節"
+                    }
+                ]
+            },
+            {
+                "module": "Label",
+                "text": "向右調整以增加曝光，向左調整以減少曝光"
+            },
+            {
+                "module": "Heading1",
+                "text": "曝光三角",
+                "id": "exposure-triangle"
+            },
+            {
+                "module": "Text",
+                "textList": [
+                    "曝光是攝影藝術中最重要的部分，因為沒有光，就沒有攝影。而曝光三角正是用來控制相機接收光線的三種核心方式：快門速度、光圈大小和感光度（ISO）。這三種參數各自透過不同的原理來控制光線，同時也帶有各自獨特的效果，影響影像的表現。"
+                ]
+            },
+            {
+                "module": "Text",
+                "textList": [
+                    "在不同的拍攝場景中，快門速度、光圈大小和感光度的選擇也會有所不同。例如："
+                ]
+            },
+            {
+                "module": "List",
+                "textList": [
+                    "拍攝運動場景時，快門速度應該足夠快，以捕捉運動員的動作。",
+                    "拍攝人像時，光圈大小應該足夠大，以保證人物的清晰度。",
+                    "拍攝夜景時，感光度應該足夠高，以捕捉光線的細節。"
+                ]
+            },
+            {
+                "module": "Heading1",
+                "text": "測光模式",
+                "id": "metering-modes"
+            },
+            {
+                "module": "Text",
+                "textList": [
+                    "測光模式決定了相機如何測量光線並確定整體的曝光標準。根據測光模式的選擇，相機會分析畫面中不同區域的光線分布，給出適合的曝光參數。常見的測光模式包括："
+                ]
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 6
+                },
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "./articles/principles/img/CCD.jpg"
+                    },
+                    {
+                        "module": "Heading2",
+                        "text": "權衡式測光",
+                        "nestedItems": [
+                            {
+                                "module": "Text",
+                                "textList": [
+                                    "分析整個畫面光線分布的測光方式，給出平衡整體的曝光建議，適合大多數日常拍攝場景。"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 6
+                },
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "./articles/principles/img/CCD.jpg"
+                    },
+                    {
+                        "module": "Heading2",
+                        "text": "點測光",
+                        "nestedItems": [
+                            {
+                                "module": "Text",
+                                "textList": [
+                                    "針對畫面中間小範圍的光線進行測量，能精確控制曝光，特別適用於高對比度場景，例如背光拍攝或舞台表演。"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 6
+                },
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "./articles/principles/img/CCD.jpg"
+                    },
+                    {
+                        "module": "Heading2",
+                        "text": "中央偏重測光",
+                        "nestedItems": [
+                            {
+                                "module": "Text",
+                                "textList": [
+                                    "將重點放在畫面中央區域，不過同時也考量整體曝光。是權衡測光與點測光的折衷項目。"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "module": "Images",
+                "srcList": [
+                    {
+                        "src": "/img/principles/inverted-image.jpg"
+                    },
+                    {
+                        "src": "/img/principles/inverted-image.jpg"
+                    }
+                ]
+            },
+            {
+                "module": "Label",
+                "text": "不同廠牌也有各自獨有的測光模式。"
+            },
+            {
+                "module": "Heading1",
+                "text": "包圍曝光",
+                "id": "exposure-bracketing"
+            },
+            {
+                "module": "Text",
+                "textList": [
+                    "包圍曝光是一種攝影技巧，指在同一場景中拍攝多張具有不同曝光值的照片，通常包含正常曝光、較暗（曝光不足）和較亮（曝光過度）三張或更多照片。這種方法不僅為拍攝提供保險，確保獲得最佳影像，還能用於創建 HDR（高動態範圍）照片。",
+                    "一些相機內建「自動包圍曝光」（AEB, Auto Exposure Bracketing）功能，可以自動化這個過程；即使相機沒有內建此功能，也可以手動調整拍攝不同曝光的照片來包圍曝光。"
+                ]
+            },
+            {
+                "module": "Heading2",
+                "text": "保險性拍攝"
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 6
+                },
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "/articles/exposure-value/img/CCD.jpg",
+                        "caption": "拍攝多張不同曝光的照片。"
+                    },
+                    {
+                        "module": "Image",
+                        "src": "/articles/exposure-value/img/CCD.jpg",
+                        "caption": "挑一張最理想的照片。"
+                    }
+                ]
+            },
+            {
+                "module": "Heading2",
+                "text": "HDR 合成"
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 6
+                },
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "/articles/exposure-value/img/CCD.jpg",
+                        "caption": "透過不同曝光，捕捉亮部及暗部細節。"
+                    },
+                    {
+                        "module": "Image",
+                        "src": "/articles/exposure-value/img/CCD.jpg",
+                        "caption": "合成爲一張HDR照片，同時保有各處細節"
+                    }
+                ]
+            }
+        ],
+        "advance": [
+            {
+                "module": "Heading1",
+                "text": "曝光補償",
+                "id": "exposure-compensation"
+            },
+            {
+                "module": "Text",
+                "textList": [
+                    "有時候，拍攝場景中出現大面積的黑色或白色物體，可能會讓相機的測光系統無法準確判斷合適的曝光量，導致影像過暗或過亮。此時可以透過手動調整補償值（±EV）來人為控制曝光，使畫面達到理想亮度。"
+                ]
+            },
+            {
+                "module": "Heading2",
+                "text": "正補償"
+            },
+            {
+                "module": "Text",
+                "textList": [
+                    "當拍攝大面積亮色物體時，相機可能判斷為高亮度場景而降低曝光，此時可以透過增加曝光補償，使物體恢復真實的亮度。"
+                ]
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 6
+                },
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "/articles/exposure-value/img/CCD.jpg",
+                        "caption": "原始照片"
+                    },
+                    {
+                        "module": "Image",
+                        "src": "/articles/exposure-value/img/CCD.jpg",
+                        "caption": "曝光補償後的照片"
+                    }
+                ]
+            },
+            {
+                "module": "Heading2",
+                "text": "負補償"
+            },
+            {
+                "module": "Text",
+                "textList": [
+                    "反之拍攝大面積暗色物體時，可以透過減少曝光補償，使場景曝光正常。"
+                ]
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 6
+                },
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "/articles/exposure-value/img/CCD.jpg",
+                        "caption": "原始照片"
+                    },
+                    {
+                        "module": "Image",
+                        "src": "/articles/exposure-value/img/CCD.jpg",
+                        "caption": "曝光補償後的照片"
+                    }
+                ]
+            }
+        ],
+        "learnMore": [
+            {
+                "module": "Heading1",
+                "text": "延伸閱讀",
+                "id": "learn-more"
+            }
+        ]
+    }
+}

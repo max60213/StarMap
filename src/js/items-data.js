@@ -40,7 +40,7 @@ export const itemsData = {
             "initState" : 2,
             "url": "/articles/aperture.json"
         },
-        "shutter": {
+        "shutter-speed": {
             "name": {
                 "zh": "快門速度",
                 "en": "Shutter Speed"
@@ -49,7 +49,7 @@ export const itemsData = {
             "content": "快門速度決定了相機感光元件曝光的時間長短。快門速度越快，適合拍攝運動或快速移動的主題，可以凍結畫面；慢快門則適合拍攝夜景或流水等靜態場景，產生流暢的效果。",
             "states": ["1/4", "1/15", "1/60", "1/250", "1/1000"],
             "initState" : 2,
-            "url": "/articles/shutter.json"
+            "url": "/articles/shutter-speed/shutter-speed.json"
         },
         "iso": {
             "name": {

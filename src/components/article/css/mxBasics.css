@@ -2,15 +2,19 @@
   margin-bottom: 2rem;
 }
 
+.block .block {
+  margin-bottom: 0;
+}
+
 .mx-heading1 {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
   margin-top: 1.2em;
   padding-top: 2rem;
 }
 .mx-heading2 {
   font-size: 1.5rem;
-  margin-bottom: 0rem;
+  margin-bottom: 0.8rem;
   margin-top: 1.8em;
 }
 .mx-text p {
@@ -35,6 +39,14 @@
 .mx-label {
   text-align: center;
   margin-top: -0.8rem;
+}
+.mx-image {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.mx-image img {
+  width: 100%;
 }
 .mx-images {
   overflow: visible !important;
@@ -87,7 +99,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--layer-2);
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -107,8 +119,8 @@
 .mx_btn:hover:before {
   width: 150%;
   height: 150%;
-  background: white;
+  background: var(--primary-color);
 }
 .mx_btn:hover:after {
-  background-color: black;
+  background-color: var(--primary-color);
 }/*# sourceMappingURL=mxBasics.css.map */

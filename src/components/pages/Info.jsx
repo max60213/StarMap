@@ -8,6 +8,7 @@ function Info(props) {
   const { galaxy } = useContext(GalaxyContext);
   const [itemData, setItemData] = useState(null);
   const path = currentPath();
+  
 
   useEffect(() => {
     if (!galaxy) return;
@@ -19,20 +20,6 @@ function Info(props) {
 
     setItemData(currentItemData); // 將目前選中的項目數據保存到狀態中
   }, [galaxy]);
-
-  // 加載 JSON 文件
-  useEffect(() => {
-    const fetchItemsData = async () => {
-      try {
-        const response = await fetch(`${baseUrl}/articles/${articleId}/${articleId}.json`); // 修改為 JSON 文件的路徑
-        const data = await response.json();
-        setItemsData(data);
-      } catch (error) {
-        console.error('Failed to fetch items-data.json:', error);
-      }
-    };
-    fetchItemsData();
-  }, []);
 
   let navigate = useNavigate();
   const toHome = () => {

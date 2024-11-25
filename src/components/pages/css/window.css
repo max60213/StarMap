@@ -95,6 +95,7 @@
 }
 .view_data * {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  color: white;
 }
 .view_data p {
   font-size: 16px;
@@ -114,6 +115,9 @@
 .info {
   max-width: max(680px, 30vw);
 }
+.info-content * {
+  color: white;
+}
 .info-content-title .en {
   font-weight: 300;
   font-size: 1.8rem;
@@ -121,13 +125,13 @@
 }
 .info p:not(.second) {
   font-size: 1.4rem;
-  color: var(--text-primary);
+  color: white;
   mix-blend-mode: overlay;
 }
 .info .second {
   position: absolute;
   top: 0;
   font-size: 1.4rem;
-  color: var(--text-primary);
+  color: white;
   opacity: 0.6;
 }/*# sourceMappingURL=window.css.map */

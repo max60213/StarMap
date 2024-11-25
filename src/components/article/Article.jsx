@@ -1,26 +1,22 @@
-import React, { useEffect, useState, Suspense, useTransition } from 'react';
-import { useParams } from 'react-router-dom';
-import Aside from './Aside';
-import './css/article.css';
-import ToggleAdvance from './ToggleAdvance';
+import React, { useEffect, useState, Suspense, useTransition } from "react";
+import { useParams } from "react-router-dom";
+import Aside from "./Aside";
+import "./css/article.css";
+import ToggleAdvance from "./ToggleAdvance";
 
 /**
  * Article 元件 - 負責文章內容的載入與渲染
  * 支援三種層級的內容：初學者、進階和延伸閱讀
+ * 並支援模組內包模組的遞迴渲染
  */
 function Article() {
-  // 從 URL 參數取得文章 ID
-  const { articleId } = useParams();
-  // 儲存文章資料的狀態
-  const [articleData, setArticleData] = useState(null);
-  // 儲存動態載入的元件
-  const [components, setComponents] = useState({});
-  // 載入狀態管理
-  const [isLoading, setIsLoading] = useState(true);
-  // 用於延遲渲染 Aside 的轉場狀態
-  const [isPending, startTransition] = useTransition();
+  const { articleId } = useParams(); // 從 URL 參數取得文章 ID
+  const [articleData, setArticleData] = useState(null); // 儲存文章資料的狀態
+  const [components, setComponents] = useState({}); // 儲存動態載入的元件
+  const [isLoading, setIsLoading] = useState(true); // 載入狀態管理
+  const [isPending, startTransition] = useTransition(); // 管理轉場狀態
 
-  const baseUrl = import.meta.env.BASE_URL;
+  const baseUrl = import.meta.env.BASE_URL; // 基本路徑
 
   /**
    * 動態載入元件的函數
@@ -29,62 +25,48 @@ function Article() {
    */
   const loadComponents = async (data) => {
     const loadedComponents = {};
-    for (const key in data.components) {
-      const componentConfig = data.components[key];
-      try {
-        // 動態引入元件
-        const moduleExports = await import(/* @vite-ignore */ `${componentConfig.path}`);
-        componentConfig.modules.forEach((module) => {
-          if (moduleExports[module]) {
-            loadedComponents[module] = moduleExports[module];
-          } else {
-            console.error(`元件 ${module} 在 ${componentConfig.path} 中未找到`);
-          }
-        });
-      } catch (error) {
-        console.error(`從 ${componentConfig.path} 載入元件失敗:`, error);
-      }
-    }
+    await Promise.all(
+      Object.entries(data.components).map(async ([key, componentConfig]) => {
+        try {
+          const moduleExports = await import(/* @vite-ignore */ `${componentConfig.path}`);
+          componentConfig.modules.forEach((module) => {
+            if (moduleExports[module]) {
+              loadedComponents[module] = moduleExports[module];
+            } else {
+              console.error(`元件 ${module} 在 ${componentConfig.path} 中未找到`);
+            }
+          });
+        } catch (error) {
+          console.error(`從 ${componentConfig.path} 載入元件失敗:`, error);
+        }
+      })
+    );
     return loadedComponents;
   };
 
   // 在元件掛載時載入文章資料
   useEffect(() => {
     fetch(`${baseUrl}/articles/${articleId}/${articleId}.json`)
-      .then(response => response.json())
-      .then(async data => {
+      .then((response) => response.json())
+      .then(async (data) => {
         setArticleData(data);
         const loadedComponents = await loadComponents(data);
         setComponents(loadedComponents);
         setIsLoading(false);
 
-        // 使用 startTransition 來延遲顯示 Aside
+        // 使用 startTransition 處理轉場
         startTransition(() => {
-          // 將所有區塊的內容合併為一個陣列，用於檢查載入狀態
-          const allContent = [
-            ...(data.content.beginner || []),
-            ...(data.content.advance || []),
-            ...(data.content.learnMore || [])
-          ];
-
-          // 確保所有元件都已完成載入
-          Promise.all(
-            allContent.map(async (item) => {
-              if (loadedComponents[item.module]) {
-                await new Promise(resolve => setTimeout(resolve, 0));
-              }
-            })
-          );
+          // 此處可放置需要延遲執行的副作用
         });
       })
-      .catch(error => {
-        console.error('載入文章時發生錯誤:', error);
+      .catch((error) => {
+        console.error("載入文章時發生錯誤:", error);
         setIsLoading(false);
       });
-  }, []);
+  }, [articleId, baseUrl]);
 
   /**
-   * 渲染內容區塊的輔助函數
+   * 渲染內容區塊的輔助函數，支援遞迴模組渲染
    * @param {Array} contentArray - 要渲染的內容陣列
    * @returns {Array|null} 渲染後的 React 元素陣列或 null
    */
@@ -92,17 +74,28 @@ function Article() {
     if (!contentArray) return null;
 
     return contentArray.map((item, index) => {
-      const Component = components[item.module];
-      if (!Component) {
-        return <div key={index}>找不到元件 {item.module}</div>;
+      const Component = components[item.module] || DefaultComponent;
+
+      // 檢查是否有內嵌模組，進行遞迴渲染
+      if (item.nestedItems) {
+        return (
+          <Component {...item} key={index}>
+            {renderContent(item.nestedItems)} {/* 遞迴渲染內部模組 */}
+          </Component>
+        );
       }
-      return (
-        <Suspense fallback={<div>正在載入元件...</div>} key={index}>
-          <Component {...item} />
-        </Suspense>
-      );
+
+      // 無內嵌模組則直接渲染
+      return <Component {...item} key={index} />;
     });
   };
+
+  // 預設元件 - 用於處理找不到的模組
+  const DefaultComponent = ({ module }) => (
+    <div className="default-component">
+      無法渲染模組 {module}，請確認資料或元件配置是否正確。
+    </div>
+  );
 
   return (
     <div className="mx-article">
@@ -110,7 +103,7 @@ function Article() {
         {isLoading ? (
           <div>載入中...</div>
         ) : (
-          <>
+          <Suspense fallback={<div>正在載入內容...</div>}>
             {/* 初學者內容區塊 */}
             <section className="mx-section beginner">
               {renderContent(articleData?.content.beginner)}
@@ -118,19 +111,17 @@ function Article() {
 
             {/* 進階內容區塊 */}
             <ToggleAdvance target="advance" />
-
-            <section className="mx-section advance" id='advance'>
+            <section className="mx-section advance" id="advance">
               <div className="advance-container">
                 {renderContent(articleData?.content.advance)}
               </div>
             </section>
 
-
             {/* 延伸閱讀區塊 */}
             <section className="mx-section learnMore">
               {renderContent(articleData?.content.learnMore)}
             </section>
-          </>
+          </Suspense>
         )}
       </main>
       {/* 側邊欄只在主要內容載入完成後顯示 */}
