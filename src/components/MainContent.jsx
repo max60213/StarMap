@@ -1,3 +1,5 @@
+// MainContent.jsx
+
 import { useEffect, useContext } from 'react';
 import { itemsData, group } from '../js/items-data.js';
 import { useNavigate } from 'react-router-dom';
@@ -91,10 +93,8 @@ function MainContent(props) {
     return (
         <div className="mx-list px-3 pe-xl-5">
             <h1>Lorem ipsum dolor sit amet consectetur.</h1>
-            <p className="mb-1">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
-                provident sequi est dolores neque corporis sunt nihil aspernatur nulla
-                hic?
+            <p className="mb-1 opacity-100">
+                這是為攝影新手打造的教學網站，透過動態圖示、與簡單的互動設計，搭配詳細的圖例說明，涵蓋常用名詞與基礎觀念。如果不知道從哪開始，可以按照順序逐步探索，輕鬆入門攝影！
             </p>
 
             {itemGroup(0)}

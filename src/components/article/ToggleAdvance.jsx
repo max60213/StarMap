@@ -13,7 +13,13 @@ function ToggleAdvance({ target }) {
             behavior: "smooth", // 平滑滾動
             block: "start",    // 將目標對齊到頂部
           });
-        }, 200);
+        }, 300);
+      }
+      else {
+        toggleAdvance.scrollIntoView({
+          behavior: "smooth", // 平滑滾動
+          block: "end",    // 將目標對齊到底部
+        });
       }
     }
 

@@ -7,6 +7,7 @@
 				"Heading2",
 				"Text",
 				"Images",
+				"Image",
 				"Table",
 				"List",
 				"Label"
@@ -66,18 +67,20 @@
 				]
 			},
 			{
-				"module": "Images",
-				"srcList": [
-					{
-						"src": "/img/principles/inverted-image.jpg",
-						"caption": "光線經過鏡頭聚焦形成倒像的示意圖"
-					}
-				]
+				"module": "Image",
+				"src": "https://dummyimage.com/600x400",
+				"caption": "光線經過鏡頭聚焦形成倒像的示意圖"
 			},
 			{
 				"module": "Heading1",
 				"text": "常用功能構造",
 				"id": "common-buttons-on-camera-body"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"雖然不同相機廠商的機型設計各異，但攝影的基本原理是相通的，因此無論品牌如何，大多數相機都具有相似的功能構造，幫助使用者快速適應和操作。以下是一些常見的功能構造："
+				]
 			},
 			{
 				"module": "Heading2",
@@ -94,13 +97,13 @@
 				"module": "Images",
 				"srcList": [
 					{
-						"src": "/img/examples/sony-mode-dial.jpg"
+						"src": "https://dummyimage.com/600x400"
 					},
 					{
-						"src": "/img/examples/canon-mode-dial.jpg"
+						"src": "https://dummyimage.com/600x400"
 					},
 					{
-						"src": "/img/examples/nikon-mode-dial.jpg"
+						"src": "https://dummyimage.com/600x400"
 					}
 				]
 			},
@@ -123,13 +126,13 @@
 				"module": "Images",
 				"srcList": [
 					{
-						"src": "/img/examples/sony-wb-button.jpg"
+						"src": "https://dummyimage.com/600x400"
 					},
 					{
-						"src": "/img/examples/canon-wb-button.jpg"
+						"src": "https://dummyimage.com/600x400"
 					},
 					{
-						"src": "/img/examples/nikon-wb-button.jpg"
+						"src": "https://dummyimage.com/600x400"
 					}
 				]
 			},
@@ -152,13 +155,13 @@
 				"module": "Images",
 				"srcList": [
 					{
-						"src": "/img/examples/sony-iso-button.jpg"
+						"src": "https://dummyimage.com/600x400"
 					},
 					{
-						"src": "/img/examples/canon-iso-button.jpg"
+						"src": "https://dummyimage.com/600x400"
 					},
 					{
-						"src": "/img/examples/nikon-iso-button.jpg"
+						"src": "https://dummyimage.com/600x400"
 					}
 				]
 			},
@@ -176,6 +179,10 @@
 				"textList": [
 					"其他功能（如曝光補償、自動對焦模式、驅動模式等）通常會放在Menu選單內，以便在需要時進行設置。這些選項可以通過選單來自訂和調整，避免機身上出現過多的按鈕，保持操作的簡潔。"
 				]
+			},
+			{
+				"module": "Heading1",
+				"text": "決定畫質的因素"
 			}
 		],
 		"advance": [

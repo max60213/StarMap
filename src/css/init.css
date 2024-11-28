@@ -4,6 +4,7 @@ html, body, * {
   box-sizing: border-box;
   color: var(--primary-color);
   scroll-behavior: smooth;
+  scrollbar-width: none;
 }
 
 .dg.ac {
@@ -55,7 +56,6 @@ body {
 }
 
 .full-size {
-  position: absolute;
   width: 100%;
   height: 100%;
 }

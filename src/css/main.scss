@@ -22,7 +22,7 @@
 
     @media all and (min-height: 700.5px) {
         &.shrink {
-            height: calc(100px + 60vh);
+            height: calc(150px + 60vh);
         }
     }
 }
@@ -65,7 +65,7 @@
         }
     }
 
-    @media all and ($phone-only) {
+    @media all and ($tablet-only) {
         flex-direction: column;
 
         .mx-first,

@@ -7,9 +7,11 @@
 				"Heading2",
 				"Text",
 				"Images",
+				"Image",
 				"Table",
 				"List",
-				"Label"
+				"Label",
+				"Columns"
 			]
 		}
 	},
@@ -51,11 +53,192 @@
 			{
 				"module": "Text",
 				"textList": [
-					"快門速度是攝影中控制光線進入相機的時間長短的重要參數。當快門打開時，光線會通過鏡頭進入相機並到達感光元件，快門的開啟時間越長，感光元件接收到的光線就越多，影像越亮；反之，快門開啟時間越短，光線越少，影像越暗。"
+					"快門速度是指光線進入相機開始到結束的這段時間，有些人也稱作“曝光時間”，通常以秒或分秒表示，例如 1/4 秒、1/60 秒、1/250 秒等。當快門打開時，光線會通過鏡頭進入相機並到達感光元件，快門的開啟時間越長，感光元件接收到的光線就越多，影像越亮；反之，快門開啟時間越短，光線越少，影像越暗。"
+				]
+			},
+			{
+				"module": "Images",
+				"srcList": [
+					{
+						"src": "https://dummyimage.com/600x400",
+						"caption": "1/4 秒"
+					},
+					{
+						"src": "https://dummyimage.com/600x400",
+						"caption": "1/60 秒"
+					},
+					{
+						"src": "https://dummyimage.com/600x400",
+						"caption": "1/250 秒"
+					}
+				]
+			},
+			{
+				"module": "Heading1",
+				"text": "對影像的影響"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"快門速度不僅影響影像的亮度，還直接決定影像的清晰度和動態效果。快速快門（如 1/1000 秒）能凍結運動，適合拍攝高速物體；而慢速快門（如 1/10 秒）則能創造動態模糊效果，如柔滑的流水或光跡。"
+				]
+			},
+			{
+				"module": "Images",
+				"srcList": [
+					{
+						"src": "https://dummyimage.com/600x400",
+						"caption": "1/4 秒"
+					},
+					{
+						"src": "https://dummyimage.com/600x400",
+						"caption": "1/60 秒"
+					}
+				]
+			},
+			{
+				"module": "Heading2",
+				"text": "安全快門"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"在手持拍攝時，為了避免因手震導致畫面模糊，建議將快門速度調整到快於 1/60 秒。這被稱為「安全快門」，適用於大多數日常拍攝場景。若使用長焦鏡頭，安全快門速度應適當提高。"
+				]
+			},
+			{
+				"module": "Heading1",
+				"text": "特殊應用"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"快門速度的調整還能用來實現許多特殊的攝影效果，例如："
+				]
+			},
+			{
+				"module": "Heading2",
+				"text": "追焦"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"在拍攝移動中的主體（如賽車或奔跑的動物）時，使用適當的快門速度並同步移動相機，可以讓主體保持清晰，而背景呈現動態模糊，突顯速度感與運動方向。"
+				]
+			},
+			{
+				"module": "Image",
+				"src": "https://dummyimage.com/600x400"
+			},
+			{
+				"module": "Heading2",
+				"text": "星空/星軌"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"拍攝星空或星軌時，快門速度應調整到較慢，以捕捉星星的運動軌跡。通常需要幾秒至數分鐘的曝光時間，並使用腳架固定相機，避免震動。"
+				]
+			},
+			{
+				"module": "Columns",
+				"breakpoints": {
+					"lg": 6
+				},
+				"nestedItems":[
+					{
+						"module": "Image",
+						"src": "https://dummyimage.com/600x400",
+						"caption": "星空"
+					},
+					{
+						"module": "Image",
+						"src": "https://dummyimage.com/600x400",
+						"caption": "星軌"
+					}
 				]
 			}
 		],
-		"advance": [],
-		"learnMore": []
+		"advance": [
+			{
+				"module": "Heading1",
+				"text": "電子與機械快門"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"現代相機通常提供電子快門和機械快門兩種模式。這兩者各有優缺點，適用於不同場景。例如，電子快門適合需要<mark>靜音</mark>或高速連拍的場合，而機械快門能避免影像的<mark>果凍效應</mark>。"
+				]
+			},
+			{
+				"module": "Image",
+				"src": "https://dummyimage.com/600x400",
+				"caption": "機身內的機械快門簾（使用慢動作錄製）"
+			},
+			{
+				"module": "Columns",
+				"breakpoints": {
+					"lg": 6
+				},
+				"nestedItems": [
+					{
+						"module": "Image",
+						"src": "https://dummyimage.com/600x400",
+						"caption": "相機快速移動時，畫面傾斜似果凍晃動，即果凍效應"
+					},
+					{
+						"module": "Image",
+						"src": "https://dummyimage.com/600x400",
+						"caption": "使用機械快門能有效減緩果凍效應"
+					}
+				]
+			},
+			{
+				"module": "Table",
+				"columns": [
+					"",
+					"電子快門",
+					"機械快門"
+				],
+				"rows": [
+					[
+						"運作原理",
+						"感光元件逐行數位掃描",
+						"透過物理葉片遮光"
+					],
+					[
+						"快門聲音",
+						"無聲",
+						"有快門聲"
+					],
+					[
+						"磨損",
+						"無磨損",
+						"長期使用有磨損"
+					],
+					[
+						"適用場景",
+						"靜音環境、高速連拍",
+						"拍攝高速運動場景"
+					],
+					[
+						"影像問題",
+						"可能出現果凍效應",
+						"較無果凍效應"
+					],
+					[
+						"速度",
+						"可實現極高速拍攝",
+						"限於機械葉片速度"
+					]
+				]
+			}
+		],
+		"learnMore": [
+			{
+				"module": "Heading1",
+				"text": "延伸閱讀"
+			}
+		]
 	}
 }

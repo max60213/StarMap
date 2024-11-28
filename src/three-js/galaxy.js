@@ -29,9 +29,10 @@ class Galaxy {
     this.state = {
       cubeAngle: 0,
       rotSpeed: 0,
-      camPos: 0,
+      camPosZ: 0,
+      camPosY: 0,
       currentOrbit: 0,
-      currentItem: "sensor",
+      currentItem: "principal",
       targetAngle: 0
     };
 
@@ -69,7 +70,7 @@ class Galaxy {
     this.setupEventListeners();
     this.initGUI();
     this.animate();
-    this.setCurrentItem("sensor");
+    this.setCurrentItem("principal");
     window.sceneLoaded = true;
   }
 
@@ -102,7 +103,11 @@ class Galaxy {
     // 初始化 InfiniteGridHelper
     const grid = new InfiniteGridHelper(1, 0, new THREE.Color('white'), 50, 'xzy');
     grid.position.y = -1.5;
+
+    const grid2 = new InfiniteGridHelper(1, 0, new THREE.Color('white'), 50, 'xzy');
+    grid2.position.y = 1.5;
     this.scene.add(grid);
+    this.scene.add(grid2);
   }
 
   initCamera = () => {
@@ -144,7 +149,15 @@ class Galaxy {
         star.userData = { orbit: i, index: j, order: order, name: this.items[order] };
         const starPivot = new THREE.Object3D();
         starPivot.add(star);
-        star.position.set(0, 0, this.params.radius * i);
+        if (order == 0) {
+          star.position.set(0, 3, this.params.radius * i);
+        }
+        else if (order == 2) {
+          star.position.set(0, -3, this.params.radius * i);
+        }
+        else {
+          star.position.set(0, 0, this.params.radius * i);
+        }
         starPivot.rotation.y = (Math.PI * 2 / this.orbit[i]) * j;
         this.galaxy[i].push(starPivot);
         this.starGroup.add(starPivot);
@@ -214,20 +227,20 @@ class Galaxy {
       this.state.rotSpeed = 0;
     }
     if (this.controlState.upKey || this.controlState.downKey) {
-      if (this.controlState.upKey && this.state.camPos > 0) {
-        this.state.camPos -= this.config.speed * 3;
+      if (this.controlState.upKey && this.state.camPosZ > 0) {
+        this.state.camPosZ -= this.config.speed * 3;
       }
-      if (this.controlState.downKey && this.state.camPos < this.params.radius * (this.galaxy.length - 1)) {
-        this.state.camPos += this.config.speed;
+      if (this.controlState.downKey && this.state.camPosZ < this.params.radius * (this.galaxy.length - 1)) {
+        this.state.camPosZ += this.config.speed;
       }
     }
     if (this.controlState.upKeyUp || this.controlState.downKeyUp) {
-      if (this.state.camPos >= 0 && this.state.camPos < this.params.radius * (this.galaxy.length - 1)) {
-        this.state.camPos = Math[this.controlState.upKeyUp ? 'floor' : 'ceil'](this.state.camPos / this.params.radius) * this.params.radius;
-        this.state.currentOrbit = this.state.camPos / this.params.radius;
+      if (this.state.camPosZ >= 0 && this.state.camPosZ < this.params.radius * (this.galaxy.length - 1)) {
+        this.state.camPosZ = Math[this.controlState.upKeyUp ? 'floor' : 'ceil'](this.state.camPosZ / this.params.radius) * this.params.radius;
+        this.state.currentOrbit = this.state.camPosZ / this.params.radius;
       }
-      if (this.state.camPos > this.params.radius * (this.galaxy.length - 1)) {
-        this.state.camPos = this.params.radius * (this.galaxy.length - 1);
+      if (this.state.camPosZ > this.params.radius * (this.galaxy.length - 1)) {
+        this.state.camPosZ = this.params.radius * (this.galaxy.length - 1);
         this.state.currentOrbit = this.galaxy.length - 1;
       }
       this.state.targetAngle = 360 / this.orbit[this.state.currentOrbit];
@@ -245,47 +258,56 @@ class Galaxy {
     this.cameraAnchor.quaternion.slerp(targetQuaternion, this.config.respondTime);
     this.camera.position.lerp(this.camTarget, this.config.respondTime);
 
-    const orbitPositioner = new THREE.Vector3(0, 0, this.state.camPos);
-    this.cameraAnchor.position.lerp(orbitPositioner, 0.1);
+    const orbitPositioner = new THREE.Vector3(0, this.state.camPosY, this.state.camPosZ);
+
+    this.cameraAnchor.position.lerp(orbitPositioner, 0.15);
 
     this.cameraAnchor.scale.lerp(new THREE.Vector3(this.starSize[this.state.currentOrbit] * this.camDistance, this.starSize[this.state.currentOrbit] * this.camDistance, this.starSize[this.state.currentOrbit] * this.camDistance), 0.1);
 
     this.camera.lookAt(this.cameraAnchor.position);
 
-    if (this.state.camPos < 0) this.state.camPos = 0;
+    if (this.state.camPosZ < 0) this.state.camPosZ = 0;
   }
 
   locateChecker = () => {
     let threshold = 0.01 / ((this.state.currentOrbit + 0.2) * 5);
-    if (Math.abs(this.cameraAnchor.position.z - this.state.camPos) < threshold) {
-      if (this.state.currentOrbit == 0) {
-        if (this.camera.position.distanceTo(this.camTarget) < threshold * 10) {
-          window.itemReady = true;
-          this.setItemReady(true);
+
+    // 計算相機位置與 orbitPositioner 的距離
+    const orbitPositioner = new THREE.Vector3(0, this.state.camPosY, this.state.camPosZ);
+    const positionDistance = this.cameraAnchor.position.distanceTo(orbitPositioner);
+
+    // 如果相機角度和位置都在 threshold 範圍內
+    if (positionDistance < threshold && Math.abs(this.cameraAnchor.position.z - this.state.camPosZ) < threshold) {
+        if (this.state.currentOrbit == 0) {
+            if (this.camera.position.distanceTo(this.camTarget) < threshold * 10) {
+                window.itemReady = true;
+                this.setItemReady(true);
+            } else {
+                window.itemReady = false;
+                this.setItemReady(false);
+            }
+        } else if (this.cube2.quaternion.angleTo(this.cube.quaternion) < threshold) {
+            window.itemReady = true;
+            this.setItemReady(true);
         } else {
-          window.itemReady = false;
-          this.setItemReady(false);
+            window.itemReady = false;
+            this.setItemReady(false);
         }
-      } else if (this.cube2.quaternion.angleTo(this.cube.quaternion) < threshold) {
-        window.itemReady = true;
-        this.setItemReady(true);
-      } else {
+    } else {
         window.itemReady = false;
         this.setItemReady(false);
-      }
-    } else {
-      window.itemReady = false;
-      this.setItemReady(false);
     }
+
+    // 更新 UI 狀態
     let view = document.querySelector('.window-frame');
     if (view && window.itemReady) {
-      view.classList.add('ready');
+        view.classList.add('ready');
     }
     if (!window.itemReady && !view.classList.contains('active') && view.classList.contains('ready')) {
-      view.classList.remove('ready');
-      console.log('remove ready');
+        view.classList.remove('ready');
+        console.log('remove ready');
     }
-  }
+};
 
   onMouseMove = (event) => {
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -428,7 +450,16 @@ class Galaxy {
           this.state.currentItem = item;
           this.setCurrentItem(item);
           this.state.currentOrbit = starPivot.children[0].userData.orbit;
-          this.state.camPos = this.state.currentOrbit * this.params.radius;
+          if(starPivot.children[0].userData.order == 0) {
+            this.state.camPosY = 3;
+          }
+          else if(starPivot.children[0].userData.order == 2) {
+            this.state.camPosY = -3;
+          }
+          else {
+            this.state.camPosY = 0;
+          }
+          this.state.camPosZ = this.state.currentOrbit * this.params.radius;
           this.state.targetAngle = 360 / -this.orbit[this.state.currentOrbit];
           this.state.cubeAngle = starPivot.children[0].userData.index * this.state.targetAngle;
         }

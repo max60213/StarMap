@@ -1,8 +1,8 @@
-import React, { useEffect, useState, Suspense, useTransition } from 'react';
-import { useParams } from 'react-router-dom';
-import Aside from './Aside';
-import './css/article.css';
-import ToggleAdvance from './ToggleAdvance';
+import React, { useEffect, useState, Suspense, useTransition } from "react";
+import { useParams } from "react-router-dom";
+import Aside from "./Aside";
+import "./css/article.css";
+import ToggleAdvance from "./ToggleAdvance";
 
 /**
  * Article 元件 - 負責文章內容的載入與渲染
@@ -60,7 +60,7 @@ function Article() {
         });
       })
       .catch((error) => {
-        console.error('載入文章時發生錯誤:', error);
+        console.error("載入文章時發生錯誤:", error);
         setIsLoading(false);
       });
   }, [articleId, baseUrl]);
@@ -77,11 +77,10 @@ function Article() {
       const Component = components[item.module] || DefaultComponent;
 
       // 檢查是否有內嵌模組，進行遞迴渲染
-      if (item.modules) {
+      if (item.nestedItems) {
         return (
           <Component {...item} key={index}>
-            {renderContent(item.modules)} {/* 遞迴渲染內部模組 */}
-            {console.log(item)}
+            {renderContent(item.nestedItems)} {/* 遞迴渲染內部模組 */}
           </Component>
         );
       }

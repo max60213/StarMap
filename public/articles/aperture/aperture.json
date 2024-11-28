@@ -7,25 +7,46 @@
         "Text",
         "Images",
         "Table",
-        "List"
+        "List",
+        "Label"
       ]
     }
   },
-  "landing":{
-    "data":{
-      "lens": ["28MM"],
-      "WB": ["6500K"],
-      "shutter": ["60/1"],
-      "aperture": ["f/2.8", "f/3.5", "f/4.6", "f/6.3", "f/13"],
-      "iso": ["800"],
-      "EV": ["0"]
+  "landing": {
+    "data": {
+      "lens": [
+        "28MM"
+      ],
+      "WB": [
+        "6500K"
+      ],
+      "shutter": [
+        "60/1"
+      ],
+      "aperture": [
+        "f/2.8",
+        "f/3.5",
+        "f/4.6",
+        "f/6.3",
+        "f/13"
+      ],
+      "iso": [
+        "800"
+      ],
+      "EV": [
+        "0"
+      ]
     },
     "info": [
       "攝影設備種類繁多，但其基礎概念與原理始終如一。",
       "不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
     ],
-    "states": ["1\"", "APS-C", "Full Frame"],
-    "initState" : 1,
+    "states": [
+      "1\"",
+      "APS-C",
+      "Full Frame"
+    ],
+    "initState": 1,
     "url": "/articles/principles/principles.json"
   },
   "content": {
@@ -33,89 +54,84 @@
       {
         "module": "Text",
         "textList": [
-          "光圈是相機鏡頭內的可調節開口，控制進入感光元件的光線量，就像<mark>人眼的瞳孔</mark>調節光線一樣。透過改變光圈的大小，不僅能控制進光量，還能影響影像的亮度、景深及整體的曝光效果。"
+          "光圈相當於人眼的瞳孔，負責控制光線進入相機的量。當光線不足時，光圈可以放大，就像瞳孔在昏暗環境中擴張；而在光線充足的情況下，可以縮小光圈，避免過多光線進入。",
+          "光圈大小通常以 f 值 表示，計算公式為 <strong>f 值 = 鏡頭焦距 / 光圈口徑</strong>，不過通常不用真的去計算，只需要掌握觀念："
         ]
       },
       {
-        "module": "Table",
-        "columns": [
-          "光圈大小 (f 值)",
-          "光圈開口",
-          "亮度",
-          "景深",
-          "快門速度需求"
-        ],
-        "rows": [
-          [
-            "f/1.4 – f/2.8",
-            "大",
-            "高亮度",
-            "景深淺，背景模糊",
-            "快門速度可較快"
-          ],
-          [
-            "f/4 – f/5.6",
-            "中",
-            "適中亮度",
-            "中等景深",
-            "需中等快門速度"
-          ],
-          [
-            "f/8 – f/11",
-            "小",
-            "光線減少",
-            "景深較深，背景清晰",
-            "需要較慢快門速度"
-          ],
-          [
-            "f/16 及以上",
-            "很小",
-            "光線大幅減少",
-            "整體畫面清晰",
-            "快門速度較慢"
-          ]
+        "module": "Label",
+        "customClass": "mx-mark",
+        "text": "f 值越小，光圈越大，亮度越高；f 值越大，光圈越小，亮度越低。"
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "f/1.4"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "f/2.8"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "f/5.6"
+          }
         ]
       },
       {
         "module": "Heading1",
-        "text": "光圈的數值",
-        "id": "aperture-values"
+        "text": "光圈的構造",
+        "id": "structure-of-aperture"
       },
       {
         "module": "Text",
+        "customClass": "mb-3",
         "textList": [
-          "光圈的 <mark>f 值</mark>（Aperture Value）是由鏡頭焦距除以光圈口徑得出來的。例如，焦距 50mm 的鏡頭，如果光圈口徑為 25mm，則 f 值為 2（50 ÷ 25 = 2）。<mark>f 值越小，光圈越大，進光量越多</mark>，影像亮度就越高。根據光圈大小，攝影師會稱大光圈鏡頭為「Fast Lens」，因為它能在弱光下使用較快的快門速度；而小光圈則稱為「Slow Lens」，需要較慢的快門速度來獲得適當曝光。",
-          "除了常見的 f 值（Aperture Value），在電影製作中也經常使用 <mark>T 值</mark>（Transmission Value）。f 值主要描述光圈的幾何大小，而 T 值則更準確地反映了實際進入感光元件的光線量。"
+          "在可交換鏡頭式相機中，光圈位於鏡頭內，與機身無關，機身會讀取鏡頭支援的光圈範圍，再呈現於選單上。"
         ]
       },
       {
-        "module": "Table",
-        "columns": [
-          "比較項目",
-          "f 值 (f-stop)",
-          "T 值 (T-stop)"
-        ],
-        "rows": [
-          [
-            "定義",
-            "焦距 ÷ 光圈口徑",
-            "實際進光量測量"
-          ],
-          [
-            "準確性",
-            "忽略光線損失",
-            "考慮透光效率"
-          ],
-          [
-            "優勢",
-            "計算簡單，適合大眾使用",
-            "多鏡頭間曝光一致"
-          ],
-          [
-            "常見場合",
-            "一般相機、手機",
-            "電影鏡頭、專業影片設備"
-          ]
+        "module": "Images",
+        "customClass": "mb-5",
+        "srcList": [
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "六葉片"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "九葉片"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "十二葉片"
+          }
+        ]
+      },
+      {
+        "module": "Text",
+        "customClass": "mb-3",
+        "textList": [
+          "每顆鏡頭的光圈範圍與形狀各有不同，選購鏡頭時，光圈是必須留意的重要資訊。"
+        ]
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "六葉片"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "九葉片"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "十二葉片"
+          }
         ]
       }
     ],
@@ -140,12 +156,84 @@
         ]
       },
       {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "六葉片"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "九葉片"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "十二葉片"
+          }
+        ]
+      },
+      {
         "module": "Text",
         "textList": [
-          "此外，景深還會受到<mark>感光元件尺寸</mark>的影響。例如，全畫幅相機（Full-frame）因為感光元件較大，即使使用相同的光圈值，相較於手機或 APS-C 感光元件，景深會更淺。詳見「<a class='link'>感光元件</a>」以深入了解。"
+          "此外，景深受鏡頭實體焦距影響，而實體焦距又受感光元件尺寸影響。例如，全畫幅相機（Full-frame）因為感光元件較大，即使使用相同的光圈值，相較於手機或 APS-C 感光元件，景深會更淺。詳見「<a class='link'>感光元件</a>」。"
+        ]
+      },
+      {
+        "module": "Heading1",
+        "text": "葉片的影響"
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "光圈由數個葉片組成，這些葉片的數量和形狀會影響畫面中的散景。"
+        ]
+      },
+      {
+        "module": "List",
+        "textList": [
+          "葉片數量越多：光圈越接近圓形，散景更自然",
+          "葉片數量較少：光圈形狀會接近多邊形，散景也呈現多邊形，別具特色。"
+        ]
+      },
+      {
+        "module": "Images",
+        "customClass": "mb-5",
+        "srcList": [
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "六葉片"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "九葉片"
+          }
+        ]
+      },
+      {
+        "module": "Text",
+        "textList": [
+          "拍攝強光時，光圈的葉片數量和形狀也會影響畫面中的星芒效果。"
+        ]
+      },
+      {
+        "module": "Images",
+        "srcList": [
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "六葉片"
+          },
+          {
+            "src": "https://dummyimage.com/600x400",
+            "caption": "九葉片"
+          }
         ]
       }
     ],
-    "learnMore": []
+    "learnMore": [
+      {
+        "module": "Heading1",
+        "text": "延伸閱讀"
+      }
+    ]
   }
 }

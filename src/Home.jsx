@@ -61,8 +61,8 @@ function Home() {
                     >
                         <Suspense fallback={<div>Loading...</div>}>
                             <Routes location={location}> {/* 使用 Routes 而非多層 Router */}
-                                <Route path={`${baseUrl}/`} element={""} />
-                                <Route path={`${baseUrl}/:articleId`} element={<Article />} />
+                                <Route path="/" element={""} />
+                                <Route path="/:articleId" element={<Article />} />
                             </Routes>
                         </Suspense>
                     </CSSTransition>

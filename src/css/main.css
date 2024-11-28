@@ -18,7 +18,7 @@
 }
 @media all and (min-height: 700.5px) {
   #visual.shrink {
-    height: calc(100px + 60vh);
+    height: calc(150px + 60vh);
   }
 }
 
@@ -61,7 +61,7 @@
     width: initial;
   }
 }
-@media all and (max-width: 785.9px) {
+@media all and (max-width: 1023.9px) {
   .mx-container {
     flex-direction: column;
   }

@@ -18,6 +18,20 @@ function Article() {
 
   const baseUrl = import.meta.env.BASE_URL; // 基本路徑
 
+  // 預定義所有組件的導入，指向同一個檔案
+  const componentsPaths = {
+    Text: () => import('./MxBasics.jsx').then(module => ({ default: module.Text })),
+    Heading1: () => import('./MxBasics.jsx').then(module => ({ default: module.Heading1 })),
+    Heading2: () => import('./MxBasics.jsx').then(module => ({ default: module.Heading2 })),
+    Image: () => import('./MxBasics.jsx').then(module => ({ default: module.Image })),
+    Images: () => import('./MxBasics.jsx').then(module => ({ default: module.Images })),
+    Label: () => import('./MxBasics.jsx').then(module => ({ default: module.Label })),
+    List: () => import('./MxBasics.jsx').then(module => ({ default: module.List })),
+    Table: () => import('./MxBasics.jsx').then(module => ({ default: module.Table })),
+    Embed: () => import('./MxBasics.jsx').then(module => ({ default: module.Embed })),
+    Columns: () => import('./MxBasics.jsx').then(module => ({ default: module.Columns }))
+  };
+
   /**
    * 動態載入元件的函數
    * @param {Object} data - 包含元件設定的文章資料
@@ -25,22 +39,29 @@ function Article() {
    */
   const loadComponents = async (data) => {
     const loadedComponents = {};
-    await Promise.all(
-      Object.entries(data.components).map(async ([key, componentConfig]) => {
-        try {
-          const moduleExports = await import(/* @vite-ignore */ `${componentConfig.path}`);
-          componentConfig.modules.forEach((module) => {
-            if (moduleExports[module]) {
-              loadedComponents[module] = moduleExports[module];
-            } else {
-              console.error(`元件 ${module} 在 ${componentConfig.path} 中未找到`);
-            }
-          });
-        } catch (error) {
-          console.error(`從 ${componentConfig.path} 載入元件失敗:`, error);
-        }
-      })
-    );
+    
+    try {
+      // 從文章數據中獲取所需的組件列表
+      const neededComponents = new Set();
+      Object.values(data.components).forEach(config => {
+        config.modules.forEach(module => neededComponents.add(module));
+      });
+
+      // 載入所需的組件
+      await Promise.all(
+        Array.from(neededComponents).map(async (moduleName) => {
+          if (componentsPaths[moduleName]) {
+            const moduleExport = await componentsPaths[moduleName]();
+            loadedComponents[moduleName] = moduleExport.default;
+          } else {
+            console.error(`找不到組件: ${moduleName}`);
+          }
+        })
+      );
+    } catch (error) {
+      console.error('載入組件時發生錯誤:', error);
+    }
+
     return loadedComponents;
   };
 

@@ -1,5 +1,5 @@
 import "./css/mxBasics.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -90,7 +90,7 @@ const Image = ({
 }) => (
   <div className={`block mx mx-image ${customClass}`}>
     <img src={src} alt={alt} />
-    {caption && <figcaption className="text-center">{caption}</figcaption>}
+    {caption && <figcaption className="text-center mt-2">{caption}</figcaption>}
     {link && (
       <a href={link} target="_blank" rel="noopener noreferrer">
         {linkText || "More Info"}
@@ -101,7 +101,7 @@ const Image = ({
 );
 
 // 圖片元件，處理多張圖片並包含可選的說明和連結
-const Images = ({ align = "center", srcList, customClass = "", nestedItems }) => {
+const Images = ({ align = "center" ,srcList, customClass = "", nestedItems }) => {
   const baseUrl = import.meta.env.BASE_URL; // 從環境變數獲取 baseUrl
 
   const alignClass = `align-items-${align}`;
@@ -111,8 +111,8 @@ const Images = ({ align = "center", srcList, customClass = "", nestedItems }) =>
       className={`block mx mx-images ${customClass}`}
       cssMode={true}
       navigation={true}
-      spaceBetween={30}
-      centeredSlides={true}
+      spaceBetween={20}
+      centeredSlides={false}
       pagination={{
         clickable: true,
       }}
@@ -121,23 +121,19 @@ const Images = ({ align = "center", srcList, customClass = "", nestedItems }) =>
       breakpoints={{
         640: {
           slidesPerView: 2,
-          spaceBetween: 20,
         },
         768: {
           slidesPerView: 2,
-          spaceBetween: 40,
         },
         1024: {
           slidesPerView: 3,
-          spaceBetween: 50,
-          centeredSlides: false,
         },
       }}
       modules={[Navigation, Pagination]}
     >
       {srcList.map((image, index) => (
         <SwiperSlide key={index} className={`swiper-wrapper mx mx-images-item d-flex ${alignClass}`}>
-          <img src={`${baseUrl}${image.src}`} alt={image.alt} />
+          <img src={`${image.src}`} alt={image.alt} />
           {image.caption && <figcaption>{image.caption}</figcaption>}
           {image.link && (
             <a href={image.link} className="link" target="_blank" rel="noopener noreferrer">
@@ -194,7 +190,7 @@ const Columns = ({ breakpoints, customClass = "", nestedItems }) => {
     .join(" ");
 
   return (
-    <div className={`block row ${customClass}`}>
+    <div className={`block row row-gap-4 ${customClass}`}>
       {nestedItems &&
         nestedItems.map((item, index) => (
           <div className={`d-flex justify-content-center align-items-center col-12 ${breakpointClasses}`} key={index}>

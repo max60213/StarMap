@@ -1,4 +1,4 @@
-export const group = [2, 4, 4];
+export const group = [3, 3, 4];
 export const itemsData = {
     "items": {
         "principles": {
@@ -12,6 +12,14 @@ export const itemsData = {
             "initState" : 1,
             "url": "/articles/principles/principles.json"
         },
+        "exposure-value": {
+            "name": {
+                "zh": "曝光值",
+                "en": "Exposure Value"
+            },
+            "description": "影像的總曝光量",
+            "content": "曝光值是根據 ISO、光圈和快門速度的設定來確定的，它決定了照片的總光量。正確的曝光能夠使照片展現出最佳的亮度和對比，避免過曝或欠曝。"
+        },
         "storage-methods": {
             "name": {
                 "zh": "儲存與格式",
@@ -20,14 +28,6 @@ export const itemsData = {
             "description": "不同格式的用途與特性",
             "content": "影像或視頻的格式決定了其數據的組織方式，如 JPEG、RAW、MP4 等。不同的格式有不同的特點，如壓縮比、編輯靈活性和檔案大小。",
             "url": "/articles/storage-methods/storage-methods.json"
-        },
-        "exposure-value": {
-            "name": {
-                "zh": "曝光值",
-                "en": "Exposure Value"
-            },
-            "description": "影像的總曝光量",
-            "content": "曝光值是根據 ISO、光圈和快門速度的設定來確定的，它決定了照片的總光量。正確的曝光能夠使照片展現出最佳的亮度和對比，避免過曝或欠曝。"
         },
         "aperture": {
             "name": {

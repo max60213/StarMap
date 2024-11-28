@@ -1,10 +1,10 @@
 .mx-aside {
     padding-right: 0;
-    width: 200px;
+    width: clamp(9.375rem, 7.5rem + 5vw, 12.5rem);
     padding-top: 0.5rem;
 
     &>div {
-        top: 2rem;
+        top: 4rem;
     }
 
     .nav {

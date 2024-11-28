@@ -40,6 +40,8 @@
 
 .slideRight-exit-active {
   opacity: 0;
+  position: absolute !important;
+  pointer-events: none;
   transform: translateX(20%);
   transition: opacity 300ms ease-in, transform 300ms ease-in;
 }
@@ -62,6 +64,8 @@
 
 .slideLeft-exit-active {
   opacity: 0;
+  position: absolute !important;
+  pointer-events: none;
   transform: translateX(-20%);
   transition: opacity 300ms ease-in, transform 300ms ease-in;
 }

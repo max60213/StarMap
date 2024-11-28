@@ -9,7 +9,7 @@
 .mx-heading1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  margin-top: 1.2em;
+  margin-top: 1em;
   padding-top: 2rem;
 }
 .mx-heading2 {
@@ -23,7 +23,7 @@
 .mx-table .table > :not(caption) > * > * {
   background-color: transparent;
 }
-.mx mark {
+.mx mark, .mx-mark, .mx-mark > * {
   background-color: transparent;
   color: var(--theme-color);
   padding-top: 0;
@@ -36,9 +36,11 @@
 .mx-list ul li {
   margin-bottom: 0.4em;
 }
-.mx-label {
+.mx-label * {
   text-align: center;
   margin-top: -0.8rem;
+  font-weight: bold;
+  color: var(--text-primary);
 }
 .mx-image {
   display: flex;
@@ -74,7 +76,7 @@
   filter: drop-shadow(0 8px 10px var(--shadow-float));
 }
 .mx-images-item figcaption {
-  margin-top: 1.2em;
+  margin-top: 1em;
   text-align: center;
 }
 .mx-images-item .link {
