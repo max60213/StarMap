@@ -29,7 +29,8 @@
   display: flex;
   align-items: center;
   padding: 0 6vw;
-  gap: 4vw;
+  -moz-column-gap: 4vw;
+       column-gap: 4vw;
 }
 @media all and (max-width: 1023.9px) {
   .mx-container {
@@ -176,7 +177,7 @@
 #visual .mx-list > *:last-child {
   margin-bottom: 25vh;
 }
-@media all and (max-width: 785.9px) {
+@media all and (max-width: 1023.9px) {
   #visual .mx-list > *:first-child {
     padding-top: 20px;
   }
@@ -252,4 +253,12 @@
 
 .color-primary, .color-primary > * {
   color: var(--text-primary);
+}
+
+.mainTitle {
+  letter-spacing: 0.02em;
+}
+
+.subTitle {
+  color: var(--primary-color);
 }/*# sourceMappingURL=main.css.map */

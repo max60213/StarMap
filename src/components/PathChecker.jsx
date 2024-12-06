@@ -1,18 +1,12 @@
 // PathChecker.jsx
 import { useLocation } from 'react-router-dom';
 
-function useIsHome() {
+export const useIsHome = () => {
     const location = useLocation();
-    const baseUrl = import.meta.env.BASE_URL;
-    // 檢查路徑是否為 "/" 或空字符串 ""
-    return location.pathname === '/' || location.pathname === '' || location.pathname === baseUrl || location.pathname === baseUrl + '/';
+    return location.pathname === '/' || location.pathname === '';
 }
 
-function currentPath() {
+export const currentPath = () => {
     const location = useLocation();
-    const baseUrl = import.meta.env.BASE_URL;
-    // 返回去除 baseUrl 後的路徑
-    return location.pathname.replace(new RegExp(`^${baseUrl}/`), '');
+    return location.pathname.replace(/^\//, '');
 }
-
-export { useIsHome, currentPath };

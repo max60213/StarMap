@@ -1,7 +1,8 @@
 import "./css/mxBasics.css";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { createPortal } from 'react-dom';
 
 // Import Swiper styles
 import "swiper/css";
@@ -79,6 +80,40 @@ const Text = ({ textList, customClass = "", nestedItems }) => (
   </div>
 );
 
+// ImageViewer 組件（新增）
+const ImageViewer = ({ media, onClose }) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(onClose, 300);
+  };
+
+  // 找到 main 元素作為 portal 的目標
+  const mainElement = document.querySelector('main');
+
+  if (!media || !mainElement) return null;
+
+  return createPortal(
+    <div className={`mx-image-viewer ${isVisible ? 'visible' : ''}`}>
+      <div className="overlay" onClick={handleClose}>
+        <div className="content" onClick={e => e.stopPropagation()}>
+          {media.src.endsWith('.mp4') ? (
+            <video src={media.src} controls autoPlay />
+          ) : (
+            <img src={media.src} alt={media.alt} />
+          )}
+          <button className='mx_btn close-btn' onClick={handleClose}>
+            <img src={`./close.svg`} alt="" />
+          </button>
+        </div>
+      </div>
+    </div>,
+    mainElement // Portal 的目標元素
+  );
+};
+
+// Image 組件
 const Image = ({
   src,
   alt = "",
@@ -86,64 +121,111 @@ const Image = ({
   link = "",
   linkText = "",
   customClass = "",
-  nestedItems,
-}) => (
-  <div className={`block mx mx-image ${customClass}`}>
-    <img src={src} alt={alt} />
-    {caption && <figcaption className="text-center mt-2">{caption}</figcaption>}
-    {link && (
-      <a href={link} target="_blank" rel="noopener noreferrer">
-        {linkText || "More Info"}
-      </a>
-    )}
-    {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
-  </div>
-);
+  nestedItems
+}) => {
+  const [selectedMedia, setSelectedMedia] = useState(null);
 
-// 圖片元件，處理多張圖片並包含可選的說明和連結
-const Images = ({ align = "center" ,srcList, customClass = "", nestedItems }) => {
-  const baseUrl = import.meta.env.BASE_URL; // 從環境變數獲取 baseUrl
+  return (
+    <>
+      <div className={`block mx mx-image ${customClass}`}>
+        <img
+          src={src}
+          alt={alt}
+          onClick={() => setSelectedMedia({ src, alt })}
+        />
+        {caption && <figcaption>{caption}</figcaption>}
+        {linkText && (
+          <a href={link} className="link" target="_blank" rel="noopener noreferrer">
+            {linkText || "More Info"}
+          </a>
+        )}
+        {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
+      </div>
 
+      {selectedMedia && (
+        <ImageViewer
+          media={selectedMedia}
+          onClose={() => setSelectedMedia(null)}
+        />
+      )}
+    </>
+  );
+};
+
+// Images 組件
+const Images = ({ align = "center", srcList, customClass = "", nestedItems }) => {
+  const [selectedMedia, setSelectedMedia] = useState(null);
   const alignClass = `align-items-${align}`;
 
   return (
-    <Swiper
-      className={`block mx mx-images ${customClass}`}
-      cssMode={true}
-      navigation={true}
-      spaceBetween={20}
-      centeredSlides={false}
-      pagination={{
-        clickable: true,
-      }}
-      mousewheel={true}
-      keyboard={true}
-      breakpoints={{
-        640: {
-          slidesPerView: 2,
-        },
-        768: {
-          slidesPerView: 2,
-        },
-        1024: {
-          slidesPerView: 3,
-        },
-      }}
-      modules={[Navigation, Pagination]}
-    >
-      {srcList.map((image, index) => (
-        <SwiperSlide key={index} className={`swiper-wrapper mx mx-images-item d-flex ${alignClass}`}>
-          <img src={`${image.src}`} alt={image.alt} />
-          {image.caption && <figcaption>{image.caption}</figcaption>}
-          {image.link && (
-            <a href={image.link} className="link" target="_blank" rel="noopener noreferrer">
-              {image.linkText}
-            </a>
-          )}
-        </SwiperSlide>
-      ))}
-      {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
-    </Swiper>
+    <>
+      <Swiper
+        className={`block mx mx-images ${customClass}`}
+        cssMode={true}
+        navigation={true}
+        spaceBetween={20}
+        centeredSlides={false}
+        pagination={{
+          clickable: true,
+        }}
+        mousewheel={true}
+        keyboard={true}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+        }}
+        modules={[Navigation, Pagination]}
+      >
+        {srcList.map((media, index) => {
+          const isVideo = media.src.endsWith('.mp4') || media.src.endsWith('.webm');
+          return (
+            <SwiperSlide key={index} className={`swiper-wrapper mx mx-images-item d-flex align-content-start ${alignClass}`}>
+              {isVideo ? (
+                <video
+                  src={media.src}
+                  onClick={() => setSelectedMedia({
+                    src: media.src,
+                    alt: media.alt
+                  })}
+                  controls
+                  preload="metadata"
+                />
+              ) : (
+                <img
+                  src={media.src}
+                  alt={media.alt}
+                  onClick={() => setSelectedMedia({
+                    src: media.src,
+                    alt: media.alt
+                  })}
+                />
+              )}
+              {media.caption && <figcaption>{media.caption}</figcaption>}
+              {media.link && (
+                <a href={media.link} className="link" target="_blank" rel="noopener noreferrer">
+                  {media.linkText}
+                </a>
+              )}
+            </SwiperSlide>
+          );
+        })}
+        {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
+      </Swiper>
+
+      {selectedMedia && (
+        <ImageViewer
+          media={selectedMedia}
+          onClose={() => setSelectedMedia(null)}
+        />
+      )}
+    </>
   );
 };
 

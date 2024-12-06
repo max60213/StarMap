@@ -10,7 +10,8 @@
 				"Image",
 				"Table",
 				"List",
-				"Label"
+				"Label",
+				"Columns"
 			]
 		}
 	},
@@ -68,8 +69,9 @@
 			},
 			{
 				"module": "Image",
-				"src": "https://dummyimage.com/600x400",
-				"caption": "光線經過鏡頭聚焦形成倒像的示意圖"
+				"src": "./articles/principles/img/1.jpg",
+				"caption": "光線經過鏡頭聚焦形成倒像",
+				"linkText": "邱韻如, 科學⽉刊546期, 2015/06"
 			},
 			{
 				"module": "Heading1",
@@ -97,48 +99,20 @@
 				"module": "Images",
 				"srcList": [
 					{
-						"src": "https://dummyimage.com/600x400"
+						"src": "./articles/principles/img/IMG_1503.JPG"
+
 					},
 					{
-						"src": "https://dummyimage.com/600x400"
+						"src": "./articles/principles/img/IMG_1501.JPG"
 					},
 					{
-						"src": "https://dummyimage.com/600x400"
+						"src": "./articles/principles/img/IMG_1513.JPG"
 					}
 				]
 			},
 			{
 				"module": "Label",
 				"text": "各種機身上的模式轉盤，不同廠牌標示可能不同，不過功能大同小異"
-			},
-			{
-				"module": "Heading2",
-				"text": "白平衡按鈕 (WB)",
-				"id": "white-balance-button"
-			},
-			{
-				"module": "Text",
-				"textList": [
-					"白平衡按鈕讓使用者能夠快速調整相機的白平衡設定，以應對不同的光線條件，保持影像色彩的準確性。白平衡選項通常包括自動模式、日光、陰影、螢光燈、鎢絲燈等，以適應不同的拍攝環境。"
-				]
-			},
-			{
-				"module": "Images",
-				"srcList": [
-					{
-						"src": "https://dummyimage.com/600x400"
-					},
-					{
-						"src": "https://dummyimage.com/600x400"
-					},
-					{
-						"src": "https://dummyimage.com/600x400"
-					}
-				]
-			},
-			{
-				"module": "Label",
-				"text": "各種機身上的白平衡按鈕，有些尺寸較小的機種會放在選單內"
 			},
 			{
 				"module": "Heading2",
@@ -155,19 +129,50 @@
 				"module": "Images",
 				"srcList": [
 					{
-						"src": "https://dummyimage.com/600x400"
+						"src": "./articles/principles/img/IMG_1538-1.JPG"
+
 					},
 					{
-						"src": "https://dummyimage.com/600x400"
+						"src": "./articles/principles/img/IMG_1535.JPG"
+
 					},
 					{
-						"src": "https://dummyimage.com/600x400"
+						"src": "./articles/principles/img/IMG_1536-1.jpg"
 					}
 				]
 			},
 			{
 				"module": "Label",
-				"text": "各種機身上的iso按鈕，有些尺寸較小的機種會放在選單內"
+				"text": "各種機身上的ISO按鈕，有些會放在Menu選單中"
+			},
+			{
+				"module": "Heading2",
+				"text": "DISP 按鈕",
+				"id": "DISP-button"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"DISP 按鈕用於切換顯示模式，包括顯示網格、直方圖、拍攝資訊，或是資訊的顯示開關。這些顯示模式有助於使用者更好地了解拍攝環境和參數設置，提高拍攝的準確性。"
+				]
+			},
+			{
+				"module": "Images",
+				"srcList": [
+					{
+						"src": "./articles/principles/img/IMG_1530.JPG"
+					},
+					{
+						"src": "./articles/principles/img/IMG_1531.JPG"
+					},
+					{
+						"src": "./articles/principles/img/IMG_1532.JPG"
+					}
+				]
+			},
+			{
+				"module": "Label",
+				"text": "各種機身上的 DISP 按鈕。"
 			},
 			{
 				"module": "Heading2",
@@ -183,62 +188,96 @@
 			{
 				"module": "Heading1",
 				"text": "決定畫質的因素"
-			}
-		],
-		"advance": [
+			},
 			{
-				"module": "Heading1",
-				"text": "感光元件的種類",
-				"id": "types-of-sensors"
+				"module": "Heading2",
+				"text": "像素量"
 			},
 			{
 				"module": "Text",
-				"textList": [
-					"感光元件是成像的核心，常見的有 <mark>CMOS</mark>（互補金屬氧化物半導體）和 <mark>CCD</mark>（電荷耦合元件），兩者在<mark>成本</mark>、<mark>功耗</mark>、<mark>影像品質</mark>等方面存在差異。"
+				"textList":[
+					"像素數量，也稱為畫素，是由感光元件上的像素數量所決定。例如，如果一台相機拍攝的照片解析度為 4032x3024，這代表該照片由 4032 個橫向像素與 3024 個縱向像素構成，兩者相乘得出總像素數量，即 12,192,768 個像素，約等於 1200 萬畫素（12MP）。不過，像素數量並非唯一的畫質指標，因為感光元件的尺寸和像素密度也會影響影像的雜訊表現和動態範圍。"
 				]
 			},
 			{
-				"module": "Images",
-				"srcList": [
+				"module": "Columns",
+				"breakpoints": {
+					"lg": 4,
+					"md": 12
+				},
+				"nestedItems":[
 					{
-						"src": "/img/CCD.jpg",
-						"caption": "相機鏡頭中的CMOS感光元件"
+						"module": "Image",
+						"src": "./articles/principles/img/24MP.jpg",
+						"caption": "2400 萬畫素"
+					},
+					{
+						"module": "Image",
+						"src": "./articles/principles/img/2.4MP.jpg",
+						"caption": "2.4 萬畫素"
+					},	
+					{
+						"module": "Image",
+						"src": "./articles/principles/img/0.96MP.jpg",
+						"caption": "9600畫素, 接近馬賽克"
 					}
 				]
 			},
 			{
 				"module": "Table",
-				"columns": [
-					"比較項目",
-					"CMOS",
-					"CCD"
-				],
+				"columns": ["照片規格 (英寸)", "差 (120dpi 以下)", "好 (120dpi 至 240dpi)", "優 (240dpi 以上)", "各尺寸最大有效像素"],
 				"rows": [
-					[
-						"製造成本",
-						"低",
-						"高"
-					],
-					[
-						"功耗",
-						"低",
-						"高"
-					],
-					[
-						"影像雜訊",
-						"較高，需校正",
-						"低"
-					],
-					[
-						"傳輸速度",
-						"快速",
-						"較慢"
-					],
-					[
-						"應用範圍",
-						"手機、一般相機",
-						"天文攝影、高精度設備"
-					]
+				  ["5 英寸 5×3.5", "600×420 (25 萬像素以下)", "600×420-1200×840", "1200×840 (101 萬像素以上)", "1524×1027 (157 萬像素)"],
+				  ["6 英寸 6×4", "720×480 (35 萬像素以下)", "720×480-1440×960", "1440×960 (138 萬像素以上)", "1818×1228 (223 萬像素)"],
+				  ["7 英寸 7×5", "840×600 (50 萬像素以下)", "840×600-1680×1200", "1680×1200 (202 萬像素以上)", "2138×1536 (328 萬像素)"],
+				  ["8 英寸 8×6", "960×720 (69 萬像素以下)", "960×720-1920×1440", "1920×1440 (276 萬像素以上)", "2434×1830 (445 萬像素)"],
+				  ["10 英寸 10×8", "1200×960 (115 萬像素以下)", "1200×960-2400×1920", "2400×1920 (460 萬像素以上)", "3036×2434 (739 萬像素)"],
+				  ["12 英寸 12×10", "1440×1200 (173 萬像素以下)", "1440×1200-2880×2400", "2880×2400 (691 萬像素以上)", "3638×3036 (1104 萬像素)"],
+				  ["14 英寸 14×10", "1680×1200 (202 萬像素以下)", "1680×1200-3360×2400", "3360×2400 (806 萬像素以上)", "4240×3036 (1287 萬像素)"]
+				]
+			  }
+		],
+		"advance": [
+			  {
+				"module": "Heading1",
+				"text": "感光元件的種類",
+				"id": "types-of-sensors"
+			  },
+			  {
+				"module": "Text",
+				"textList": [
+				  "數位相機常見的感光元件有 <mark>CMOS</mark>（互補金屬氧化物半導體）和 <mark>CCD</mark>（電荷耦合元件）。CMOS 因製造成本低、耗電量少且整合性高，廣泛應用於手機和一般數位相機中，並逐漸取代部分 CCD 的市場。"
+				]
+			  },
+			  {
+				"module": "Images",
+				"srcList": [
+				  {
+					"src": "./articles/principles/img/sensor-of-DSLR.jpg",
+					"caption": "相機鏡頭下的CMOS"
+				  },
+				  {
+					"src": "./articles/principles/img/sensor-of-carcam.jpg",
+					"caption": "行車記錄器的CMOS"
+				  },
+				  {
+					"src": "./articles/principles/img/CCD.jpg",
+					"caption": "一組用於紫外線影像處理用的CCD",
+					"linkText": "zh.wikipedia.org/zh-tw/感光耦合元件",
+					"link": "https://zh.wikipedia.org/zh-tw/感光耦合元件"
+				  }
+				]
+			  },
+			{
+				"module": "Heading2",
+				"text": "尺寸越大≠亮度越高",
+				"id": "bigger-sensor-≠-brighter-image"
+			},
+			{
+				"module": "Text",
+				"textList": [
+					"感光元件越大，畫面會更亮是<mark>常見的迷思</mark>。事實上，影像的亮度並非單單由感光元件的大小決定，而是需要光圈、快門速度和感光度 (ISO) 這三者的綜合調整。感光元件的尺寸增大，通常能提升畫質、降低雜訊，並在低光環境中有更好的表現。然而，這不代表影像一定會更亮",
+					"以量筒測量降雨為例，不同尺寸的量筒在同場雨中，儘管大量筒能容納更多雨水，但與小量筒相比，每<mark>單位面積的雨量是一致的</mark>。類似地，感光元件的大小影響的是光線總量的收集能力，但每單位像素的曝光仍主要由光圈、快門速度和感光度（ISO）共同決定。"
 				]
 			},
 			{
@@ -258,50 +297,27 @@
 				"module": "Images",
 				"srcList": [
 					{
-						"src": "/img/Bayer_matrix.png",
+						"src": "./articles/principles/img/Bayer_matrix.png",
 						"caption": "常見的RGGB陣列",
 						"linkText": "wikiwand.com/zh-tw/布萊斯·拜爾",
 						"link": "https://wikiwand.com/zh-tw/布萊斯·拜爾"
 					},
 					{
-						"src": "/img/principles-type.png",
+						"src": "./articles/principles/img/sensors-type.png",
 						"caption": "​各種特殊的陣列",
 						"linkText": "zh.wikipedia.org/wiki/拜爾濾色鏡",
 						"link": "http://zh.wikipedia.org/wiki/拜爾濾色鏡"
 					},
 					{
-						"src": "/img/CYGM-filter.png",
+						"src": "./articles/principles/img/CYGM-filter.png",
 						"caption": "CYGM陣列，以明度較高的顏色濾鏡來提升進光量",
 						"linkText": "wikipedia.org/wiki/CYGM_filter",
 						"link": "https://en.wikipedia.org/wiki/CYGM_filter"
 					}
 				]
-			},
-			{
-				"module": "Heading1",
-				"text": "不同尺寸的影響",
-				"id": "size-matters"
-			},
-			{
-				"module": "Text",
-				"textList": [
-					"感光元件的尺寸越大，通常能提升<mark>畫質</mark>、降低<mark>雜訊</mark>，並在低光環境中提供更好的表現。然而，這並不代表影像一定會更<mark>亮</mark>。影像的亮度主要由<mark>光圈</mark>、<mark>快門速度</mark>和<mark>感光度（ISO）</mark>共同決定，而非單純依賴感光元件的大小。"
-				]
-			},
-			{
-				"module": "Heading2",
-				"text": "尺寸越大≠亮度越高",
-				"id": "bigger-sensor-≠-brighter-image"
-			},
-			{
-				"module": "Text",
-				"textList": [
-					"感光元件越大，畫面會更亮是<mark>常見的迷思</mark>。事實上，影像的亮度並非單單由感光元件的大小決定，而是需要光圈、快門速度和感光度 (ISO) 這三者的綜合調整。感光元件的尺寸增大，通常能提升畫質、降低雜訊，並在低光環境中有更好的表現。然而，這不代表影像一定會更亮",
-					"以量筒測量降雨為例，不同尺寸的量筒在同場雨中，儘管大量筒能容納更多雨水，但與小量筒相比，每<mark>單位面積的雨量是一致的</mark>。類似地，感光元件的大小影響的是光線總量的收集能力，但每單位像素的曝光仍主要由光圈、快門速度和感光度（ISO）共同決定。"
-				]
 			}
 		],
-		"learnedMore": [
+		"learnMore": [
 			{
 				"module": "Heading1",
 				"text": "延伸閱讀",

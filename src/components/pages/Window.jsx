@@ -11,13 +11,12 @@ function Window(props) {
     const { galaxy, itemReady, currentItem } = useContext(GalaxyContext);
     const isHome = useIsHome();
     const iconVideo = useRef(null);
-    const baseUrl = import.meta.env.BASE_URL;
 
 
     useEffect(() => {
         if (!galaxy || !currentItem || !iconVideo.current) return;
-        iconVideo.current.poster = `${baseUrl}/img/icons/${currentItem}.png`;
-        iconVideo.current.src = `${baseUrl}/video/icons/${currentItem}.mp4`;
+        iconVideo.current.poster = `/img/icons/${currentItem}.png`;
+        iconVideo.current.src = `/video/icons/${currentItem}.mp4`;
         console.log("currentItem: ", currentItem);
     }, [currentItem]);
 

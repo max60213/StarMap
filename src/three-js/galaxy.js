@@ -20,10 +20,9 @@ class Galaxy {
       pcShift: [-2.3 / 10, 0],
       mobileShift: [0, 1 / 4],
       respondTime: 0.04,
-      breakpoint: 785.9,
+      breakpoint: 1023.5,
       maxSpeed: 4,
       speed: 0.1,
-      baseUrl: import.meta.env.BASE_URL
     };
 
     this.state = {
@@ -32,7 +31,7 @@ class Galaxy {
       camPosZ: 0,
       camPosY: 0,
       currentOrbit: 0,
-      currentItem: "principal",
+      currentItem: "principles",
       targetAngle: 0
     };
 
@@ -70,7 +69,8 @@ class Galaxy {
     this.setupEventListeners();
     this.initGUI();
     this.animate();
-    this.setCurrentItem("principal");
+    this.setCurrentItem("principles");
+    this.selector("principles");
     window.sceneLoaded = true;
   }
 
@@ -142,7 +142,7 @@ class Galaxy {
       for (let j = 0; j < this.orbit[i]; j++) {
         const starGeometry = new THREE.CircleGeometry(this.starSize[i], 64);
         const star = new THREE.Mesh(starGeometry, starMaterial.clone());
-        loader.load(`${this.config.baseUrl}/img/icons/${this.items[order]}.png`, (texture) => {
+        loader.load(`/img/icons/${this.items[order]}.png`, (texture) => {
           star.material.map = texture;
           star.material.needsUpdate = true;
         });
@@ -152,7 +152,7 @@ class Galaxy {
         if (order == 0) {
           star.position.set(0, 3, this.params.radius * i);
         }
-        else if (order == 2) {
+        else if (order == 1) {
           star.position.set(0, -3, this.params.radius * i);
         }
         else {
@@ -171,18 +171,33 @@ class Galaxy {
   }
 
   setupEventListeners = () => {
-    document.addEventListener('mousemove', this.onMouseMove);
-    document.addEventListener('keydown', this.onKeyDown);
-    document.addEventListener('keyup', this.onKeyUp);
-    //window.addEventListener('resize', this.onResize);
-    window.addEventListener('orientationchange', this.onResize);
+    const handlers = {
+        mousemove: this.onMouseMove,
+        keydown: this.onKeyDown,
+        keyup: this.onKeyUp,
+        orientationchange: this.onResize
+    };
 
-    const resizeObserver = new ResizeObserver(entries => {
-      for (let entry of entries) {
-        this.onResize(entry);
-      }
+    // 添加事件監聽器
+    Object.entries(handlers).forEach(([event, handler]) => {
+        document.addEventListener(event, handler);
     });
-    resizeObserver.observe(this.visual);
+
+    // 設置 ResizeObserver
+    this.resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            this.onResize(entry);
+        }
+    });
+    this.resizeObserver.observe(this.visual);
+
+    // 提供清理方法
+    this.cleanupEventListeners = () => {
+        Object.entries(handlers).forEach(([event, handler]) => {
+            document.removeEventListener(event, handler);
+        });
+        this.resizeObserver.disconnect();
+    };
   }
 
   initGUI = () => {
@@ -453,7 +468,7 @@ class Galaxy {
           if(starPivot.children[0].userData.order == 0) {
             this.state.camPosY = 3;
           }
-          else if(starPivot.children[0].userData.order == 2) {
+          else if(starPivot.children[0].userData.order == 1) {
             this.state.camPosY = -3;
           }
           else {

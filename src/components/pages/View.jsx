@@ -6,7 +6,6 @@ function View() {
     // Extract variables from context
     const { currentItem } = useContext(GalaxyContext);
     const viewVideo = useRef(null);
-    const baseUrl = import.meta.env.BASE_URL;
 
     // 根據 currentItem 從 itemsData 中取得相對應的資料
     const currentItemData = itemsData.items[currentItem]; // 從 itemsData 中提取當前項目的資料
@@ -17,7 +16,7 @@ function View() {
     // Update the video source when currentItem changes
     useEffect(() => {
         if (viewVideo.current && currentItem) {
-            viewVideo.current.src = `${baseUrl}/articles/${currentItem}/${currentItem}.mp4`;
+            viewVideo.current.src = `/articles/${currentItem}/${currentItem}.mp4`;
             console.log("View updated");
         }
 
@@ -55,7 +54,7 @@ function View() {
                     </div>
                 </div>
             </div>
-            <video ref={viewVideo} autoPlay preload="auto" muted loop id="view-player" src={baseUrl + `/articles/${currentItem}/${currentItem}.mp4`}></video>
+            <video ref={viewVideo} autoPlay preload="auto" muted loop id="view-player" src={`/articles/${currentItem}/${currentItem}.mp4`}></video>
         </div>
     );
 }

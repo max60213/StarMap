@@ -13,13 +13,12 @@ function Info(props) {
   useEffect(() => {
     if (!galaxy) return;
 
-    // 假設 galaxy.currentItem 是目前選中的項目的鍵名，例如 'sensor'
     galaxy.selector(path);
     const currentItemKey = galaxy.getCurrentItem();
     const currentItemData = itemsData.items[currentItemKey];
 
-    setItemData(currentItemData); // 將目前選中的項目數據保存到狀態中
-  }, [galaxy]);
+    setItemData(currentItemData);
+  }, [galaxy, path]);
 
   let navigate = useNavigate();
   const toHome = () => {
@@ -39,7 +38,7 @@ function Info(props) {
             </div>
 
             <button className='ms-auto mx_btn' onClick={toHome}>
-              <img src="./close.svg" alt="" />
+              <img src="/close.svg" alt="" />
             </button>
           </div>
           <hr />

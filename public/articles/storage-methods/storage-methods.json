@@ -10,7 +10,8 @@
                 "Table",
                 "List",
                 "Label",
-                "Embed"
+                "Embed",
+                "Columns"
             ]
         }
     },
@@ -126,7 +127,31 @@
             {
                 "module": "Text",
                 "textList": [
-                    "向量圖以數學公式描述影像的幾何形狀，如直線、曲線與多邊形，透過計算生成圖像，因此具有“無限解析度”的特性。無論放大或縮小，影像始終平滑清晰，不會像點陣圖那樣像素化。常用於儲存文字、Logo 及簡單的插圖。",
+                    "向量圖以數學公式描述影像的幾何形狀，如直線、曲線與多邊形，透過計算生成圖像，因此具有“無限解析度”的特性。無論放大或縮小，影像始終平滑清晰，不會像點陣圖那樣像素化。常用於儲存文字、Logo 及簡單的插圖。"
+                ]
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 4
+                },
+                "customClass": "justify-content-center",
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "./articles/storage-methods/img/vector1.svg",
+                        "caption": "向量的書本圖示"
+                    },
+                    {
+                        "module": "Image",
+                        "src": "./articles/storage-methods/img/vector2.svg",
+                        "caption": "簡單的插圖"
+                    }
+                ]
+            },
+            {
+                "module": "Text",
+                "textList": [
                     "對於初次接觸的人來說，可能很難理解為何向量圖能儲存「無限解析度」，但檔案卻很小。以下是一個簡單的比喻："
                 ]
             },
@@ -144,6 +169,25 @@
                 "textList": [
                     "利用這個公式，電腦可以畫出一條拋物線的圖形。不管圖放大多少倍，我們都能在圖上的每個位置準確地求出 Y 的值，因為它是由數學公式定義的，因此曲線始終平滑，不會變成像素方塊。",
                     "我們只需儲存簡短的算式就能畫出一條能無限縮放的曲線。而透過更多算式的組合，可以生成更複雜、有意義的圖形。這正是向量圖的核心原理。"
+                ]
+            },
+            {
+                "module": "Columns",
+                "breakpoints": {
+                    "lg": 6
+                },
+                "customClass": "justify-content-center",
+                "nestedItems": [
+                    {
+                        "module": "Image",
+                        "src": "./articles/storage-methods/img/vector_bezier_noBG.png",
+                        "caption": "組成向量圖的貝茲曲線"
+                    },
+                    {
+                        "module": "Image",
+                        "src": "./articles/storage-methods/img/vector_file.png",
+                        "caption": "向量圖所紀錄的資訊"
+                    }
                 ]
             },
             {

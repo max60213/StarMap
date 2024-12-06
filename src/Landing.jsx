@@ -13,14 +13,14 @@ function Landing() {
         <div className="mx-container">
             <div className="mx-first">
                 <Window className={isHome ? "" : "active"} />
-                <CSSTransition
+                {/* <CSSTransition
                     in={isHome}
                     timeout={300}
                     classNames="fade"
                     unmountOnExit
                 >
                     <Navigate/>
-                </CSSTransition>
+                </CSSTransition> */}
             </div>
             <div className="mx-last">
                 <CSSTransition

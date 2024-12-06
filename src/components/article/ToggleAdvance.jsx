@@ -2,9 +2,11 @@ import React, { useRef } from 'react';
 
 function ToggleAdvance({ target }) {
   const imgRef = useRef(null); // 用 useRef 建立一個 img 的參考
+  const baseUrl = import.meta.env.BASE_URL;
   const handleToggle = () => {
     const targetElement = document.getElementById(target);
     const toggleAdvance = document.getElementById("toggle_advance");
+    const advanceContainer = document.getElementsByClassName("advance-container");
     if (targetElement) {
       targetElement.classList.toggle('expand');
       if (targetElement.classList.contains('expand')) {
@@ -13,9 +15,13 @@ function ToggleAdvance({ target }) {
             behavior: "smooth", // 平滑滾動
             block: "start",    // 將目標對齊到頂部
           });
-        }, 300);
+        }, 500);
+        setTimeout(() => {
+          advanceContainer[0].classList.add('overflow-visible');
+        }, 1000);
       }
       else {
+        advanceContainer[0].classList.remove('overflow-visible');
         toggleAdvance.scrollIntoView({
           behavior: "smooth", // 平滑滾動
           block: "end",    // 將目標對齊到底部
@@ -34,7 +40,7 @@ function ToggleAdvance({ target }) {
         <p className="mt-2">為避免學習負擔，將部分深度內容隱藏，點擊右側以展開或收合。</p>
       </div>
       <button className="mx_btn mx_btn-lg mx_btn-collapse" onClick={handleToggle}>
-        <img className='' ref={imgRef} src="./drop_down.svg" alt="" />
+        <img className='' ref={imgRef} src="/drop_down.svg" alt="" />
       </button>
     </div>
   );

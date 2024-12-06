@@ -7,62 +7,38 @@ function Navigate(props) {
     useEffect(() => {
         if (!galaxy) return;
 
-        // 處理用戶輸入的函數
         const handleInput = (direction, state) => {
             galaxy.handleInput(direction, state);
         };
 
-        // 獲取控制按鈕元素
         const buttonLeft = document.getElementById('button-left');
         const buttonRight = document.getElementById('button-right');
         const buttonUp = document.getElementById('button-up');
         const buttonDown = document.getElementById('button-down');
 
-        // 設置滑鼠和觸摸事件
-        buttonLeft.addEventListener('mousedown', () => handleInput('left', 'down'));
-        buttonUp.addEventListener('mousedown', () => handleInput('up', 'down'));
-        buttonRight.addEventListener('mousedown', () => handleInput('right', 'down'));
-        buttonDown.addEventListener('mousedown', () => handleInput('down', 'down'));
+        // 添加事件監聽器
+        const events = [
+            [buttonLeft, 'mousedown', () => handleInput('left', 'down')],
+            [buttonLeft, 'mouseup', () => handleInput('left', 'up')],
+            [buttonUp, 'mousedown', () => handleInput('up', 'down')],
+            [buttonUp, 'mouseup', () => handleInput('up', 'up')],
+            [buttonRight, 'mousedown', () => handleInput('right', 'down')],
+            [buttonRight, 'mouseup', () => handleInput('right', 'up')],
+            [buttonDown, 'mousedown', () => handleInput('down', 'down')],
+            [buttonDown, 'mouseup', () => handleInput('down', 'up')]
+        ];
 
-        buttonLeft.addEventListener('mouseup', () => handleInput('left', 'up'));
-        buttonUp.addEventListener('mouseup', () => handleInput('up', 'up'));
-        buttonRight.addEventListener('mouseup', () => handleInput('right', 'up'));
-        buttonDown.addEventListener('mouseup', () => handleInput('down', 'up'));
+        events.forEach(([element, event, handler]) => {
+            element.addEventListener(event, handler);
+        });
 
-        // 觸摸事件（確保預防默認行為以避免滾動等問題）
-        buttonLeft.addEventListener('touchstart', (e) => { e.preventDefault(); handleInput('left', 'down'); }, { passive: false });
-        buttonUp.addEventListener('touchstart', (e) => { e.preventDefault(); handleInput('up', 'down'); }, { passive: false });
-        buttonRight.addEventListener('touchstart', (e) => { e.preventDefault(); handleInput('right', 'down'); }, { passive: false });
-        buttonDown.addEventListener('touchstart', (e) => { e.preventDefault(); handleInput('down', 'down'); }, { passive: false });
-
-        buttonLeft.addEventListener('touchend', (e) => { e.preventDefault(); handleInput('left', 'up'); }, { passive: false });
-        buttonUp.addEventListener('touchend', (e) => { e.preventDefault(); handleInput('up', 'up'); }, { passive: false });
-        buttonRight.addEventListener('touchend', (e) => { e.preventDefault(); handleInput('right', 'up'); }, { passive: false });
-        buttonDown.addEventListener('touchend', (e) => { e.preventDefault(); handleInput('down', 'up'); }, { passive: false });
-
-        // 清理函數：移除所有事件監聽器
+        // 清理函數
         return () => {
-            buttonLeft.removeEventListener('mousedown', () => handleInput('left', 'down'));
-            buttonUp.removeEventListener('mousedown', () => handleInput('up', 'down'));
-            buttonRight.removeEventListener('mousedown', () => handleInput('right', 'down'));
-            buttonDown.removeEventListener('mousedown', () => handleInput('down', 'down'));
-
-            buttonLeft.removeEventListener('mouseup', () => handleInput('left', 'up'));
-            buttonUp.removeEventListener('mouseup', () => handleInput('up', 'up'));
-            buttonRight.removeEventListener('mouseup', () => handleInput('right', 'up'));
-            buttonDown.removeEventListener('mouseup', () => handleInput('down', 'up'));
-
-            buttonLeft.removeEventListener('touchstart', (e) => { e.preventDefault(); handleInput('left', 'down'); });
-            buttonUp.removeEventListener('touchstart', (e) => { e.preventDefault(); handleInput('up', 'down'); });
-            buttonRight.removeEventListener('touchstart', (e) => { e.preventDefault(); handleInput('right', 'down'); });
-            buttonDown.removeEventListener('touchstart', (e) => { e.preventDefault(); handleInput('down', 'down'); });
-
-            buttonLeft.removeEventListener('touchend', (e) => { e.preventDefault(); handleInput('left', 'up'); });
-            buttonUp.removeEventListener('touchend', (e) => { e.preventDefault(); handleInput('up', 'up'); });
-            buttonRight.removeEventListener('touchend', (e) => { e.preventDefault(); handleInput('right', 'up'); });
-            buttonDown.removeEventListener('touchend', (e) => { e.preventDefault(); handleInput('down', 'up'); });
+            events.forEach(([element, event, handler]) => {
+                element.removeEventListener(event, handler);
+            });
         };
-    }, [galaxy]);  // 當 galaxy 更新時重新執行
+    }, [galaxy]);
 
     return (
         <div id="navigate" className={`arrows-container ${props.className || ""}`}>

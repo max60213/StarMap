@@ -39,7 +39,7 @@
     @include full-size;
     align-items: center;
     padding: 0 6vw;
-    gap: 4vw;
+    column-gap: 4vw;
     @media all and ($tablet-only) {
         padding: 0 max(20px, 3%);
         gap: 20px;
@@ -201,7 +201,7 @@
             margin-bottom: 25vh;
         }
 
-        @media all and ($phone-only) {
+        @media all and ($tablet-only) {
             &>*:first-child {
                 padding-top: 20px;
             }
@@ -291,4 +291,11 @@
 
 .color-primary, .color-primary > * {
     color: var(--text-primary);
+}
+
+.mainTitle{
+    letter-spacing: 0.02em;
+}
+.subTitle{
+    color: var(--primary-color);
 }

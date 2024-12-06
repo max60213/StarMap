@@ -49,6 +49,24 @@
 }
 .mx-image img {
   width: 100%;
+  transition: transform 0.5s ease, filter 0.5s ease;
+  cursor: pointer;
+}
+.mx-image img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 8px 10px var(--shadow-float));
+}
+.mx-image figcaption {
+  margin-top: 1em;
+  text-align: center;
+}
+.mx-image .link {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 300;
+  opacity: 0.6;
+  text-align: center;
+  color: var(--primary-color);
 }
 .mx-images {
   overflow: visible !important;
@@ -60,7 +78,7 @@
 .mx-images > * {
   overflow: visible !important;
   justify-content: center;
-  align-items: end;
+  align-items: center;
 }
 .mx-images-item {
   display: flex;
@@ -70,6 +88,7 @@
 .mx-images-item img {
   width: 100%;
   transition: transform 0.5s ease, filter 0.5s ease;
+  cursor: pointer;
 }
 .mx-images-item img:hover {
   transform: scale(1.05);
@@ -106,6 +125,8 @@
   height: 100%;
   border-radius: 50%;
   transition: all 0.6s cubic-bezier(0.3, 0, 0, 1);
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
 }
 .mx_btn img {
   filter: invert(1);
@@ -125,4 +146,53 @@
 }
 .mx_btn:hover:after {
   background-color: var(--primary-color);
+}
+.mx-image-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.mx-image-viewer.visible {
+  opacity: 1;
+  visibility: visible;
+}
+.mx-image-viewer .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.mx-image-viewer .content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mx-image-viewer .content img:not(.close-btn img), .mx-image-viewer .content video {
+  max-width: 100%;
+  max-height: 90vh;
+  -o-object-fit: contain;
+     object-fit: contain;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+.mx-image-viewer .close-btn {
+  position: absolute;
+  top: -2rem;
+  right: -2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }/*# sourceMappingURL=mxBasics.css.map */
