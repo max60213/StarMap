@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Aside from "./Aside";
 import "./css/article.css";
 import ToggleAdvance from "./ToggleAdvance";
+import { Row } from "react-bootstrap";
 
 /**
  * Article 元件 - 負責文章內容的載入與渲染
@@ -10,52 +11,60 @@ import ToggleAdvance from "./ToggleAdvance";
  * 並支援模組內包模組的遞迴渲染
  */
 function Article() {
-  const { articleId } = useParams();
-  const [articleData, setArticleData] = useState(null);
-  const [modules, setModules] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [isPending, startTransition] = useTransition();
+  const { articleId } = useParams(); // 從 URL 參數取得文章 ID
+  const [articleData, setArticleData] = useState(null); // 儲存文章資料的狀態
+  const [components, setComponents] = useState({}); // 儲存動態載入的元件
+  const [isLoading, setIsLoading] = useState(true); // 載入狀態管理
+  const [isPending, startTransition] = useTransition(); // 管理轉場狀態
 
-  // 預定義可用的模組
-  const modulesPaths = {
-    basic: () => import('./modules/basic'),
-    // 未來可以在這裡添加更多模組
-    // advanced: () => import('./modules/advanced'),
-    // interactive: () => import('./modules/interactive'),
+  const baseUrl = import.meta.env.BASE_URL; // 基本路徑
+
+  // 預定義所有組件的導入，指向同一個檔案
+  const componentsPaths = {
+    Text: () => import('./MxBasics.jsx').then(module => ({ default: module.Text })),
+    Heading1: () => import('./MxBasics.jsx').then(module => ({ default: module.Heading1 })),
+    Heading2: () => import('./MxBasics.jsx').then(module => ({ default: module.Heading2 })),
+    Image: () => import('./MxBasics.jsx').then(module => ({ default: module.Image })),
+    Images: () => import('./MxBasics.jsx').then(module => ({ default: module.Images })),
+    Label: () => import('./MxBasics.jsx').then(module => ({ default: module.Label })),
+    List: () => import('./MxBasics.jsx').then(module => ({ default: module.List })),
+    Table: () => import('./MxBasics.jsx').then(module => ({ default: module.Table })),
+    Embed: () => import('./MxBasics.jsx').then(module => ({ default: module.Embed })),
+    Column: () => import('./MxBasics.jsx').then(module => ({ default: module.Column })),
+    Row: () => import('./MxBasics.jsx').then(module => ({ default: module.Row })),
   };
 
   /**
-   * 動態載入模組的函數
-   * @param {Object} data - 包含模組設定的文章資料
-   * @returns {Object} 載入完成的模組集合
+   * 動態載入元件的函數
+   * @param {Object} data - 包含元件設定的文章資料
+   * @returns {Object} 載入完成的元件集合
    */
-  const loadModules = async (data) => {
-    const loadedModules = {};
-
+  const loadComponents = async (data) => {
+    const loadedComponents = {};
+    
     try {
-      // 從文章數據中獲取所需的模組列表
-      const neededModules = new Set();
+      // 從文章數據中獲取所需的組件列表
+      const neededComponents = new Set();
       Object.values(data.components).forEach(config => {
-        // 假設每個元件配置都有一個 module 屬性指定它屬於哪個模組
-        neededModules.add(config.moduleType || 'basic'); // 預設使用 basic 模組
+        config.modules.forEach(module => neededComponents.add(module));
       });
 
-      // 載入所需的模組
+      // 載入所需的組件
       await Promise.all(
-        Array.from(neededModules).map(async (moduleName) => {
-          if (modulesPaths[moduleName]) {
-            const moduleExport = await modulesPaths[moduleName]();
-            loadedModules[moduleName] = moduleExport;
+        Array.from(neededComponents).map(async (moduleName) => {
+          if (componentsPaths[moduleName]) {
+            const moduleExport = await componentsPaths[moduleName]();
+            loadedComponents[moduleName] = moduleExport.default;
           } else {
-            console.error(`找不到模組: ${moduleName}`);
+            console.error(`找不到組件: ${moduleName}`);
           }
         })
       );
     } catch (error) {
-      console.error('載入模組時發生錯誤:', error);
+      console.error('載入組件時發生錯誤:', error);
     }
 
-    return loadedModules;
+    return loadedComponents;
   };
 
   // 在元件掛載時載入文章資料
@@ -64,18 +73,23 @@ function Article() {
       .then((response) => response.json())
       .then(async (data) => {
         setArticleData(data);
-        const loadedModules = await loadModules(data);
-        setModules(loadedModules);
+        const loadedComponents = await loadComponents(data);
+        setComponents(loadedComponents);
         setIsLoading(false);
+
+        // 使用 startTransition 處理轉場
+        startTransition(() => {
+          // 此處可放置需要延遲執行的副作用
+        });
       })
       .catch((error) => {
         console.error("載入文章時發生錯誤:", error);
         setIsLoading(false);
       });
-  }, [articleId]);
+  }, [articleId, baseUrl]);
 
   /**
-   * 渲染內容區塊的輔助函數
+   * 渲染內容區塊的輔助函數，支援遞迴模組渲染
    * @param {Array} contentArray - 要渲染的內容陣列
    * @returns {Array|null} 渲染後的 React 元素陣列或 null
    */

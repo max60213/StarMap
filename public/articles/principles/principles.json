@@ -11,7 +11,7 @@
 				"Table",
 				"List",
 				"Label",
-				"Columns"
+				"Column"
 			]
 		}
 	},
@@ -200,7 +200,7 @@
 				]
 			},
 			{
-				"module": "Columns",
+				"module": "Column",
 				"breakpoints": {
 					"lg": 4,
 					"md": 12
@@ -208,16 +208,19 @@
 				"nestedItems":[
 					{
 						"module": "Image",
+						"customClass": "pixelated",
 						"src": "./articles/principles/img/24MP.jpg",
 						"caption": "2400 萬畫素"
 					},
 					{
 						"module": "Image",
+						"customClass": "pixelated",
 						"src": "./articles/principles/img/2.4MP.jpg",
 						"caption": "2.4 萬畫素"
 					},	
 					{
 						"module": "Image",
+						"customClass": "pixelated",
 						"src": "./articles/principles/img/0.96MP.jpg",
 						"caption": "9600畫素, 接近馬賽克"
 					}
@@ -289,8 +292,7 @@
 				"module": "Text",
 				"textList": [
 					"感光元件是由許多細小的<mark>像素</mark>（Pixel）組合而成，像素的數量與尺寸決定了影像的<mark>解析度</mark>和<mark>感光能力</mark>。每個像素只能捕捉某一特定範圍的電磁波，即一種顏色的光，因此需要多個像素的組合來捕捉<mark>彩色</mark>的畫面。",
-					"目前最常見的排列方式是 <mark>Bayer 濾色鏡</mark>（Bayer Filter），它包含<mark>紅</mark>（R）、<mark>綠</mark>（G）、<mark>藍</mark>（B）像素的規律排列。由於人眼對綠色較為敏感，Bayer 陣列中綠色像素的數量是紅色和藍色的兩倍，這種排列稱為 <mark>RGGB 陣列</mark>。",
-					"除了 RGB 陣列外，還有其他變種，如 <mark>CYGM 陣列</mark> 和 <mark>RYYB 陣列</mark>，它們透過特殊的顏色濾鏡來提升<mark>進光量</mark>，但在<mark>顏色準確度</mark>上有所犧牲。"
+					"最常見的排列方式是 Bayer 濾色鏡（Bayer Filter），以紅（R）、綠（G）、藍（B）像素的 RGGB 陣列為主，其中綠色像素數量是紅色和藍色的兩倍，因人眼對綠色較敏感。此外，還有 CYGM 和 RYYB 等變種，它們透過特殊的顏色濾鏡來提升進光量，但可能降低顏色準確度。"
 				]
 			},
 			{

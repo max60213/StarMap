@@ -1,35 +1,102 @@
-import { useEffect, useContext } from "react";
+import { useRef, useEffect, useContext } from 'react';
 import GalaxyContext from '../GalaxyContext.jsx';
 import { itemsData } from '../../js/items-data.js';
 import "./css/slider.css";
 
-function Slider() {
-    // Extract variables from context
+const Slider = ({ currentStep, setCurrentStep }) => {
     const { currentItem } = useContext(GalaxyContext);
-
-    // 根據 currentItem 從 itemsData 中取得相對應的資料
-    const currentItemData = itemsData.items[currentItem]; // 從 itemsData 中提取當前項目的資料
-    const states = currentItemData ? currentItemData.states : []; // 安全地取得 states，若無則返回空陣列
-    const initState = currentItemData ? currentItemData.initState : 0; // 默認值為 0
-    console.log(initState);
-
+    const currentItemData = itemsData.items[currentItem];
+    const states = currentItemData?.states || [];
+    const initState = currentItemData?.initState || 0;
+    
+    const sliderRef = useRef(null);
+    const thumbRef = useRef(null);
+    const isDraggingRef = useRef(false);
+    
+    // Set initial state when currentItem changes
     useEffect(() => {
-        // Dynamic import of the JS file (only if needed dynamically)
-        import("../../js/view.js").then(({ sliderInit }) => {
-            sliderInit(); // Call the initialization function
-        }).catch(err => console.error("Error loading view.js", err));
-    });
+        setCurrentStep(initState);
+    }, [currentItem, initState, setCurrentStep]);
+
+    // Calculate step size
+    const getStepPixel = () => {
+        if (!sliderRef.current || !thumbRef.current) return 0;
+        return (sliderRef.current.offsetWidth - thumbRef.current.offsetWidth) / (states.length - 1);
+    };
+
+    // Handle click on slider
+    const handleSliderClick = (event) => {
+        if (isDraggingRef.current) return;
+        
+        const slider = sliderRef.current;
+        const thumb = thumbRef.current;
+        if (!slider || !thumb) return;
+
+        const stepPixel = getStepPixel();
+        const clickPosition = event.clientX - slider.getBoundingClientRect().left;
+        const newStep = Math.min(
+            Math.max(0, Math.round(clickPosition / stepPixel)),
+            states.length - 1
+        );
+        
+        setCurrentStep(newStep);
+    };
+
+    // Handle drag start
+    const handleMouseDown = (event) => {
+        event.preventDefault();
+        const thumb = thumbRef.current;
+        const slider = sliderRef.current;
+        if (!thumb || !slider) return;
+
+        isDraggingRef.current = true;
+        const shiftX = event.clientX - thumb.getBoundingClientRect().left;
+        const stepPixel = getStepPixel();
+
+        const handleMouseMove = (event) => {
+            const newLeft = event.clientX - shiftX - slider.getBoundingClientRect().left;
+            const newStep = Math.min(
+                Math.max(0, Math.round(newLeft / stepPixel)),
+                states.length - 1
+            );
+            setCurrentStep(newStep);
+        };
+
+        const handleMouseUp = () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            isDraggingRef.current = false;
+        };
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+    };
+
+    // Calculate thumb position
+    const thumbPosition = currentStep * getStepPixel();
 
     return (
-        <div id='slider' className="slider" data-init={initState} data-states={JSON.stringify(states)}>
-            <div id='slider-bar' className="slider-bar"></div>
-            <div id='slider-thumb' className="slider-thumb">
-                <div className="slider-thumb-btn"></div>
-                <div id="slider-thumb-highlight" className="slider-thumb-highlight"></div>
-                <h3 id='slider-thumb-state' className="slider-thumb-state"></h3>
+        <div 
+            ref={sliderRef}
+            className="slider"
+            onClick={handleSliderClick}
+        >
+            <div className="slider-bar" />
+            <div
+                ref={thumbRef}
+                className="slider-thumb"
+                style={{ left: `${thumbPosition}px` }}
+                onMouseDown={handleMouseDown}
+                onDragStart={() => false}
+            >
+                <div className="slider-thumb-btn" />
+                <div className="slider-thumb-highlight" />
+                <h3 className="slider-thumb-state">
+                    {states[currentStep]}
+                </h3>
             </div>
         </div>
     );
-}
+};
 
 export default Slider;

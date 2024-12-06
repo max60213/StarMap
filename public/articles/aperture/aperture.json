@@ -6,6 +6,7 @@
         "Heading1",
         "Text",
         "Images",
+        "Image",
         "Table",
         "List",
         "Label"
@@ -159,16 +160,16 @@
         "module": "Images",
         "srcList": [
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "六葉片"
+            "src": "./articles/aperture/img/2.JPG",
+            "caption": "f/22 小光圈，畫面整體清晰"
           },
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "九葉片"
+            "src": "./articles/aperture/img/3.JPG",
+            "caption": "f/8 中等光圈，背景稍模糊"
           },
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "十二葉片"
+            "src": "./articles/aperture/img/4.JPG",
+            "caption": "f/2.8 大光圈，背景虛化，景深極淺，凸顯主體"
           }
         ]
       },
@@ -180,7 +181,8 @@
       },
       {
         "module": "Heading1",
-        "text": "葉片的影響"
+        "text": "葉片的影響",
+        "id": "blades"
       },
       {
         "module": "Text",
@@ -212,21 +214,13 @@
       {
         "module": "Text",
         "textList": [
-          "拍攝強光時，光圈的葉片數量和形狀也會影響畫面中的星芒效果。"
+          "拍攝強光時，小光圈可以拍攝出星芒效果，光圈的葉片數量和形狀會影響畫面中的星芒形狀數量。"
         ]
       },
       {
-        "module": "Images",
-        "srcList": [
-          {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "六葉片"
-          },
-          {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "九葉片"
-          }
-        ]
+        "module": "Image",
+        "src": "./articles/aperture/img/1.jpg",
+        "caption": "六片葉片的光圈拍出六道光芒效果"
       }
     ],
     "learnMore": [

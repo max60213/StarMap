@@ -2,7 +2,7 @@ import GalaxyContext from '../GalaxyContext.jsx';
 import { useContext, useEffect, useRef } from 'react';
 import { itemsData } from '../../js/items-data.js';
 
-function View() {
+function View({ currentStep }) {
     // Extract variables from context
     const { currentItem } = useContext(GalaxyContext);
     const viewVideo = useRef(null);
@@ -21,6 +21,23 @@ function View() {
         }
 
     }, []); // Added dependencies
+
+    // Transform values
+    const transforms = [
+        'translate(0%, 0%)',
+        `translate(0%, -${100 / 3}%)`,
+        `translate(0%, -${(100 * 2) / 3}%)`,
+        'translate(-50%, 0%)',
+        `translate(-50%, -${100 / 3}%)`,
+        `translate(-50%, -${(100 * 2) / 3}%)`
+    ];
+
+    useEffect(() => {
+        const video = document.getElementById('view-player');
+        if (video) {
+            video.style.transform = transforms[currentStep];
+        }
+    }, [currentStep]);
 
     return (
         <div className="view player">

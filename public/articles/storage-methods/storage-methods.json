@@ -11,7 +11,7 @@
                 "List",
                 "Label",
                 "Embed",
-                "Columns"
+                "Column"
             ]
         }
     },
@@ -131,7 +131,7 @@
                 ]
             },
             {
-                "module": "Columns",
+                "module": "Column",
                 "breakpoints": {
                     "lg": 4
                 },
@@ -172,7 +172,7 @@
                 ]
             },
             {
-                "module": "Columns",
+                "module": "Column",
                 "breakpoints": {
                     "lg": 6
                 },

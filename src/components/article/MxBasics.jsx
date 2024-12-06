@@ -1,6 +1,6 @@
 import "./css/mxBasics.css";
 import React, { useState } from "react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation, Pagination, FreeMode } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { createPortal } from 'react-dom';
 
@@ -125,19 +125,34 @@ const Image = ({
 }) => {
   const [selectedMedia, setSelectedMedia] = useState(null);
 
+  const getThumbPath = (imagePath) => {
+    const lastDotIndex = imagePath.lastIndexOf('.');
+    if (lastDotIndex === -1) return `${imagePath}_thumb`;
+    return `${imagePath.substring(0, lastDotIndex)}_thumb${imagePath.substring(lastDotIndex)}`;
+  };
+
   return (
     <>
       <div className={`block mx mx-image ${customClass}`}>
         <img
-          src={src}
+          src={getThumbPath(src)}
           alt={alt}
           onClick={() => setSelectedMedia({ src, alt })}
         />
         {caption && <figcaption>{caption}</figcaption>}
         {linkText && (
-          <a href={link} className="link" target="_blank" rel="noopener noreferrer">
-            {linkText || "More Info"}
-          </a>
+          link ? (
+            <a
+              href={link}
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {linkText}
+            </a>
+          ) : (
+            <span className="link">{linkText}</span>
+          )
         )}
         {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
       </div>
@@ -157,19 +172,26 @@ const Images = ({ align = "center", srcList, customClass = "", nestedItems }) =>
   const [selectedMedia, setSelectedMedia] = useState(null);
   const alignClass = `align-items-${align}`;
 
+  const getThumbPath = (imagePath) => {
+    const lastDotIndex = imagePath.lastIndexOf('.');
+    if (lastDotIndex === -1) return `${imagePath}_thumb`;
+    return `${imagePath.substring(0, lastDotIndex)}_thumb${imagePath.substring(lastDotIndex)}`;
+  };
+
   return (
     <>
       <Swiper
         className={`block mx mx-images ${customClass}`}
-        cssMode={true}
         navigation={true}
         spaceBetween={20}
         centeredSlides={false}
         pagination={{
           clickable: true,
         }}
+        cssMode={true}
         mousewheel={true}
         keyboard={true}
+        freeMode={true}
         breakpoints={{
           640: {
             slidesPerView: 2,
@@ -181,37 +203,53 @@ const Images = ({ align = "center", srcList, customClass = "", nestedItems }) =>
             slidesPerView: 3,
           },
         }}
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, FreeMode]}
       >
         {srcList.map((media, index) => {
-          const isVideo = media.src.endsWith('.mp4') || media.src.endsWith('.webm');
+          const isVideo = media.src.endsWith(".mp4") || media.src.endsWith(".webm");
           return (
-            <SwiperSlide key={index} className={`swiper-wrapper mx mx-images-item d-flex align-content-start ${alignClass}`}>
+            <SwiperSlide
+              key={index}
+              className={`swiper-wrapper mx mx-images-item d-flex align-content-start ${alignClass}`}
+            >
               {isVideo ? (
                 <video
                   src={media.src}
-                  onClick={() => setSelectedMedia({
-                    src: media.src,
-                    alt: media.alt
-                  })}
+                  onClick={() =>
+                    setSelectedMedia({
+                      src: media.src,
+                      alt: media.alt,
+                    })
+                  }
                   controls
                   preload="metadata"
                 />
               ) : (
                 <img
-                  src={media.src}
+                  src={getThumbPath(media.src)}
                   alt={media.alt}
-                  onClick={() => setSelectedMedia({
-                    src: media.src,
-                    alt: media.alt
-                  })}
+                  onClick={() =>
+                    setSelectedMedia({
+                      src: media.src,
+                      alt: media.alt,
+                    })
+                  }
                 />
               )}
               {media.caption && <figcaption>{media.caption}</figcaption>}
-              {media.link && (
-                <a href={media.link} className="link" target="_blank" rel="noopener noreferrer">
-                  {media.linkText}
-                </a>
+              {media.linkText && (
+                media.link ? (
+                  <a
+                    href={media.link}
+                    className="link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {media.linkText}
+                  </a>
+                ) : (
+                  <span className="link">{media.linkText}</span>
+                )
               )}
             </SwiperSlide>
           );
@@ -265,17 +303,39 @@ const Embed = ({ content, customClass = "", nestedItems }) => (
   </div>
 );
 
-const Columns = ({ breakpoints, customClass = "", nestedItems }) => {
+const Column = ({ breakpoints, gap = 4, customClass = "", nestedItems }) => {
   // 將每個斷點的列數設定轉換為 Bootstrap 的類別
   const breakpointClasses = Object.entries(breakpoints)
     .map(([breakpoint, columns]) => `col-${breakpoint}-${columns}`)
     .join(" ");
 
+  // 將 gap 轉換為 Bootstrap 的類別
+  const gapClass = gap ? `row-gap-${gap}` : "";
+
   return (
-    <div className={`block row row-gap-4 ${customClass}`}>
+    <div className={`block row ${gapClass} ${customClass}`}>
       {nestedItems &&
         nestedItems.map((item, index) => (
           <div className={`d-flex justify-content-center align-items-center col-12 ${breakpointClasses}`} key={index}>
+            {renderNestedModules([item], exportedComponents)}
+          </div>
+        ))}
+    </div>
+  );
+};
+
+const Row = ({ customClass = "", gap = 4, nestedItems }) => {
+  // 將 gap 轉換為 Bootstrap 的類別
+  const gapClass = gap ? `g-${gap}` : "";
+
+  return (
+    <div className={`flex-column ${gapClass} ${customClass}`}>
+      {nestedItems &&
+        nestedItems.map((item, index) => (
+          <div
+            className="d-flex"
+            key={index}
+          >
             {renderNestedModules([item], exportedComponents)}
           </div>
         ))}
@@ -294,7 +354,8 @@ const exportedComponents = {
   Table,
   Label,
   Embed,
-  Columns,
+  Column,
+  Row
 };
 
-export { Heading1, Heading2, List, Text, Image, Images, Table, Label, Embed, Columns };
+export { Heading1, Heading2, List, Text, Image, Images, Table, Label, Embed, Column, Row };

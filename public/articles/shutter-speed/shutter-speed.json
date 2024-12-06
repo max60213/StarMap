@@ -11,7 +11,7 @@
 				"Table",
 				"List",
 				"Label",
-				"Columns"
+				"Column"
 			]
 		}
 	},
@@ -128,7 +128,7 @@
 			},
 			{
 				"module": "Image",
-				"src": "https://dummyimage.com/600x400"
+				"src": "./articles/shutter-speed/img/chase.JPG"
 			},
 			{
 				"module": "Heading2",
@@ -137,24 +137,24 @@
 			{
 				"module": "Text",
 				"textList": [
-					"拍攝星空或星軌時，快門速度應調整到較慢，以捕捉星星的運動軌跡。通常需要幾秒至數分鐘的曝光時間，並使用腳架固定相機，避免震動。"
+					"拍攝星空或星軌時，快門速度應調整到較慢，以捕捉星星微弱的光線及運動軌跡。通常需要幾秒至數分鐘的曝光時間，並使用腳架固定相機，避免震動。"
 				]
 			},
 			{
-				"module": "Columns",
+				"module": "Column",
 				"breakpoints": {
 					"lg": 6
 				},
 				"nestedItems":[
 					{
 						"module": "Image",
-						"src": "https://dummyimage.com/600x400",
-						"caption": "星空"
+						"src": "./articles/shutter-speed/img/star-sky.jpg",
+						"caption": "曝光8秒拍攝的星空"
 					},
 					{
 						"module": "Image",
-						"src": "https://dummyimage.com/600x400",
-						"caption": "星軌"
+						"src": "./articles/shutter-speed/img/star-trail.jpg",
+						"caption": "使用B快門曝光20分鐘拍攝的星軌"
 					}
 				]
 			}
@@ -176,7 +176,7 @@
 				"caption": "機身內的機械快門簾（使用慢動作錄製）"
 			},
 			{
-				"module": "Columns",
+				"module": "Column",
 				"breakpoints": {
 					"lg": 6
 				},
@@ -195,7 +195,7 @@
 			},
 			{
 				"module": "Table",
-				"columns": [
+				"Column": [
 					"",
 					"電子快門",
 					"機械快門"
