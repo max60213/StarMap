@@ -11,7 +11,7 @@
 				"Table",
 				"List",
 				"Label",
-				"Columns"
+				"Column"
 			]
 		}
 	},
@@ -92,56 +92,33 @@
 				]
 			},
 			{
-				"module": "Images",
-				"srcList": [
-					{
-						"src": "https://dummyimage.com/600x400",
-						"caption": "ISO 100"
-					},
-					{
-						"src": "https://dummyimage.com/600x400",
-						"caption": "ISO 3200"
-					},
-					{
-						"src": "https://dummyimage.com/600x400",
-						"caption": "ISO 12800"
-					}
-				]
-			},
-			{
 				"module": "Text",
-				"customClass": "mt-5",
 				"textList": [
 					"小型感光元件（如手機或入門相機）由於單位像素較小，在高 ISO 下更容易出現雜訊，手機通常會通過合成或降噪算法來彌補畫質的不足。"
 				]
 			},
 			{
-				"module": "Label",
-				"customClass": "mb-3",
-				"text": "在高 ISO 數值下，大尺寸感光元件雜訊明顯較少。"
-			},
-			{
-				"module": "Columns",
+				"module": "Column",
 				"breakpoints": {
-					"xl": 4
+					"lg": 6
 				},
 				"nestedItems": [
 					{
 						"module": "Image",
-						"src": "https://dummyimage.com/600x400",
-						"caption": "Full Frame"
+						"src": 	"./articles/iso/img/phone.jpg",
+						"caption": "1/1.76英寸手機感光元件拍攝的夜景"
 					},
 					{
 						"module": "Image",
-						"src": "https://dummyimage.com/600x400",
-						"caption": "APS-C"
-					},
-					{
-						"module": "Image",
-						"src": "https://dummyimage.com/600x400",
-						"caption": "1"
+						"src": "./articles/iso/img/full_frame.jpg",
+						"caption": "35mm 全畫幅相機感光元件拍攝的夜景"
 					}
 				]
+			},
+			{
+				"module": "Label",
+				"customClass": "pt-3",
+				"text": "同樣是ISO 3200，其餘設置也相同的情況下，大尺寸感光元件雜訊明顯較少。"
 			}
 		],
 		"advance": [
@@ -158,7 +135,7 @@
 				]
 			},
 			{
-				"module": "Columns",
+				"module": "Column",
 				"breakpoints": {
 					"lg": 6
 				},

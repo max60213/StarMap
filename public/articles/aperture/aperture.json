@@ -99,15 +99,15 @@
         "srcList": [
           {
             "src": "https://dummyimage.com/600x400",
-            "caption": "六葉片"
+            "caption": "123"
           },
           {
             "src": "https://dummyimage.com/600x400",
-            "caption": "九葉片"
+            "caption": "123"
           },
           {
             "src": "https://dummyimage.com/600x400",
-            "caption": "十二葉片"
+            "caption": "123"
           }
         ]
       },
@@ -116,23 +116,6 @@
         "customClass": "mb-3",
         "textList": [
           "每顆鏡頭的光圈範圍與形狀各有不同，選購鏡頭時，光圈是必須留意的重要資訊。"
-        ]
-      },
-      {
-        "module": "Images",
-        "srcList": [
-          {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "六葉片"
-          },
-          {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "九葉片"
-          },
-          {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "十二葉片"
-          }
         ]
       }
     ],

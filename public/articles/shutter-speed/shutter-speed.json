@@ -195,7 +195,7 @@
 			},
 			{
 				"module": "Table",
-				"Column": [
+				"columns": [
 					"",
 					"電子快門",
 					"機械快門"
