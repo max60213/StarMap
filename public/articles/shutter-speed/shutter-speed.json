@@ -16,6 +16,9 @@
 		}
 	},
 	"landing": {
+		"src": [
+			"/articles/shutter-speed/shutter-speed-1.jpg"
+		],
 		"data": {
 			"lens": [
 				"28MM"
@@ -24,7 +27,7 @@
 				"6500K"
 			],
 			"shutter": [
-				"60/1"
+				"1\"", "1/4", "1/15", "1/60", "1/250"
 			],
 			"aperture": [
 				"3.5"
@@ -108,7 +111,8 @@
 			},
 			{
 				"module": "Heading1",
-				"text": "特殊應用"
+				"text": "特殊應用",
+				"id": "special-applications"
 			},
 			{
 				"module": "Text",
@@ -162,7 +166,8 @@
 		"advance": [
 			{
 				"module": "Heading1",
-				"text": "電子與機械快門"
+				"text": "電子與機械快門",
+				"id": "electronic-and-mechanical-shutter"
 			},
 			{
 				"module": "Text",
@@ -237,7 +242,8 @@
 		"learnMore": [
 			{
 				"module": "Heading1",
-				"text": "延伸閱讀"
+				"text": "延伸閱讀",
+				"id": "learn-more"
 			}
 		]
 	}

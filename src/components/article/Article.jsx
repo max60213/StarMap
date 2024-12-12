@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import Aside from "./Aside";
 import "./css/article.css";
 import ToggleAdvance from "./ToggleAdvance";
-import { Row } from "react-bootstrap";
 
 /**
  * Article 元件 - 負責文章內容的載入與渲染
@@ -41,7 +40,7 @@ function Article() {
    */
   const loadComponents = async (data) => {
     const loadedComponents = {};
-    
+
     try {
       // 從文章數據中獲取所需的組件列表
       const neededComponents = new Set();
@@ -69,24 +68,26 @@ function Article() {
 
   // 在元件掛載時載入文章資料
   useEffect(() => {
+    // 從指定的路徑抓取文章資料檔案 (JSON 格式)
     fetch(`/articles/${articleId}/${articleId}.json`)
-      .then((response) => response.json())
+      .then((response) => response.json()) // 將回應轉換為 JSON 格式
       .then(async (data) => {
-        setArticleData(data);
-        const loadedComponents = await loadComponents(data);
-        setComponents(loadedComponents);
-        setIsLoading(false);
+        setArticleData(data); // 將文章資料存入狀態
+        const loadedComponents = await loadComponents(data); // 動態載入需要的元件
+        setComponents(loadedComponents); // 將載入完成的元件存入狀態
+        setIsLoading(false); // 更新載入狀態為完成
 
-        // 使用 startTransition 處理轉場
+        // 使用 startTransition 處理轉場狀態，避免主執行緒被阻塞
         startTransition(() => {
-          // 此處可放置需要延遲執行的副作用
+          // 此處可放置需要延遲執行的副作用，如預載入資料等
         });
       })
       .catch((error) => {
+        // 在資料載入過程中發生錯誤時，顯示錯誤訊息並結束載入狀態
         console.error("載入文章時發生錯誤:", error);
         setIsLoading(false);
       });
-  }, [articleId, baseUrl]);
+  }, [articleId, baseUrl]); // 當 articleId 或 baseUrl 改變時重新執行該效果
 
   /**
    * 渲染內容區塊的輔助函數，支援遞迴模組渲染

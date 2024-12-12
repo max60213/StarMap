@@ -1,5 +1,5 @@
 import { CSSTransition } from 'react-transition-group';
-import { useContext, useEffect, useRef, useState } from 'react'; // 添加 useState
+import { useContext, useEffect, useRef, useState } from 'react';
 import GalaxyContext from '../GalaxyContext';
 import "./css/window.css";
 import View from './View';
@@ -10,9 +10,27 @@ function Window(props) {
     const { galaxy, itemReady, currentItem } = useContext(GalaxyContext);
     const isHome = useIsHome();
     const iconVideo = useRef(null);
-    // 新增：管理 currentStep 狀態
-    const [currentStep, setCurrentStep] = useState(0);
 
+    // 狀態管理
+    const [currentStep, setCurrentStep] = useState(0);
+    const [articleData, setArticleData] = useState(null);
+
+    // 抓取 JSON 資料
+    useEffect(() => {
+        async function fetchData() {
+            if (!currentItem) return;
+            try {
+                const response = await fetch(`/articles/${currentItem}/${currentItem}.json`);
+                const data = await response.json();
+                setArticleData(data); // 將資料存入狀態
+            } catch (error) {
+                console.error("讀取 JSON 資料時發生錯誤:", error);
+            }
+        }
+        fetchData();
+    }, [currentItem]);
+
+    // 設置圖標資源
     useEffect(() => {
         if (!galaxy || !currentItem || !iconVideo.current) return;
         iconVideo.current.poster = `/img/icons/${currentItem}.png`;
@@ -37,7 +55,10 @@ function Window(props) {
                     classNames="fade"
                     unmountOnExit
                 >
-                    <View currentStep={currentStep}/>
+                    <View 
+                        currentStep={currentStep} 
+                        articleData={articleData} 
+                    />
                 </CSSTransition>
             </div>
             <CSSTransition
@@ -49,6 +70,7 @@ function Window(props) {
                 <Slider
                     currentStep={currentStep}
                     setCurrentStep={setCurrentStep}
+                    articleData={articleData}
                 />
             </CSSTransition>
         </div>
