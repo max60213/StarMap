@@ -1,4 +1,11 @@
-// 定義主題變量
+// Media Query Breakpoints
+$phone-only: 'max-width: 785.9px' !default;
+$phone-up: 'min-width: 786px' !default;
+$tablet-only: 'max-width: 1023.9px' !default;
+$tablet-up: 'min-width: 1024px' !default;
+$gentle: cubic-bezier(0.3, 0, 0, 1) !default;
+
+// Theme init
 $themes: (
     "dark": (
         background-color: hsl(0, 0%, 9%),

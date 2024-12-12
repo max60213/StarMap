@@ -1,38 +1,63 @@
+// 定義變數
+$slider-width: min(300px, 90%);
+$thumb-size: 20px;
+$highlight-size: 60px;
+$transition-duration: 0.2s;
+$color-white: hsl(0, 0%, 100%);
+$color-black-60: rgba(0, 0, 0, 0.6);
+$color-white-80: rgba(255, 255, 255, 0.8);
+$color-white-60: rgba(255, 255, 255, 0.6);
+
+// 主容器
+.slider-container {
+    width: 100%;
+}
+
+// 滑桿和按鈕的包裝容器
+.slider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    margin: 0 auto;
+    height: 0;
+}
+
+// 滑桿主體
 .slider {
-    width: min(360px, 90%);
+    width: $slider-width;
     height: 0;
     padding: 0 8px;
     z-index: 10;
-    bottom: calc(40% - 180px);
 
     &-bar {
         height: 4px;
         background-color: hsl(0, 0%, 100%);
         border-radius: 100px;
         outline: solid hsl(0, 0%, 40%) 1px;
-        transition: height 0.2s ease;
+        transition: height $transition-duration ease;
     }
 
     &-thumb {
         top: -8px;
-        width: 20px;
-        height: 20px;
+        width: $thumb-size;
+        height: $thumb-size;
         position: relative;
-        transform: translateX(-25%);
-        transition: top 0.2s ease;
+        transform: translate(-25%, 0);
+        transition: top $transition-duration ease;
 
         &-btn {
             top: -4px;
             left: 0;
-            width: 20px;
-            height: 20px;
+            width: $thumb-size;
+            height: $thumb-size;
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
             position: absolute;
-            border: rgba(0, 0, 0, 0.6) solid 1px;
+            border: 1px solid $color-black-60;
             cursor: pointer;
             border-radius: 50%;
-            transition: transform 0.2s ease;
+            transition: transform $transition-duration ease;
             z-index: 2;
 
             &:hover {
@@ -42,15 +67,14 @@
             &:active {
                 transform: scale(1);
 
-                // 當按下時，隱藏 highlight
-                ~&-highlight {
-                    scale: 10;
+                + .slider-thumb-highlight {
+                    opacity: 0;
                 }
             }
         }
 
         &-highlight {
-            width: 20px;
+            width: $thumb-size;
             position: absolute;
             transform: translate(-50%, -50%);
             background-color: var(--theme-color);
@@ -62,41 +86,80 @@
 
             @keyframes highlight {
                 0% {
-                    width: 20px;
-                    height: 20px;
+                    width: $thumb-size;
+                    height: $thumb-size;
                 }
 
                 100% {
-                    width: 60px;
-                    height: 60px;
-                    background-color: rgba(var(--theme-color), 0.5);
+                    width: $highlight-size;
+                    height: $highlight-size;
+                    background-color: rgb(var(--theme-color-rgb) / 0.5);
                 }
             }
         }
 
         &-state {
-            padding: 0.2em 0.4em;
-            font-size: 24px;
+            padding: 5px 10px;
+            font-size: 20px;
             font-weight: 300;
-            width: max-content;
-            margin: 10px;
-            background-color: hsl(0, 0%, 0%, 0.4);
-            transform: translateX(-50%);
+            background-color: $color-black-60;
+            border: 1px solid $color-white-80;
             backdrop-filter: blur(10px);
             position: absolute;
-            bottom: 24px;
-            left: 0;
+            top: calc(-50% - 4px);
+            right: 40px;
             opacity: 0;
             color: white;
+            text-align: end;
+            user-select: none;
             cursor: pointer;
             border-radius: 8px;
             pointer-events: none;
-            transition: opacity 0.2s ease;
+            transition: opacity $transition-duration ease;
         }
 
         &-btn:hover~&-state,
         &-btn:active~&-state {
             opacity: 1;
+        }
+    }
+}
+
+// 切換按鈕
+.slider-switch-btn {
+    padding: 8px;
+    aspect-ratio: 1/1;
+    width: 42px;
+    height: 42px;
+    border-radius: 100%;
+    background-color: $color-black-60;
+    border: 1px solid $color-white-80;
+    cursor: pointer;
+    transition: transform $transition-duration ease, border $transition-duration ease;
+    color: white;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+        opacity: 0.6;
+        transition: opacity $transition-duration ease;
+    }
+
+    &:hover {
+        transform: scale(1.05);
+        img {
+            opacity: 1;
+        }
+    }
+
+    &.active {
+        color: $color-black-60;
+        background-color: $color-white;
+        border: 1px solid $color-black-60;
+        img {
+            filter: invert(1);
+            opacity: 0.8;
         }
     }
 }

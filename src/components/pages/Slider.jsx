@@ -1,62 +1,51 @@
-import { useRef, useEffect, useContext } from 'react';
-import GalaxyContext from '../GalaxyContext.jsx';
-import { itemsData } from '../../js/items-data.js';
-import "./css/slider.css";
+import { useRef, useEffect, useState } from 'react';
+import './css/slider.css';
 
-const Slider = ({ currentStep, setCurrentStep }) => {
-    const { currentItem } = useContext(GalaxyContext);
-    const currentItemData = itemsData.items[currentItem];
-    const states = currentItemData?.states || [];
-    const initState = currentItemData?.initState || 0;
+const Slider = ({ currentStep, setCurrentStep, articleData, setCurrentImageIndex }) => {
+    const states = articleData?.landing?.states || [];
+    const isSwitchable = articleData?.landing?.switchable || false;
+    const [isActive, setIsActive] = useState(false);
     
     const sliderRef = useRef(null);
     const thumbRef = useRef(null);
     const isDraggingRef = useRef(false);
     
-    // Set initial state when currentItem changes
+    // 設定初始狀態
     useEffect(() => {
-        setCurrentStep(initState);
-    }, [currentItem, initState, setCurrentStep]);
+        setCurrentStep(articleData?.landing?.initState || 0);
+        console.log(articleData);
+    }, [setCurrentStep, articleData]);
 
-    // Calculate step size
+    // 計算步驟像素
     const getStepPixel = () => {
         if (!sliderRef.current || !thumbRef.current) return 0;
         return (sliderRef.current.offsetWidth - thumbRef.current.offsetWidth) / (states.length - 1);
     };
 
-    // Handle click on slider
+    // 處理滑桿點擊
     const handleSliderClick = (event) => {
         if (isDraggingRef.current) return;
         
         const slider = sliderRef.current;
-        const thumb = thumbRef.current;
-        if (!slider || !thumb) return;
-
-        const stepPixel = getStepPixel();
         const clickPosition = event.clientX - slider.getBoundingClientRect().left;
         const newStep = Math.min(
-            Math.max(0, Math.round(clickPosition / stepPixel)),
+            Math.max(0, Math.round(clickPosition / getStepPixel())),
             states.length - 1
         );
         
         setCurrentStep(newStep);
     };
 
-    // Handle drag start
+    // 處理拖曳
     const handleMouseDown = (event) => {
         event.preventDefault();
-        const thumb = thumbRef.current;
-        const slider = sliderRef.current;
-        if (!thumb || !slider) return;
-
         isDraggingRef.current = true;
-        const shiftX = event.clientX - thumb.getBoundingClientRect().left;
-        const stepPixel = getStepPixel();
+        const shiftX = event.clientX - thumbRef.current.getBoundingClientRect().left;
 
         const handleMouseMove = (event) => {
-            const newLeft = event.clientX - shiftX - slider.getBoundingClientRect().left;
+            const newLeft = event.clientX - shiftX - sliderRef.current.getBoundingClientRect().left;
             const newStep = Math.min(
-                Math.max(0, Math.round(newLeft / stepPixel)),
+                Math.max(0, Math.round(newLeft / getStepPixel())),
                 states.length - 1
             );
             setCurrentStep(newStep);
@@ -72,28 +61,41 @@ const Slider = ({ currentStep, setCurrentStep }) => {
         document.addEventListener('mouseup', handleMouseUp);
     };
 
-    // Calculate thumb position
-    const thumbPosition = currentStep * getStepPixel();
+    // 處理圖片切換
+    const handleSwitchImage = () => {
+        setCurrentImageIndex(prev => prev === 1 ? 0 : 1);
+        setIsActive(prev => !prev);
+    };
 
     return (
-        <div 
-            ref={sliderRef}
-            className="slider"
-            onClick={handleSliderClick}
-        >
-            <div className="slider-bar" />
-            <div
-                ref={thumbRef}
-                className="slider-thumb"
-                style={{ left: `${thumbPosition}px` }}
-                onMouseDown={handleMouseDown}
-                onDragStart={() => false}
-            >
-                <div className="slider-thumb-btn" />
-                <div className="slider-thumb-highlight" />
-                <h3 className="slider-thumb-state">
-                    {states[currentStep]}
-                </h3>
+        <div className="slider-container">
+            <div className="slider-wrapper">
+                <div 
+                    ref={sliderRef}
+                    className="slider"
+                    onClick={handleSliderClick}
+                >
+                    <div className="slider-bar" />
+                    <div
+                        ref={thumbRef}
+                        className="slider-thumb"
+                        style={{ left: `${currentStep * getStepPixel()}px` }}
+                        onMouseDown={handleMouseDown}
+                        onDragStart={() => false}
+                    >
+                        <div className="slider-thumb-btn" />
+                        <div className="slider-thumb-highlight" />
+                        <h3 className="slider-thumb-state">{states[currentStep]}</h3>
+                    </div>
+                </div>
+                {isSwitchable && (
+                    <button 
+                        className={`slider-switch-btn text-center ${isActive ? 'active' : ''}`}
+                        onClick={handleSwitchImage}
+                    >
+                        <img src="/auto_brightness.svg" alt="Auto Brightness" />
+                    </button>
+                )}
             </div>
         </div>
     );

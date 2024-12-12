@@ -14,6 +14,7 @@ function Window(props) {
     // 狀態管理
     const [currentStep, setCurrentStep] = useState(0);
     const [articleData, setArticleData] = useState(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     // 抓取 JSON 資料
     useEffect(() => {
@@ -30,7 +31,7 @@ function Window(props) {
         fetchData();
     }, [currentItem]);
 
-    // 設置圖標資源
+    // 設置標資源
     useEffect(() => {
         if (!galaxy || !currentItem || !iconVideo.current) return;
         iconVideo.current.poster = `/img/icons/${currentItem}.png`;
@@ -57,7 +58,8 @@ function Window(props) {
                 >
                     <View 
                         currentStep={currentStep} 
-                        articleData={articleData} 
+                        articleData={articleData}
+                        currentImageIndex={currentImageIndex}
                     />
                 </CSSTransition>
             </div>
@@ -71,6 +73,8 @@ function Window(props) {
                     currentStep={currentStep}
                     setCurrentStep={setCurrentStep}
                     articleData={articleData}
+                    currentImageIndex={currentImageIndex}
+                    setCurrentImageIndex={setCurrentImageIndex}
                 />
             </CSSTransition>
         </div>

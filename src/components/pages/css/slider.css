@@ -1,9 +1,21 @@
+.slider-container {
+  width: 100%;
+}
+
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin: 0 auto;
+  height: 0;
+}
+
 .slider {
-  width: min(360px, 90%);
+  width: min(300px, 90%);
   height: 0;
   padding: 0 8px;
   z-index: 10;
-  bottom: calc(40% - 180px);
 }
 .slider-bar {
   height: 4px;
@@ -17,7 +29,7 @@
   width: 20px;
   height: 20px;
   position: relative;
-  transform: translateX(-25%);
+  transform: translate(-25%, 0);
   transition: top 0.2s ease;
 }
 .slider-thumb-btn {
@@ -28,7 +40,7 @@
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   position: absolute;
-  border: rgba(0, 0, 0, 0.6) solid 1px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
   cursor: pointer;
   border-radius: 50%;
   transition: transform 0.2s ease;
@@ -40,8 +52,8 @@
 .slider-thumb-btn:active {
   transform: scale(1);
 }
-~ .slider-thumb-btn:active-highlight {
-  scale: 10;
+.slider-thumb-btn:active + .slider-thumb-highlight {
+  opacity: 0;
 }
 .slider-thumb-highlight {
   width: 20px;
@@ -62,25 +74,26 @@
   100% {
     width: 60px;
     height: 60px;
-    background-color: rgba(var(--theme-color), 0.5);
+    background-color: rgb(var(--theme-color-rgb)/0.5);
   }
 }
 .slider-thumb-state {
-  padding: 0.2em 0.4em;
-  font-size: 24px;
+  padding: 5px 10px;
+  font-size: 20px;
   font-weight: 300;
-  width: -moz-max-content;
-  width: max-content;
-  margin: 10px;
-  background-color: hsla(0, 0%, 0%, 0.4);
-  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
   position: absolute;
-  bottom: 24px;
-  left: 0;
+  top: calc(-50% - 4px);
+  right: 40px;
   opacity: 0;
   color: white;
+  text-align: end;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   cursor: pointer;
   border-radius: 8px;
   pointer-events: none;
@@ -88,4 +101,42 @@
 }
 .slider-thumb-btn:hover ~ .slider-thumb-state, .slider-thumb-btn:active ~ .slider-thumb-state {
   opacity: 1;
+}
+
+.slider-switch-btn {
+  padding: 8px;
+  aspect-ratio: 1/1;
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: transform 0.2s ease, border 0.2s ease;
+  color: white;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slider-switch-btn img {
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+.slider-switch-btn:hover {
+  transform: scale(1.05);
+}
+.slider-switch-btn:hover img {
+  opacity: 1;
+}
+.slider-switch-btn.active {
+  color: rgba(0, 0, 0, 0.6);
+  background-color: hsl(0, 0%, 100%);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+.slider-switch-btn.active img {
+  filter: invert(1);
+  opacity: 0.8;
 }/*# sourceMappingURL=slider.css.map */

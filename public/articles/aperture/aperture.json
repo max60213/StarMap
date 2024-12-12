@@ -14,42 +14,40 @@
     }
   },
   "landing": {
-    "data": {
-      "lens": [
-        "28MM"
-      ],
-      "WB": [
-        "6500K"
-      ],
-      "shutter": [
-        "60/1"
-      ],
-      "aperture": [
-        "f/2.8",
-        "f/3.5",
-        "f/4.6",
-        "f/6.3",
-        "f/13"
-      ],
-      "iso": [
-        "800"
-      ],
-      "EV": [
-        "0"
-      ]
-    },
-    "info": [
-      "攝影設備種類繁多，但其基礎概念與原理始終如一。",
-      "不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
-    ],
-    "states": [
-      "1\"",
-      "APS-C",
-      "Full Frame"
-    ],
-    "initState": 1,
-    "url": "/articles/principles/principles.json"
-  },
+		"switchable": true,
+		"src": [
+			"/articles/aperture/aperture-1.jpg",
+			"/articles/aperture/aperture-2.jpg"
+		],
+		"data": {
+			"lens": [
+				["50MM"]
+			],
+			"WB": [
+				["AUTO"]
+			],
+			"shutter": [
+				["1.3\"", "1/2", "1/5", "1/25", "1/50"],
+        ["1/5"]
+			],
+			"aperture": [
+        ["F2.8", "F4.5", "F8.0", "F13", "F22"]
+			],
+			"iso": [
+				["640"]
+			],
+			"EV": [
+				["0"]
+			]
+		},
+		"info": [
+			"攝影設備種類繁多，但其基礎概念與原理始終如一。",
+			"不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
+		],
+		"states":	["F2.8", "F4.5", "F8.0", "F13", "F22"],
+		"initState": 2,
+		"url": "/articles/principles/principles.json"
+	},
   "content": {
     "beginner": [
       {

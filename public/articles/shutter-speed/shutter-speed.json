@@ -16,38 +16,38 @@
 		}
 	},
 	"landing": {
+		"switchable": true,
 		"src": [
-			"/articles/shutter-speed/shutter-speed-1.jpg"
+			"/articles/shutter-speed/shutter-speed-1.jpg",
+			"/articles/shutter-speed/shutter-speed-2.jpg"
 		],
 		"data": {
 			"lens": [
-				"28MM"
+				["70MM"]
 			],
 			"WB": [
-				"6500K"
+				["AUTO"]
 			],
 			"shutter": [
-				"1\"", "1/4", "1/15", "1/60", "1/250"
+				["1\"", "1/4", "1/15", "1/60", "1/250"]
 			],
 			"aperture": [
-				"3.5"
+				["2.8"],
+				["2.8", "2.8", "6.3", "11", "22"]
 			],
 			"iso": [
-				"800"
+				["100"],
+				["400", "100", "100", "100", "100"]
 			],
 			"EV": [
-				"0"
+				["0"]
 			]
 		},
 		"info": [
 			"攝影設備種類繁多，但其基礎概念與原理始終如一。",
 			"不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
 		],
-		"states": [
-			"1\"",
-			"APS-C",
-			"Full Frame"
-		],
+		"states": ["2.8", "2.8", "6.3", "11", "22"],
 		"initState": 1,
 		"url": "/articles/principles/principles.json"
 	},
