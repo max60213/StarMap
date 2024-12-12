@@ -46,37 +46,41 @@ function Window(props) {
 
     return (
         <div className="window">
-            <div className={`window-frame ${props.className}`}>
+            <div className={`window-frame ${props.className} ${!articleData?.landing.interactive && 'uninteractive'}`}>
                 <div className="player">
                     <video ref={iconVideo} id='icon-player' loop muted></video>
                 </div>
+                {articleData?.landing.interactive &&
+                    <CSSTransition
+                        in={!isHome}
+                        timeout={300}
+                        classNames="fade"
+                        unmountOnExit
+                    >
+                        <View
+                            currentStep={currentStep}
+                            articleData={articleData}
+                            currentImageIndex={currentImageIndex}
+                        />
+                    </CSSTransition>
+                }
+            </div>
+            {articleData?.landing.interactive &&
                 <CSSTransition
                     in={!isHome}
                     timeout={300}
                     classNames="fade"
                     unmountOnExit
                 >
-                    <View 
-                        currentStep={currentStep} 
+                    <Slider
+                        currentStep={currentStep}
+                        setCurrentStep={setCurrentStep}
                         articleData={articleData}
                         currentImageIndex={currentImageIndex}
+                        setCurrentImageIndex={setCurrentImageIndex}
                     />
                 </CSSTransition>
-            </div>
-            <CSSTransition
-                in={!isHome}
-                timeout={300}
-                classNames="fade"
-                unmountOnExit
-            >
-                <Slider
-                    currentStep={currentStep}
-                    setCurrentStep={setCurrentStep}
-                    articleData={articleData}
-                    currentImageIndex={currentImageIndex}
-                    setCurrentImageIndex={setCurrentImageIndex}
-                />
-            </CSSTransition>
+            }
         </div>
     );
 }

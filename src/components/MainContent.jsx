@@ -104,7 +104,6 @@ function MainContent(props) {
             <hr />
 
             {itemGroup(2)}
-            <div></div>
         </div>
     );
 }

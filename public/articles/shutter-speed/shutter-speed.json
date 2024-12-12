@@ -16,6 +16,7 @@
 		}
 	},
 	"landing": {
+		"interactive": true,
 		"switchable": true,
 		"src": [
 			"/articles/shutter-speed/shutter-speed-1.jpg",

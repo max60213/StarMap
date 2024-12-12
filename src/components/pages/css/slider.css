@@ -87,7 +87,7 @@
           backdrop-filter: blur(10px);
   position: absolute;
   top: calc(-50% - 4px);
-  right: 40px;
+  right: 32px;
   opacity: 0;
   color: white;
   text-align: end;

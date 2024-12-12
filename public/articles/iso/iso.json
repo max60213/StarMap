@@ -16,6 +16,7 @@
 		}
 	},
 	"landing": {
+		"interactive": true,
 		"switchable": true,
 		"src": [
 			"/articles/iso/iso-1.jpg",
@@ -46,7 +47,7 @@
 			"攝影設備種類繁多，但其基礎概念與原理始終如一。",
 			"不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
 		],
-		"states":	["F2.8", "F4.5", "F8.0", "F13", "F22"],
+		"states": ["100", "400", "2500", "12800", "51200"],
 		"initState": 2,
 		"url": "/articles/principles/principles.json"
 	},

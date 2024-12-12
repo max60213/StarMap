@@ -70,7 +70,7 @@ const Slider = ({ currentStep, setCurrentStep, articleData, setCurrentImageIndex
     return (
         <div className="slider-container">
             <div className="slider-wrapper">
-                <div 
+                <div
                     ref={sliderRef}
                     className="slider"
                     onClick={handleSliderClick}
@@ -91,6 +91,7 @@ const Slider = ({ currentStep, setCurrentStep, articleData, setCurrentImageIndex
                 {isSwitchable && (
                     <button 
                         className={`slider-switch-btn text-center ${isActive ? 'active' : ''}`}
+                        title="自動曝光"
                         onClick={handleSwitchImage}
                     >
                         <img src="/auto_brightness.svg" alt="Auto Brightness" />

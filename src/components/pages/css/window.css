@@ -204,6 +204,14 @@ a.link {
   width: 500%;
   height: 100%;
 }
+.window-frame.active.uninteractive {
+  opacity: 1;
+  width: 80%;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  min-width: initial;
+  transition: all 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.02s;
+}
 
 .view_data {
   position: absolute;
