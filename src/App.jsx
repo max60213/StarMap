@@ -3,9 +3,9 @@ import React, { Suspense, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom'; // 移除 BrowserRouter
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/init.css';
-import './css/daylight.css';
-import './css/main.css';
+import './css/init.scss';
+import './css/daylight.scss';
+import './css/main.scss';
 import Scene from "./Scene";
 import Landing from "./Landing";
 import Loading from './Loading';

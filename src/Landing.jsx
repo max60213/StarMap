@@ -4,7 +4,7 @@ import Window from "./components/pages/Window";
 import { CSSTransition } from 'react-transition-group';
 import { useIsHome } from './components/PathChecker';
 import Info from "./components/pages/Info";
-import "./css/transitions.css";
+import "./css/transitions.scss";
 
 function Landing() {
     const isHome = useIsHome();

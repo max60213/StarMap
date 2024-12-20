@@ -68,7 +68,11 @@
     @media all and ($tablet-only) {
         flex-direction: column;
 
-        .mx-first,
+        .mx-first{
+            max-height: 50%;
+            align-items: end;
+            justify-content: center;
+        }
         .mx-last {
             max-height: 50%;
             align-items: start;
@@ -173,17 +177,17 @@
         max-width: max(680px, 30vw);
         scroll-padding-top: 6px;
 
-        @media all and ($phone-only) {
-            padding: 12px 20px 0 20px;
-            height: 100%;
-        }
-
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         overflow-y: scroll;
         scroll-snap-type: y mandatory;
         position: relative;
+
+        @media all and ($phone-only) {
+            padding: 12px 20px 0 20px;
+            height: 100%;
+        }
 
         &>*:not(hr) {
             scroll-snap-align: start;
@@ -254,10 +258,14 @@
             &.hover {
                 outline: 6px solid white;
                 gap: 4px;
-                margin-bottom: -26px;
                 background-color: white;
                 box-shadow: 0 0 15px black;
                 z-index: 3;
+                margin-bottom: -26px;
+
+                &:last-child{
+                    margin-bottom: calc(25vh - 26px);
+                }
 
                 &::before {
                     background-position: right center;
@@ -277,6 +285,11 @@
                     color: var(--text-primary);
                     filter: invert(1);
                 }
+            }
+
+            &.hide {
+                opacity: 0.4;
+                cursor: default;
             }
         }
     }

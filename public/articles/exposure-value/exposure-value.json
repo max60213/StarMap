@@ -16,6 +16,8 @@
         }
     },
     "landing": {
+        "interactive": true,
+		"switchable": false,
         "data": {
             "lens": [
                 "28MM"

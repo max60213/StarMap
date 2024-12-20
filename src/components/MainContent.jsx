@@ -4,13 +4,14 @@ import { useEffect, useContext } from 'react';
 import { itemsData, listGroup } from '../js/items-data.js';
 import { useNavigate } from 'react-router-dom';
 import GalaxyContext from '../components/GalaxyContext';
-import "../css/transitions.css";
+import "../css/transitions.scss";
 
 function MainContent(props) {
     const navigate = useNavigate();
     const { galaxy } = useContext(GalaxyContext); // 獲取 Galaxy 實例
 
-    const handleNavigation = (path) => {
+    const handleNavigation = (path, isHidden) => {
+        if (isHidden) return; // 如果元素是隱藏的，直接返回
         if (window.itemReady) {
             navigate(path);
         } else {
@@ -48,6 +49,7 @@ function MainContent(props) {
             };
 
             const handleClick = () => {
+                if (item.classList.contains('hide')) return; // 如果元素是隱藏的，直接返回
                 galaxy.selector(item.id);
                 document.querySelector('.mx-list').classList.add('fade-out');
                 const interval = setInterval(() => {
@@ -80,7 +82,7 @@ function MainContent(props) {
 
         return Object.entries(itemsData.items).slice(startIndex, endIndex).map(([key, itemData]) => {
             return (
-                <div key={key} id={key} className="mx-list-item" onClick={() => handleNavigation(`/${key}`)}>
+                <div key={key} id={key} className={`mx-list-item ${groupIndex === 2 && "hide"}`} onClick={() => handleNavigation(`/${key}`, groupIndex === 2)}>
                     <h3>
                         {itemData.name.zh}<span className="subTitle">{itemData.name.en}</span>
                     </h3>

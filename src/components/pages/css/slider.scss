@@ -107,6 +107,7 @@ $color-white-60: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
             position: absolute;
             top: calc(-50% - 4px);
+            width: max-content;
             right: 32px;
             opacity: 0;
             color: white;
@@ -141,9 +142,45 @@ $color-white-60: rgba(255, 255, 255, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
     img {
         opacity: 0.6;
         transition: opacity $transition-duration ease;
+    }
+
+    .custom-tooltip {
+        position: absolute;
+        background-color: $color-black-60;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+        border: 1px solid $color-white-80;
+        backdrop-filter: blur(10px);
+
+        &.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px 5px 0 5px;
+            border-style: solid;
+            border-color: $color-black-60 transparent transparent transparent;
+        }
     }
 
     &:hover {

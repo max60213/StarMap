@@ -1,10 +1,11 @@
 import { useRef, useEffect, useState } from 'react';
-import './css/slider.css';
+import './css/slider.scss';
 
 const Slider = ({ currentStep, setCurrentStep, articleData, setCurrentImageIndex }) => {
     const states = articleData?.landing?.states || [];
     const isSwitchable = articleData?.landing?.switchable || false;
     const [isActive, setIsActive] = useState(false);
+    const [showTooltip, setShowTooltip] = useState(false);
     
     const sliderRef = useRef(null);
     const thumbRef = useRef(null);
@@ -91,10 +92,14 @@ const Slider = ({ currentStep, setCurrentStep, articleData, setCurrentImageIndex
                 {isSwitchable && (
                     <button 
                         className={`slider-switch-btn text-center ${isActive ? 'active' : ''}`}
-                        title="自動曝光"
+                        onMouseEnter={() => setShowTooltip(true)}
+                        onMouseLeave={() => setShowTooltip(false)}
                         onClick={handleSwitchImage}
                     >
                         <img src="/auto_brightness.svg" alt="Auto Brightness" />
+                        <span className={`custom-tooltip ${showTooltip ? 'show' : ''}`}>
+                            自動曝光
+                        </span>
                     </button>
                 )}
             </div>

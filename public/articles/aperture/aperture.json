@@ -55,28 +55,28 @@
         "module": "Text",
         "textList": [
           "光圈相當於人眼的瞳孔，負責控制光線進入相機的量。當光線不足時，光圈可以放大，就像瞳孔在昏暗環境中擴張；而在光線充足的情況下，可以縮小光圈，避免過多光線進入。",
-          "光圈大小通常以 f 值 表示，計算公式為 <strong>f 值 = 鏡頭焦距 / 光圈口徑</strong>，不過通常不用真的去計算，只需要掌握觀念："
+          "光圈大小通常以 F 值 表示，計算公式為 <strong>F 值 = 鏡頭焦距 / 光圈口徑</strong>，不過通常不用真的去計算，只需要掌握觀念："
         ]
       },
       {
         "module": "Label",
         "customClass": "mx-mark",
-        "text": "f 值越小，光圈越大，亮度越高；f 值越大，光圈越小，亮度越低。"
+        "text": "F 值越小，光圈越大，亮度越高；F 值越大，光圈越小，亮度越低。"
       },
       {
         "module": "Images",
         "srcList": [
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "f/1.4"
+            "src": "./articles/aperture/img/5_0.jpg",
+            "caption": "F1.8"
           },
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "f/2.8"
+            "src": "./articles/aperture/img/5_1.jpg",
+            "caption": "F8"
           },
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "f/5.6"
+            "src": "./articles/aperture/img/5_2.jpg",
+            "caption": "F13"
           }
         ]
       },
@@ -97,16 +97,16 @@
         "customClass": "mb-5",
         "srcList": [
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "123"
+            "src": "./articles/aperture/img/5_0.jpg",
+            "caption": "F1.8"
           },
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "123"
+            "src": "./articles/aperture/img/5_1.jpg",
+            "caption": "F8"
           },
           {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "123"
+            "src": "./articles/aperture/img/5_2.jpg",
+            "caption": "F13"
           }
         ]
       },
@@ -134,8 +134,8 @@
         "module": "List",
         "ordered": false,
         "textList": [
-          "<strong>大光圈（f/1.4 - f/2.8）：</strong>進光量多，景深較淺，主體清晰，背景模糊。常用於人像攝影或創造背景虛化效果（Bokeh）。",
-          "<strong>小光圈（f/8 - f/16）：</strong>進光量少，但景深加深，整體畫面更加清晰，適合風景或建築攝影。"
+          "<strong>大光圈（F1.4 - F2.8）：</strong>進光量多，景深較淺，主體清晰，背景模糊。常用於人像攝影或創造背景虛化效果（Bokeh）。",
+          "<strong>小光圈（F8 - F16）：</strong>進光量少，但景深加深，整體畫面更加清晰，適合風景或建築攝影。"
         ]
       },
       {
@@ -143,15 +143,15 @@
         "srcList": [
           {
             "src": "./articles/aperture/img/2.JPG",
-            "caption": "f/22 小光圈，畫面整體清晰"
+            "caption": "F22 小光圈，畫面整體清晰"
           },
           {
             "src": "./articles/aperture/img/3.JPG",
-            "caption": "f/8 中等光圈，背景稍模糊"
+            "caption": "F8 中等光圈，背景稍模糊"
           },
           {
             "src": "./articles/aperture/img/4.JPG",
-            "caption": "f/2.8 大光圈，背景虛化，景深極淺，凸顯主體"
+            "caption": "F2.8 大光圈，背景虛化，景深極淺，凸顯主體"
           }
         ]
       },
@@ -180,20 +180,6 @@
         ]
       },
       {
-        "module": "Images",
-        "customClass": "mb-5",
-        "srcList": [
-          {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "六葉片"
-          },
-          {
-            "src": "https://dummyimage.com/600x400",
-            "caption": "九葉片"
-          }
-        ]
-      },
-      {
         "module": "Text",
         "textList": [
           "拍攝強光時，小光圈可以拍攝出星芒效果，光圈的葉片數量和形狀會影響畫面中的星芒形狀數量。"
@@ -202,7 +188,7 @@
       {
         "module": "Image",
         "src": "./articles/aperture/img/1.jpg",
-        "caption": "六片葉片的光圈拍出六道光芒效果"
+        "caption": "六片葉片的光圈使用F22小光圈，拍出六道光芒效果"
       }
     ],
     "learnMore": [

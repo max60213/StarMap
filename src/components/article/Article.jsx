@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense, useTransition } from "react";
 import { useParams } from "react-router-dom";
 import Aside from "./Aside";
-import "./css/article.css";
+import "./css/article.scss";
 import ToggleAdvance from "./ToggleAdvance";
 
 /**

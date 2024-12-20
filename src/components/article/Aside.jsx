@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import "./css/aside.css";
+import "./css/aside.scss";
 
 function Aside({ className }) {
     const [titles, setTitles] = useState([]);

@@ -1,7 +1,7 @@
 import { CSSTransition } from 'react-transition-group';
 import { useContext, useEffect, useRef, useState } from 'react';
 import GalaxyContext from '../GalaxyContext';
-import "./css/window.css";
+import "./css/window.scss";
 import View from './View';
 import Slider from './Slider';
 import { useIsHome } from "../PathChecker";

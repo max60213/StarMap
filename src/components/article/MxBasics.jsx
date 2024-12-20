@@ -1,6 +1,6 @@
-import "./css/mxBasics.css";
-import React, { useState } from "react";
-import { Navigation, Pagination, FreeMode } from "swiper/modules";
+import "./css/mxBasics.scss";
+import React, { useState, useEffect } from "react";
+import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { createPortal } from 'react-dom';
 
@@ -33,7 +33,7 @@ const DefaultComponent = ({ module }) => (
   </div>
 );
 
-// 內文元件，處理多個段落，支援 HTML 格式的渲染
+// 內元件，處理多個段落，支援 HTML 格式的渲染
 const Label = ({ text, customClass = "" }) => (
   <div className={`block mx mx-label ${customClass}`}>
     <p>{text}</p>
@@ -126,6 +126,12 @@ const Image = ({
   const [selectedMedia, setSelectedMedia] = useState(null);
 
   const getThumbPath = (imagePath) => {
+    // 檢查是否為外部連結或特殊檔案
+    const isExternalUrl = /^https?:\/\//.test(imagePath);
+    const isSvgOrVideo = imagePath.endsWith('.svg') || imagePath.endsWith('.mp4') || imagePath.endsWith('.webm');
+
+    if (isExternalUrl || isSvgOrVideo) return imagePath;
+
     const lastDotIndex = imagePath.lastIndexOf('.');
     if (lastDotIndex === -1) return `${imagePath}_thumb`;
     return `${imagePath.substring(0, lastDotIndex)}_thumb${imagePath.substring(lastDotIndex)}`;
@@ -170,9 +176,24 @@ const Image = ({
 // Images 組件
 const Images = ({ align = "center", srcList, customClass = "", nestedItems }) => {
   const [selectedMedia, setSelectedMedia] = useState(null);
-  const alignClass = `align-items-${align}`;
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 576);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 576);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const getThumbPath = (imagePath) => {
+    // 檢查是否為外部連結或特殊檔案
+    const isExternalUrl = /^https?:\/\//.test(imagePath);
+    const isSvgOrVideo = imagePath.endsWith('.svg') || imagePath.endsWith('.mp4') || imagePath.endsWith('.webm');
+
+    if (isExternalUrl || isSvgOrVideo) return imagePath;
+
     const lastDotIndex = imagePath.lastIndexOf('.');
     if (lastDotIndex === -1) return `${imagePath}_thumb`;
     return `${imagePath.substring(0, lastDotIndex)}_thumb${imagePath.substring(lastDotIndex)}`;
@@ -182,75 +203,68 @@ const Images = ({ align = "center", srcList, customClass = "", nestedItems }) =>
     <>
       <Swiper
         className={`block mx mx-images ${customClass}`}
+        modules={[Navigation, Pagination]}
         navigation={true}
         spaceBetween={20}
-        centeredSlides={false}
-        pagination={{
-          clickable: true,
-        }}
-        cssMode={true}
-        mousewheel={true}
-        keyboard={true}
-        freeMode={true}
+        loop={true}
+        allowTouchMove={isMobile}
         breakpoints={{
-          640: {
+          320: {
+            slidesPerView: 1,
+          },
+          576: {
             slidesPerView: 2,
           },
-          768: {
-            slidesPerView: 2,
-          },
-          1024: {
+          992: {
             slidesPerView: 3,
           },
         }}
-        modules={[Navigation, Pagination, FreeMode]}
       >
         {srcList.map((media, index) => {
           const isVideo = media.src.endsWith(".mp4") || media.src.endsWith(".webm");
           return (
-            <SwiperSlide
-              key={index}
-              className={`swiper-wrapper mx mx-images-item d-flex align-content-start ${alignClass}`}
-            >
-              {isVideo ? (
-                <video
-                  src={media.src}
-                  onClick={() =>
-                    setSelectedMedia({
-                      src: media.src,
-                      alt: media.alt,
-                    })
-                  }
-                  controls
-                  preload="metadata"
-                />
-              ) : (
-                <img
-                  src={getThumbPath(media.src)}
-                  alt={media.alt}
-                  onClick={() =>
-                    setSelectedMedia({
-                      src: media.src,
-                      alt: media.alt,
-                    })
-                  }
-                />
-              )}
-              {media.caption && <figcaption>{media.caption}</figcaption>}
-              {media.linkText && (
-                media.link ? (
-                  <a
-                    href={media.link}
-                    className="link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {media.linkText}
-                  </a>
+            <SwiperSlide key={index}>
+              <div className="image-container">
+                {isVideo ? (
+                  <video
+                    src={media.src}
+                    onClick={() =>
+                      setSelectedMedia({
+                        src: media.src,
+                        alt: media.alt,
+                      })
+                    }
+                    controls
+                    preload="metadata"
+                  />
                 ) : (
-                  <span className="link">{media.linkText}</span>
-                )
-              )}
+                  <img
+                    src={getThumbPath(media.src)}
+                    alt={media.alt}
+                    onClick={() =>
+                      setSelectedMedia({
+                        src: media.src,
+                        alt: media.alt,
+                      })
+                    }
+                  />
+                )}
+                {media.caption && <p className="description">{media.caption}</p>}
+                {media.linkText && (
+                  media.link ? (
+                    <a
+                      href={media.link}
+                      className="link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {media.linkText}
+                    </a>
+                  ) : (
+                    <span className="link">{media.linkText}</span>
+                  )
+                )}
+              </div>
             </SwiperSlide>
           );
         })}
@@ -309,7 +323,7 @@ const Column = ({ breakpoints, gap = 4, customClass = "", nestedItems }) => {
     .map(([breakpoint, columns]) => `col-${breakpoint}-${columns}`)
     .join(" ");
 
-  // 將 gap 轉換為 Bootstrap 的類別
+  // gap 轉換為 Bootstrap 的類別
   const gapClass = gap ? `row-gap-${gap}` : "";
 
   return (
