@@ -15,10 +15,13 @@ function Aside({ className }) {
         }
 
         // 只在標題列表為空或有變化時更新
-        const newTitleData = Array.from(titleElements).map((elem) => ({
-            text: elem.textContent,
-            id: elem.id
-        }));
+        const newTitleData = Array.from(titleElements).map((elem) => {
+            const firstChild = elem.children[0];
+            return {
+                text: elem.textContent,
+                id: firstChild ? firstChild.id : null
+            };
+        }).filter(item => item.id); // 過濾掉沒有 id 的項目
 
         // 比較新舊標題是否相同，避免不必要的更新
         setTitles(prev => {
@@ -45,9 +48,25 @@ function Aside({ className }) {
     // 初始化時處理標題
     useEffect(() => {
         processTitles();
+
+        // 創建 MutationObserver 來監聽 DOM 變化
+        const observer = new MutationObserver((mutations) => {
+            processTitles();
+        });
+
+        // 開始觀察 document.body 的子樹變化
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        // 清理函數
+        return () => {
+            observer.disconnect();
+        };
     }, [processTitles]);
 
-    // 使用 useMemo 記憶化導航列表
+    // 使用 useMemo 記憶化導航列���
     const navLinks = useMemo(() => (
         <>
             <a 

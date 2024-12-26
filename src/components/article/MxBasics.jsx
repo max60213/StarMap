@@ -33,7 +33,7 @@ const DefaultComponent = ({ module }) => (
   </div>
 );
 
-// 內元件，處理多個段落，支援 HTML 格式的渲染
+// ��件，處理多個段落，支援 HTML 格式的渲染
 const Label = ({ text, customClass = "" }) => (
   <div className={`block mx mx-label ${customClass}`}>
     <p>{text}</p>
@@ -42,11 +42,11 @@ const Label = ({ text, customClass = "" }) => (
 
 // 標題元件
 const Heading1 = ({ id, text, customClass = "", nestedItems }) => (
-  <>
-    <h2 id={id} className={`block title mx mx-heading1 ${customClass}`}>{text}</h2>
-    <hr />
+  <div className={`block title mx mx-heading1 ${customClass}`}>
+    <h2 id={id}>{text}</h2>
+    <hr className="block" />
     {nestedItems && renderNestedModules(nestedItems, exportedComponents)}
-  </>
+  </div>
 );
 
 const Heading2 = ({ id, text, customClass = "", nestedItems }) => (
@@ -128,7 +128,7 @@ const Image = ({
   const getThumbPath = (imagePath) => {
     // 檢查是否為外部連結或特殊檔案
     const isExternalUrl = /^https?:\/\//.test(imagePath);
-    const isSvgOrVideo = imagePath.endsWith('.svg') || imagePath.endsWith('.mp4') || imagePath.endsWith('.webm');
+    const isSvgOrVideo = imagePath.endsWith('.svg') || imagePath.endsWith('.mp4') || imagePath.endsWith('.webm') || imagePath.endsWith('.mov');
 
     if (isExternalUrl || isSvgOrVideo) return imagePath;
 
@@ -137,15 +137,29 @@ const Image = ({
     return `${imagePath.substring(0, lastDotIndex)}_thumb${imagePath.substring(lastDotIndex)}`;
   };
 
+  const isVideo = src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov');
+
   return (
     <>
       <div className={`block mx mx-image ${customClass}`}>
-        <img
-          src={getThumbPath(src)}
-          alt={alt}
-          onClick={() => setSelectedMedia({ src, alt })}
-        />
-        {caption && <figcaption>{caption}</figcaption>}
+        {isVideo ? (
+          <video
+            src={src}
+            controls
+            autoPlay
+            muted
+            loop
+            preload="metadata"
+            onClick={() => setSelectedMedia({ src, alt })}
+          />
+        ) : (
+          <img
+            src={getThumbPath(src)}
+            alt={alt}
+            onClick={() => setSelectedMedia({ src, alt })}
+          />
+        )}
+        {caption && <p className="description">{caption}</p>}
         {linkText && (
           link ? (
             <a
@@ -177,7 +191,7 @@ const Image = ({
 const Images = ({ align = "center", srcList, customClass = "", nestedItems }) => {
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 576);
-  
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 576);
@@ -202,12 +216,16 @@ const Images = ({ align = "center", srcList, customClass = "", nestedItems }) =>
   return (
     <>
       <Swiper
-        className={`block mx mx-images ${customClass}`}
+        className={`block swiper-container mx-images mx ${customClass}`}
         modules={[Navigation, Pagination]}
         navigation={true}
-        spaceBetween={20}
+        spaceBetween={30}
+        cssMode={false}
         loop={true}
         allowTouchMove={isMobile}
+        pagination={{
+          clickable: true,
+        }}
         breakpoints={{
           320: {
             slidesPerView: 1,
@@ -217,13 +235,16 @@ const Images = ({ align = "center", srcList, customClass = "", nestedItems }) =>
           },
           992: {
             slidesPerView: 3,
+            pagination: {
+              enabled: false,
+            },
           },
         }}
       >
         {srcList.map((media, index) => {
           const isVideo = media.src.endsWith(".mp4") || media.src.endsWith(".webm");
           return (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index} className="swiper-slide-custom">
               <div className="image-container">
                 {isVideo ? (
                   <video
@@ -318,7 +339,7 @@ const Embed = ({ content, customClass = "", nestedItems }) => (
 );
 
 const Column = ({ breakpoints, gap = 4, customClass = "", nestedItems }) => {
-  // 將每個斷點的列數設定轉換為 Bootstrap 的類別
+  // 將每個斷���的列數設定轉換為 Bootstrap 的類別
   const breakpointClasses = Object.entries(breakpoints)
     .map(([breakpoint, columns]) => `col-${breakpoint}-${columns}`)
     .join(" ");
@@ -330,7 +351,7 @@ const Column = ({ breakpoints, gap = 4, customClass = "", nestedItems }) => {
     <div className={`block row ${gapClass} ${customClass}`}>
       {nestedItems &&
         nestedItems.map((item, index) => (
-          <div className={`d-flex justify-content-center align-items-center col-12 ${breakpointClasses}`} key={index}>
+          <div className={`d-flex justify-content-start align-items-start col-12 ${breakpointClasses}`} key={index}>
             {renderNestedModules([item], exportedComponents)}
           </div>
         ))}

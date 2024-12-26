@@ -48,8 +48,8 @@
 			"攝影設備種類繁多，但其基礎概念與原理始終如一。",
 			"不論廠牌或工具，只要掌握基本原理與操作技巧，就能靈活應用，發揮創意，自由創作屬於自己的精彩作品。"
 		],
-		"states": ["2.8", "2.8", "6.3", "11", "22"],
-		"initState": 1,
+		"states": ["1\"", "1/4", "1/15", "1/60", "1/250"],
+		"initState": 2,
 		"url": "/articles/principles/principles.json"
 	},
 	"content": {
@@ -61,42 +61,32 @@
 				]
 			},
 			{
-				"module": "Images",
-				"srcList": [
-					{
-						"src": "https://dummyimage.com/600x400",
-						"caption": "1/4 秒"
-					},
-					{
-						"src": "https://dummyimage.com/600x400",
-						"caption": "1/60 秒"
-					},
-					{
-						"src": "https://dummyimage.com/600x400",
-						"caption": "1/250 秒"
-					}
-				]
-			},
-			{
 				"module": "Heading1",
-				"text": "對影像的影響"
+				"text": "對影像的影響",
+				"id": "impact-on-image"
 			},
 			{
 				"module": "Text",
 				"textList": [
-					"快門速度不僅影響影像的亮度，還直接決定影像的清晰度和動態效果。快速快門（如 1/1000 秒）能凍結運動，適合拍攝高速物體；而慢速快門（如 1/10 秒）則能創造動態模糊效果，如柔滑的流水或光跡。"
+					"快門速度不僅影響影像的亮度，還直接決定影像的清晰度和動態效果。快速快門（如 1/800 秒）能凍結運動，適合拍攝高速物體；而慢速快門（如 5 秒）則能創造動態模糊效果，如柔滑的流水或光跡。"
 				]
 			},
 			{
-				"module": "Images",
-				"srcList": [
+				"module": "Column",
+				"breakpoints": {
+					"lg": 6
+				},
+				"customClass": "align-items-center",
+				"nestedItems":[
 					{
-						"src": "https://dummyimage.com/600x400",
-						"caption": "1/4 秒"
+						"module": "Image",
+						"src": "./articles/shutter-speed/img/CIMG0110.JPG",
+						"caption": "5 秒"
 					},
 					{
-						"src": "https://dummyimage.com/600x400",
-						"caption": "1/60 秒"
+						"module": "Image",
+						"src": "./articles/shutter-speed/img/DSC08052.JPG",
+						"caption": "1/800秒"
 					}
 				]
 			},
@@ -178,7 +168,7 @@
 			},
 			{
 				"module": "Image",
-				"src": "https://dummyimage.com/600x400",
+				"src": "./articles/shutter-speed/img/IMG_1761.mov",
 				"caption": "機身內的機械快門簾（使用慢動作錄製）"
 			},
 			{
@@ -189,12 +179,12 @@
 				"nestedItems": [
 					{
 						"module": "Image",
-						"src": "https://dummyimage.com/600x400",
-						"caption": "相機快速移動時，畫面傾斜似果凍晃動，即果凍效應"
+						"src": "./articles/shutter-speed/img/IMG_0097.jpg",
+						"caption": "相機快速移動時，畫面傾斜似果凍晃動，即果凍效應（模擬圖）"
 					},
 					{
 						"module": "Image",
-						"src": "https://dummyimage.com/600x400",
+						"src": "./articles/shutter-speed/img/IMG_0097-2.jpg",
 						"caption": "使用機械快門能有效減緩果凍效應"
 					}
 				]

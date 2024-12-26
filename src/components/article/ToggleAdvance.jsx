@@ -17,11 +17,11 @@ function ToggleAdvance({ target }) {
           });
         }, 500);
         setTimeout(() => {
-          advanceContainer[0].classList.add('overflow-visible');
+          // advanceContainer[0].classList.add('overflow-visible');
         }, 1000);
       }
       else {
-        advanceContainer[0].classList.remove('overflow-visible');
+        // advanceContainer[0].classList.remove('overflow-visible');
         toggleAdvance.scrollIntoView({
           behavior: "smooth", // 平滑滾動
           block: "end",    // 將目標對齊到底部

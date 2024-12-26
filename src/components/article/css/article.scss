@@ -1,21 +1,47 @@
 @import "../../../css/init";
 
 .mx-article{
-    width: calc(520px + 50%);
+    width: calc(500px + 50%);
     display: flex;
     flex-direction: row;
     margin-left: auto;
     margin-right: auto;
     margin-top: 3rem;
     justify-content: space-between;
+    
+    @media all and ($tablet-only) {
+        gap: 1rem;
+        width: 90%;
+        max-width: 900px;
+        margin-top: 1.5rem;
+        .block{
+            padding: 0 30px;
+        }
+    }
+    
+    @media all and ($phone-only) {
+        flex-direction: column-reverse;
+        gap: 1rem;
+        width: 100%;
+    }
+
     &-container{
         width: 100%;
         display: flex;
         flex-direction: column;
     }
+    
     main{
         width: 78%;
+        @media all and ($tablet-only) {
+            width: 80%;
+            gap: 0;
+        }
+        @media all and ($phone-only) {
+            width: 100%;
+        }
     }
+    
     main > .block:first-child p{
         margin-top: 0;
         padding-top: 1em;
@@ -24,6 +50,7 @@
 
 .mx-section{
     position: relative;
+    overflow: hidden;
 }
 
 .advance {
@@ -33,6 +60,17 @@
     transition: grid-template-rows 1s ease, margin-top 1s ease;
     &-container{
         overflow: hidden;
+        margin: -3rem -20px 0 -20px;
+        padding: 0 20px;
+        @media all and ($tablet-only) {
+            margin: -2rem -20px 0 -20px;
+        }
+        @media all and ($phone-only) {
+            margin: -1rem -20px 0 -20px;
+        }
+        & > div {
+            padding-top: 0;
+        }
     }
     &.expand{
         transition: all 1s $gentle !important;
@@ -47,11 +85,24 @@
     justify-content: space-between;
     align-items: center;
     background-color: var(--layer-1);
-    margin: 4rem -2.4rem 0 -2.4rem;
-    padding: 2rem 2.4rem;
+    margin: 4rem -2rem 1rem -2rem;
+    padding: 2rem 2rem;
     border-radius: 24px;
     z-index: 2;
     box-shadow: 0 0 30px var(--background-color);
+    @media all and ($tablet-only) {
+        margin: 4rem 0 0 0;
+        gap: 1rem;
+        padding: 1.4rem 1.4rem;
+        margin: 0 8px 8px 8px;
+        border-radius: 20px;
+    }
+    @media all and ($phone-only) {
+        padding: 30px;
+        margin: 4rem 0 0 0;
+
+        border-radius: 0;
+    }
     button{
         width: 64px;
         height: 64px;

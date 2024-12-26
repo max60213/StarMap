@@ -8,7 +8,7 @@ function Info(props) {
   const { galaxy } = useContext(GalaxyContext);
   const [itemData, setItemData] = useState(null);
   const path = currentPath();
-  
+
 
   useEffect(() => {
     if (!galaxy) return;
@@ -28,7 +28,7 @@ function Info(props) {
   }
 
   return (
-    <div className={`info px-3 pe-xl-5 d-flex align-items-center full-size ${props.className === undefined ? "" : props.className}`}>
+    <div className={`info px-3 pe-xl-5 d-flex full-size ${props.className === undefined ? "" : props.className}`}>
       {itemData ? (
         <div className='info-content'>
           <div className='info-content-title d-flex align-items-center'>
@@ -44,7 +44,6 @@ function Info(props) {
           <hr />
           <div className='position-relative'>
             <p>{itemData.content}</p>
-            <p className='second'>{itemData.content}</p>
           </div>
         </div>
       ) : (

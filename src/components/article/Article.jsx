@@ -142,7 +142,7 @@ function Article() {
             </section>
 
             {/* 延伸閱讀區塊 */}
-            <section className="mx-section learnMore">
+            <section className="mx-section learnMore d-none">
               {renderContent(articleData?.content.learnMore)}
             </section>
           </Suspense>

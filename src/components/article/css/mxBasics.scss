@@ -2,25 +2,41 @@
 
 .block {
     margin-bottom: 2rem;
-}
 
-.block .block {
-    margin-bottom: 0;
+    .block {
+        margin-bottom: 0;
+    }
 }
 
 .mx {
-
     &-heading1 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        margin-top: 1em;
-        padding-top: 2rem;
+        margin-bottom: 0;
+
+        &~div {
+            margin-top: 1em;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-top: 1em;
+            padding-top: 1em;
+
+            @media all and ($tablet-only) {
+                font-size: 2rem;
+                padding-top: 0.5em;
+            }
+        }
     }
 
     &-heading2 {
         font-size: 1.5rem;
         margin-bottom: 0.8rem;
         margin-top: 1.8em;
+
+        @media all and ($tablet-only) {
+            font-size: 1.2rem;
+            margin-top: 1em;
+        }
     }
 
     &-text p {
@@ -74,7 +90,7 @@
             }
         }
 
-        figcaption {
+        .description {
             margin-top: 1em;
             text-align: center;
         }
@@ -90,167 +106,175 @@
     }
 
     &-images {
-        padding: 20px;
+        position: relative;
         width: 100%;
         max-width: 100%;
-      
-        .image-container {
-          width: 100%;
-          position: relative;
-          aspect-ratio: 4/3;
-          
-          img {
+        overflow: visible;
+
+        &.swiper {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background-color: #f5f5f5;
-          }
-      
-          .description {
-            padding: 15px 15px 5px;
-            text-align: center;
-            margin: 0;
-            font-size: clamp(0.875rem, 2vw, 1rem);
-          }
-      
-          .link {
-            display: inline-block;
-            padding: 5px 15px 15px;
-            text-align: center;
-            color: #007aff;
-            text-decoration: none;
-            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-            transition: color 0.3s ease;
-      
-            &:hover {
-              color: darken(#007aff, 10%);
-              text-decoration: underline;
-            }
-          }
-        }
-      
-        // Swiper 相關樣式
-        .swiper {
-          padding-bottom: 40px !important;
-      
-          &-button {
-            &-next,
-            &-prev {
-              color: #333;
-              width: 30px;
-              height: 30px;
-              background: rgba(255, 255, 255, 0.8);
-              border-radius: 50%;
-              padding: 20px;
-              top: auto !important;
-              bottom: 10px !important;
-              margin-top: 0 !important;
-              transform: translateY(-50%);
-      
-              &:after {
-                font-size: 20px;
-                transform: translateY(2px);
-              }
-            }
-      
-            &-prev {
-              left: 25% !important;
-            }
-      
-            &-next {
-              right: 25% !important;
-            }
-          }
-      
-          &-pagination {
-            position: relative !important;
-            bottom: 0 !important;
-            margin-top: 10px;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            height: 30px;
-      
-            &-bullets {
-              display: flex !important;
-              align-items: center !important;
-              width: auto !important;
-              position: relative;
-              z-index: 1;
-            }
-      
-            &-bullet {
-              margin: 0 5px !important;
-              background: #ccc !important;
-              opacity: 0.5 !important;
-              width: 8px !important;
-              height: 8px !important;
-      
-              &-active {
-                background: #007aff !important;
-                opacity: 1 !important;
-              }
-            }
-          }
-        }
-      
-        // 響應式設計
-        @media (max-width: 768px) {
-          .swiper {
-            &-button {
-              &-prev {
-                left: 15% !important;
-              }
-      
-              &-next {
-                right: 15% !important;
-              }
-            }
-          }
-        }
-      } 
-
-    &-images-old {
-        overflow: visible !important;
-
-        .swiper-pagination {
-            position: relative;
-            bottom: 0 !important;
+            padding: 0 20px;
+            overflow: visible;
         }
 
-        &>* {
-            overflow: visible !important;
-            justify-content: center;
-            align-items: center;
-        }
-
-        &-item {
+        .swiper-wrapper {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            align-items: stretch;
+        }
 
-            img {
+        .swiper-slide {
+            height: auto;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .image-container {
+            width: 100%;
+            position: relative;
+            aspect-ratio: 4/3;
+
+            @media all and ($tablet-only) {
+                margin-bottom: 3.5rem;
+
+                &:has(.description) {
+                    margin-bottom: 25px;
+                }
+
+                &:has(.link) {
+                    margin-bottom: 25px;
+                }
+
+                &:has(.description.link) {
+                    margin-bottom: 50px;
+                }
+            }
+
+            .description {
+                margin-top: 1em;
+                text-align: center;
+            }
+
+            .link {
+                display: block;
                 width: 100%;
-                transition: transform 0.5s ease, filter 0.5s ease;
+                margin-top: 0.2rem;
+                font-size: 0.8rem;
+                font-weight: 300;
+                opacity: 0.6;
+                text-align: center;
+                color: var(--primary-color);
+            }
+
+            img,
+            video {
+                width: 100%;
+                object-fit: contain;
+                transition: transform 0.3s ease;
                 cursor: pointer;
+                transition: transform 0.3s ease, filter 0.3s ease;
 
                 &:hover {
                     transform: scale(1.05);
                     filter: drop-shadow(0 8px 10px var(--shadow-float));
                 }
             }
+        }
 
-            figcaption {
-                margin-top: 1em;
-                text-align: center;
+        // 分頁導航樣式
+        .swiper-pagination {
+            position: relative !important;
+            left: 50% !important;
+            transform: translateX(-50%);
+            width: auto !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+
+            &-bullets {
+                bottom: 24px !important;
             }
 
-            .link {
-                margin-top: 0.2rem;
-                font-size: 0.8rem;
-                font-weight: 300;
-                opacity: 0.6;
-                color: var(--primary-color);
+            &-bullet {
+                width: 8px;
+                height: 8px;
+                background: var(--text-caption);
+                opacity: 0.5;
+                margin: 0 4px;
+                transition: all 0.3s ease;
+
+                &-active {
+                    opacity: 1;
+                    background: var(--theme-color);
+                    transform: scale(1.2);
+                }
+            }
+        }
+
+        // 導航按鈕基本樣式
+        .swiper-button-prev {
+            left: 10%;
+        }
+
+        .swiper-button-next {
+            right: 10%;
+        }
+
+        .swiper-button-prev,
+        .swiper-button-next {
+            color: var(--primary-color);
+            top: auto !important;
+            bottom: 5px !important;
+            transform: translateY(0);
+
+            &::after {
+                font-size: 20px;
+                filter: invert(0);
+                transition: filter 0.6s $gentle;
+            }
+
+            &::before {
+                content: "";
+                width: 42px;
+                height: 42px;
+                background-color: var(--layer-2);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                transition: all 0.6s $gentle;
+            }
+        }
+
+        .swiper-button-prev:hover,
+        .swiper-button-next:hover {
+            &::after {
+                filter: invert(1);
+            }
+
+            &::before {
+                background-color: white;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .swiper-button-prev {
+                left: 15% !important;
+            }
+
+            .swiper-button-next {
+                right: 15% !important;
+            }
+
+            .swiper-button-prev,
+            .swiper-button-next {
+
+                &::after {
+                    font-size: 16px;
+                }
             }
         }
     }

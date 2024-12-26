@@ -1,5 +1,52 @@
 @import '../../../css/init.scss';
 
+// Variables
+$border-color: rgba(255, 255, 255, 0.8);
+$shadow-color: rgba(0, 0, 0, 0.8);
+$transition-timing: cubic-bezier(0.2, 0, 0, 1);
+$window-frame-size: 44vh;
+$window-frame-size-tablet: 37vh;
+
+// Mixins
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin text-style {
+    color: white;
+    user-select: none;
+    text-shadow: 0 1px 2px $shadow-color;
+}
+
+@mixin window-frame-base {
+    position: relative;
+    @include flex-center;
+    aspect-ratio: 1/1;
+    opacity: 0;
+    width: $window-frame-size;
+    min-width: $window-frame-size;
+    border-radius: 100%;
+    margin-top: 0;
+    overflow: hidden;
+    border: $border-color solid 1px;
+    transition: all 0.6s ease, opacity 0.01s;
+
+    @media all and ($tablet-only) {
+        width: $window-frame-size-tablet;
+        min-width: $window-frame-size-tablet;
+    }
+}
+
+@mixin player-base {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
 .window {
     width: 100%;
     position: relative;
@@ -10,29 +57,22 @@
     gap: 0;
     transition: gap 0.5s ease;
 
+    @media all and ($tablet-only) {
+        width: initial;
+        height: 100%;
+    }
+
     &:has(.active) {
         gap: 1.5rem;
     }
 
+    // Window Frame
     &-frame {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        aspect-ratio: 1/1;
-        opacity: 0;
-        width: 44vh;
-        min-width: 44vh;
-        border-radius: 100%;
-        overflow: hidden;
-        border: rgb(255, 255, 255, 0.8) solid 1px;
-        transition: all 0.6s ease, opacity 0.01s;
+        @include window-frame-base;
 
+        // Player
         .player {
-            position: absolute;
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            top: 0;
+            @include player-base;
 
             &:first-child {
                 position: relative;
@@ -54,6 +94,7 @@
             }
         }
 
+        // States
         &.ready {
             opacity: 1;
             border-radius: 100%;
@@ -63,15 +104,18 @@
 
         &.active {
             opacity: 1;
-            width: 100%;
             min-width: initial;
             transform: translateY(-0.5rem);
             aspect-ratio: 3/2;
             border-radius: 8px;
-            transition: all 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.02s;
+            width: 100%;
+            transition: all 0.5s $transition-timing, opacity 0.02s;
 
-            @media all and (#{$phone-only}) {
-                max-height: 100%;
+            @media all and ($tablet-only) {
+                width: auto;
+                transform: none;
+                margin-top: 1rem;
+                height: $window-frame-size-tablet;
             }
 
             .player {
@@ -93,12 +137,17 @@
             width: 80%;
             aspect-ratio: 1;
             border-radius: 100%;
-            min-width: initial;
-            transition: all 0.5s cubic-bezier(0.2, 0, 0, 1), opacity 0.02s;
+            transform: none;
+            transition: all 0.5s $transition-timing, opacity 0.02s;
+
+            @media all and ($tablet-only) {
+                width: auto;
+            }
         }
     }
 }
 
+// View Data
 .view_data {
     position: absolute;
     display: flex;
@@ -119,18 +168,15 @@
     }
 
     * {
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-        color: white;
+        @include text-style;
     }
 
     p {
         font-size: 16px;
-        user-select: none;
-    }
 
-    p~* {
-        font-size: 28px;
-        user-select: none;
+        &~* {
+            font-size: 28px;
+        }
     }
 
     &-right {
@@ -143,6 +189,7 @@
     }
 }
 
+// Info
 .info {
     max-width: max(680px, 30vw);
 
@@ -160,17 +207,12 @@
         }
     }
 
-    p:not(.second) {
+    p {
         font-size: 1.4rem;
         color: white;
-        mix-blend-mode: overlay;
-    }
-
-    .second {
-        position: absolute;
-        top: 0;
-        font-size: 1.4rem;
-        color: white;
-        opacity: 0.6;
+        opacity: 0.8;
+        @media all and ($phone-only) {
+            font-size: 1.2rem;
+        }
     }
 }

@@ -15,7 +15,7 @@ class Galaxy {
     this.animationId = null;  // Store requestAnimationFrame ID for pausing/resuming
 
     this.config = {
-      mobileDistance: 1,
+      mobileDistance: 0.95,
       pcDistance: 0.8,
       pcShift: [-2.3 / 10, 0],
       mobileShift: [0, 1 / 4],
